@@ -1,0 +1,7 @@
+#include "FFXColor.h"
+#include "FFXBase.h"
+#include "FFXFrameProvider.h"
+#include "FFXSegment.h"
+#include "FFXFastLEDPixelController.h"
+#include "FFXOverlay.h"
+#include "FFXController.h"

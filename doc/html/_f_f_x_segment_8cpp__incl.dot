@@ -1,0 +1,43 @@
+digraph "/Users/geoffmoehrke/Documents/PlatformIO/Projects/QNodeMasterController-esp12e/lib/FastFX/FFXSegment.cpp"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="/Users/geoffmoehrke\l/Documents/PlatformIO\l/Projects/QNodeMasterController\l-esp12e/lib/FastFX/FFXSegment.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="FFXSegment.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_segment_8h.html",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="FFXBase.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_base_8h.html",tooltip=" "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="FFXColor.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_color_8h.html",tooltip=" "];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="FastLED.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="FlexTimer.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node2 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="FFXFrameProvider.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_frame_provider_8h.html",tooltip=" "];
+  Node7 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="FFXAFDimmer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_a_f_dimmer_8h.html",tooltip=" "];
+  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="FFXAutoFader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_auto_fader_8h.html",tooltip=" "];
+  Node9 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="FFXAFXFader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_a_f_x_fader_8h.html",tooltip=" "];
+  Node10 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="FFXController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_controller_8h.html",tooltip=" "];
+  Node11 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="FFXPixelController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_pixel_controller_8h.html",tooltip=" "];
+  Node12 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="FFXOverlay.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_f_x_overlay_8h.html",tooltip=" "];
+  Node13 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

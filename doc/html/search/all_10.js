@@ -1,0 +1,13 @@
+var searchData=
+[
+  ['timingdelta_341',['timingDelta',['../class_f_f_x_base.html#aad4e02d35d3fc6aee06bedbc4c596ff0',1,'FFXBase::timingDelta(uint8_t phase, unsigned long sourceMillis)'],['../class_f_f_x_base.html#a183a87c9d9baff7f649f98cd749191aa',1,'FFXBase::timingDelta(unsigned long sourceMillis)']]],
+  ['trig_5fmotion_5fcos_342',['TRIG_MOTION_COS',['../class_f_f_x_trig_motion.html#a392c32e2199616f8f469c1203ee89909a81a63236fbf654072358f903de488e43',1,'FFXTrigMotion']]],
+  ['trig_5fmotion_5fcubic_343',['TRIG_MOTION_CUBIC',['../class_f_f_x_trig_motion.html#a392c32e2199616f8f469c1203ee89909a7cd4aee78f72199c42db88c918dec932',1,'FFXTrigMotion']]],
+  ['trig_5fmotion_5fquad_344',['TRIG_MOTION_QUAD',['../class_f_f_x_trig_motion.html#a392c32e2199616f8f469c1203ee89909a65c795ca68c2e634d8dcbefb56dc4f1a',1,'FFXTrigMotion']]],
+  ['trig_5fmotion_5fsin_345',['TRIG_MOTION_SIN',['../class_f_f_x_trig_motion.html#a392c32e2199616f8f469c1203ee89909ab6bb3313f0e7e3ced869bea84244e525',1,'FFXTrigMotion']]],
+  ['trig_5fmotion_5ftri_346',['TRIG_MOTION_TRI',['../class_f_f_x_trig_motion.html#a392c32e2199616f8f469c1203ee89909a453f91915930d1a7d5da34ccff83e1d2',1,'FFXTrigMotion']]],
+  ['trigmotiontype_347',['trigMotionType',['../class_f_f_x_trig_motion.html#a392c32e2199616f8f469c1203ee89909',1,'FFXTrigMotion']]],
+  ['twinkle_5ffx_5fid_348',['TWINKLE_FX_ID',['../_f_f_x_core_effects_8h.html#a18e95b503e33147e885429d28741bc92',1,'FFXCoreEffects.h']]],
+  ['twinkle_5ffx_5fname_349',['TWINKLE_FX_NAME',['../_f_f_x_core_effects_8h.html#a365128be1cc061589967069f50e05161',1,'FFXCoreEffects.h']]],
+  ['twinklefx_350',['TwinkleFX',['../class_twinkle_f_x.html',1,'TwinkleFX'],['../class_twinkle_f_x.html#aa9a7351587a3c97080115c420b93e616',1,'TwinkleFX::TwinkleFX(uint16_t initSize, unsigned long initTimer)'],['../class_twinkle_f_x.html#ac6ebc6db216c4d8a7dd19007dc2d2e0a',1,'TwinkleFX::TwinkleFX(uint16_t initSize)']]]
+];
