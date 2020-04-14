@@ -1,5 +1,5 @@
-# FastFX library
-<a id="markdown-FastFX%20library" name="FastFX%20library"></a>
+# FFX - FastFX library
+<a id="markdown-FFX%20-%20FastFX%20library" name="FFX%20-%20FastFX%20library"></a>
 
 ## Table of Contents
 <a id="markdown-Table%20of%20Contents" name="Table%20of%20Contents"></a>
@@ -7,7 +7,9 @@
 <!-- TOC depthfrom:2 withlinks:true -->
 
 - [Table of Contents](#table-of-contents)
+- [Intro](#intro)
 - [Overview](#overview)
+    - [Dependency](#dependency)
 - [Model](#model)
 - [Tutorial & Examples](#tutorial--examples)
     - [FirstLight](#firstlight)
@@ -21,13 +23,23 @@
     - [FirstLight 3](#firstlight-3)
         - [Segments](#segments)
         - [Overlay Effects](#overlay-effects)
+        - [Timers](#timers)
 
 <!-- /TOC -->
+
+## Intro
+<a id="markdown-Intro" name="Intro"></a>
+
+Thanks for checking out FFX.  This project grew out my desire to have a single code-base for several different LED Strips I have installed in various locations around my home.  My goal was to have a single firmware image that could be downloaded on every controller, yet have the ability to change the colors/effects/etc. independently.  That goal has been realized in a forthcoming framework that utilizes MQTT, JSON and a message based system for configuration and control of individual nodes (LED Controllers, sensors, relays, etc).  The FFX library is the foundation for the LED controller used in that architecture.
+
+The examples in the following sections illustrate the basics, but don't touch on everything.  All of the coding and development was done on NodeMCU ESP8266 boards.  While I haven't tested on anything else, outside of the FastLED initialization and pin selection, it doesn't do anything that is processor dependent, so it should run just as well on other platforms.  
+
+
 
 ## Overview
 <a id="markdown-Overview" name="Overview"></a>
 
-FastFX is an Arduino library that for creating LED Strip effects and animations.  The principle idea behind the library is to provide a set of reusable classes/objects to create and display multiple colors/animations/etc. consistently in any sketch.  Effects are written as classes/subclasses and displayed by a common controller object. By defining effects as objects, FastFX is able to provide capabilities that are common to all effects without the need to custom code them for each individual effect.  These capabilities include:
+FFX is an Arduino library that for creating LED Strip effects and animations.  The principle idea behind the library is to provide a set of reusable classes/objects to create and display multiple colors/animations/etc. consistently in any sketch.  Effects are written as classes/subclasses and displayed by a common controller object. By defining effects as objects, FFX is able to provide capabilities that are common to all effects without the need to custom code them for each individual effect.  These capabilities include:
 
 - Automatic crossfade between "frames" - useful for smoother transitions in slower moving sequences.
 - Automatic crossfade between effects - gradual fade between effects when changing from one effect to another
@@ -39,6 +51,7 @@ FastFX is an Arduino library that for creating LED Strip effects and animations.
 - Auto-faders for dimming and transparency - allows for smooth transitions when changing brightness and/or transparency levels.  Timing can be set independently for each.  
 
 ### Dependency
+<a id="markdown-Dependency" name="Dependency"></a>
 
 The FastFX library requires the FastLED library: https://github.com/FastLED/FastLED.  Users attempting to use this library should have a basic understanding of FastLED and have the library installed and working (version 3.3 or greater).
 
@@ -70,34 +83,34 @@ The programming model for using FastFX differs slightly from coding directly wit
 
 Since each effect is a standalone class, creating a new one is a straightforward task.  Taking from the "FirstLight" example code in the FastLED library, we will create a FastFX version and see how we gain additional functionality with FastFX.  First we'll construct the effect class, which is always a descendant of FFXBase:
 
-~~~c++
+~~~c++ 
 class FirstLightFX : public FFXBase {
   public:    
     // Constructor - provides defaults for interval, minInterval, and maxInterval
     FirstLightFX(uint16_t initSize) : FFXBase( initSize, 10UL, 10UL, 100UL ) {
-// currColor holds the FFXColor object used to manage colors in effects - this is a
-// simple single-color effect using RGB colors, so we set the mode to singleCRGB
-currColor.setColorMode( FFXColor::FXColorMode::singleCRGB |
-// then supply it the color
-currColor.setCRGB( CRGB::White |
-// effect is running on a segment of the strip.
+    // currColor holds the FFXColor object used to manage colors in effects - this is a
+    // simple single-color effect using RGB colors, so we set the mode to singleCRGB
+    currColor.setColorMode( FFXColor::FXColorMode::singleCRGB |
+    // then supply it the color
+    currColor.setCRGB( CRGB::White |
+    // effect is running on a segment of the strip.
     }
 
     // Override initLeds - this method is called only once, right before the first frame is drawn
     // Note that anything done here is not "shown" until after the first call to writeNextFrame()
     virtual void initLeds( CRGB *bufLeds ) override {
-// Clear the field
-fill_solid( bufLeds, getNumLeds(), CRGB::Black |
+    // Clear the field
+    fill_solid( bufLeds, getNumLeds(), CRGB::Black |
     }
 
     // Override writeNextFrame - this is what is called for each change.  Note that the controller
     // will only call this once for each frame, so we don't need to track anything about the Timing
     // or coordination with other effects...just write the frame data into the passed CRGB array
     virtual void writeNextFrame( CRGB *bufLeds ) override {
-// fade any lit pixels to leave a trail behind the moving colored pixel
-fadeToBlackBy( bufLeds, numLeds, 50 |
-// set the next pixel to the current value in our FFXColor object (white, in this case)
-bufLeds[getCurrPhase()-1] = currColor.getCRGB(|
+    // fade any lit pixels to leave a trail behind the moving colored pixel
+    fadeToBlackBy( bufLeds, numLeds, 50 |
+    // set the next pixel to the current value in our FFXColor object (white, in this case)
+    bufLeds[getCurrPhase()-1] = currColor.getCRGB(|
     }
 };
 ~~~
@@ -194,7 +207,7 @@ There is no requirement for Effects to use this object at all - colors may also 
 A small change to the `writeNextFrame()` method will allow us to support the palette color modes as follows:  if the mode is palette16, the effect will step to the next color at either end of the strip (or segment) on which it is running. In palette256 mode, the effect will simply step through entire palette as it moves.
 
 ```c++
- virtual void writeNextFrame( CRGB *bufLeds ) override {
+virtual void writeNextFrame( CRGB *bufLeds ) override {
 fadeToBlackBy( bufLeds, numLeds, 50 |
 bufLeds[getMovementPhase()-1] = currColor.getCRGB(|
 switch (currColor.getColorMode()) {
@@ -331,3 +344,44 @@ Changes to brightness and opacity, both utilize *auto-fader* settings.  This mea
 <a id="markdown-Overlay%20Effects" name="Overlay%20Effects"></a>
 
 Overlay effects are momentary sequences that can be run over existing effects.  Overlay sequences are run over the top of the primary segment they are typically short sequences, which run one or more times.  Depending on how they are written - then can overlay the entire strip, just a portion, or a moving section leaving the remaining animations running in the background.  There are 2 example overlay effects in the FFXCoreEffects.h file ```PulseOverlayFX``` and ```WaveOverlayFX```.  
+
+Adding an overlay effect is as easy as adding an effect, however overlays are added at the controller, rather than the segment.  Only one overlay effect may be added at a given time.  Overlay effects are automatically removed and deleted when they have completed so once they've been added, nothing more needs to be done.  Here's what the addition of an overlay looks like:
+
+```c++
+PulseOverlayFX *newFX= new PulseOverlayFX( fxctrlr.getPrimarySegment()->getLength(), 220, 1, color );
+    newFX->setPixelRange( 34, 64 );
+    fxctrlr.setOverlayFX(newFX);  
+```
+
+
+#### Timers
+<a id="markdown-Timers" name="Timers"></a>
+
+There are two timer classes used for various functions throughout the framework.  These are a handy way to time events without having to rely on callbacks or iterrupts.  I refer to these as *passive* timers, because they do not actively fire when the time has elapsed - they must be checked repeatedly to see if the time has expired, then re-armed if needed.  The usage model is as follows:
+
+ - Create and start the timer with a default interval.
+ - Inside the main loop:
+   - If timer has expired - `isUp()==true`
+     - perform task(s)
+     - re-arm the timer if needed - `timer.step()`
+
+Here is sample code:
+
+```c++
+ StepTimer timer( 1000 );
+ //...
+ timer.start();
+ //...
+ while (true) {
+   if timer.isUp() {
+     // do stuff here - realize that stuff done here is "after cycle" so each cycle will 
+     // use the time elapsed by the timer PLUS whatever time is taken by steps performed here.
+     timer.step();  // timer will be "up" again exactly 1000 ms after this line...       
+     // ...or do stuff here - this is occuring while the timer is "running".  So, as long
+    // as these steps take less time than the timer interval (1000 ms), each cycle will be the exact same
+     // duration
+    }
+  }
+```
+See FlexTimer.h for details on StepTimer and FlexTimer classes.
+
