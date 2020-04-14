@@ -27,7 +27,7 @@
 ## Overview
 <a id="markdown-Overview" name="Overview"></a>
 
-FastFX is an Arduino library that builds on the FastLED library for creating effects and animations for LED Strips.  The principle idea behind the library is to provide a set of reusable classes/objects to create and display multiple colors/animations/etc. consistently in any sketch.  Effects are written as classes/subclasses and displayed by a common controller object. By defining effects as objects, FastFX is able to provide capabilities that are common to all effects without the need to custom code them for each individual effect.  These capabilities include:
+FastFX is an Arduino library that for creating LED Strip effects and animations.  The principle idea behind the library is to provide a set of reusable classes/objects to create and display multiple colors/animations/etc. consistently in any sketch.  Effects are written as classes/subclasses and displayed by a common controller object. By defining effects as objects, FastFX is able to provide capabilities that are common to all effects without the need to custom code them for each individual effect.  These capabilities include:
 
 - Automatic crossfade between "frames" - useful for smoother transitions in slower moving sequences.
 - Automatic crossfade between effects - gradual fade between effects when changing from one effect to another
@@ -37,6 +37,12 @@ FastFX is an Arduino library that builds on the FastLED library for creating eff
 - Independent timing - Each effect maintains its own independent Timer
 - Overlay Sequences - Brief animation sequences that can be show over the top of looping effects (with variable transparency).  Useful for indicating events, transitions, etc.  
 - Auto-faders for dimming and transparency - allows for smooth transitions when changing brightness and/or transparency levels.  Timing can be set independently for each.  
+
+### Dependency
+
+The FastFX library requires the FastLED library: https://github.com/FastLED/FastLED.  Users attempting to use this library should have a basic understanding of FastLED and have the library installed and working (version 3.3 or greater).
+
+The library also makes use of 2 timer classes (StepTimer, FlexTimer).  These are included in the repository, but may be released as a separate library at some time in the future.
 
 ## Model
 <a id="markdown-Model" name="Model"></a>

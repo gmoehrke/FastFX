@@ -4,7 +4,6 @@
 //  Copyright 2020 - Geoff Moehrke 
 //  gmoehrke@gmail.com
 // 
-
 #ifndef FFX_CONTROLLER_H
 #define FFX_CONTROLLER_H
 

@@ -33,8 +33,8 @@
 #define JUGGLE_FX_ID 5
 #define JUGGLE_FX_NAME "Juggle"
 
-#define SINELON_FX_ID 6
-#define SINELON_FX_NAME "Sinelon"
+#define CYLON_FX_ID 6
+#define CYLON_FX_NAME "Cylon"
 
 #define CYCLE_FX_ID 7
 #define CYCLE_FX_NAME "Cycle"
@@ -435,17 +435,18 @@ class JuggleFX : public FFXBase {
 };
 
 /*!
- * SineLonFX - "Ported from FastLED examples.  Twin red-pixels moving in 
- * contrary motion, uses the FFXTrigMotion helper object to give it some "boounce".
+ * CylonFX - "Ported from FastLED examples.  Single or twin red-pixels moving - in 
+ * contrary motion (if twin pixels), uses the FFXTrigMotion helper object to give it some "boounce".
  */
-class SineLonFX : public FFXBase {
+class CylonFX : public FFXBase {
   private:
     FFXTrigMotion mt;
-        
+    bool twin = false;
+
   public:
-    SineLonFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 5UL, 150UL ) {
-      fxid = SINELON_FX_ID;
-      fxName = SINELON_FX_NAME;
+    CylonFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 5UL, 150UL ) {
+      fxid = CYLON_FX_ID;
+      fxName = CYLON_FX_NAME;
       mt.setLimit( initSize-1 );
       mt.setRangeMin( 0 );
       mt.setRangeMax( 6 );   
@@ -456,7 +457,7 @@ class SineLonFX : public FFXBase {
       currColor.setShiftDelta( 1 );
       currColor.reset();       
       }
-    SineLonFX(  uint16_t initSize ) : SineLonFX( initSize, 10 ) {}
+    CylonFX(  uint16_t initSize ) : CylonFX( initSize, 10 ) {}
     
     virtual void initLeds( CRGB *bufLeds ) override {
       fill_solid( bufLeds, numLeds, CRGB::Black );
@@ -466,7 +467,9 @@ class SineLonFX : public FFXBase {
         fadeToBlackBy( bufLeds, numLeds, 50 );
         uint16_t pos = mt.getPosition();
         bufLeds[pos] = currColor.getCRGB();
-        bufLeds[mirror(pos)] = bufLeds[pos];        
+        if (twin) {
+          bufLeds[mirror(pos)] = bufLeds[pos];        
+        }
         mt.step();
         setUpdated(true);
     }
