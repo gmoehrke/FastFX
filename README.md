@@ -91,9 +91,9 @@ class FirstLightFX : public FFXBase {
     FirstLightFX(uint16_t initSize) : FFXBase( initSize, 10UL, 10UL, 100UL ) {
     // currColor holds the FFXColor object used to manage colors in effects - this is a
     // simple single-color effect using RGB colors, so we set the mode to singleCRGB
-    currColor.setColorMode( FFXColor::FXColorMode::singleCRGB |
+    currColor.setColorMode( FFXColor::FXColorMode::singleCRGB );
     // then supply it the color
-    currColor.setCRGB( CRGB::White |
+    currColor.setCRGB( CRGB::White );
     // effect is running on a segment of the strip.
     }
 
@@ -101,7 +101,7 @@ class FirstLightFX : public FFXBase {
     // Note that anything done here is not "shown" until after the first call to writeNextFrame()
     virtual void initLeds( CRGB *bufLeds ) override {
     // Clear the field
-    fill_solid( bufLeds, getNumLeds(), CRGB::Black |
+    fill_solid( bufLeds, getNumLeds(), CRGB::Black );
     }
 
     // Override writeNextFrame - this is what is called for each change.  Note that the controller
@@ -109,9 +109,9 @@ class FirstLightFX : public FFXBase {
     // or coordination with other effects...just write the frame data into the passed CRGB array
     virtual void writeNextFrame( CRGB *bufLeds ) override {
     // fade any lit pixels to leave a trail behind the moving colored pixel
-    fadeToBlackBy( bufLeds, numLeds, 50 |
+    fadeToBlackBy( bufLeds, numLeds, 50 );
     // set the next pixel to the current value in our FFXColor object (white, in this case)
-    bufLeds[getCurrPhase()-1] = currColor.getCRGB(|
+    bufLeds[getCurrPhase()-1] = currColor.getCRGB();
     }
 };
 ~~~
@@ -137,12 +137,12 @@ Now we can modify the setup() function to create and initialize an instance of t
 ```c++
 void setup() {
     pinMode( 5, OUTPUT |
-    FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS|
-    FastLED.clear(|
+    FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
+    FastLED.clear();
 
-    fxctrlr.initialize( new FFXFastLEDPixelController( leds, NUM_LEDS ) |
-    fxctrlr.getPrimarySegment()->setFX( new FirstLightFX( NUM_LEDS ) |
-    fxctrlr.getPrimarySegment()->setBrightness( 100 |
+    fxctrlr.initialize( new FFXFastLEDPixelController( leds, NUM_LEDS ) );
+    fxctrlr.getPrimarySegment()->setFX( new FirstLightFX( NUM_LEDS ) );
+    fxctrlr.getPrimarySegment()->setBrightness( 100 );
 }
 ```
 
@@ -209,24 +209,24 @@ A small change to the `writeNextFrame()` method will allow us to support the pal
 
 ```c++
 virtual void writeNextFrame( CRGB *bufLeds ) override {
-fadeToBlackBy( bufLeds, numLeds, 50 |
-bufLeds[getMovementPhase()-1] = currColor.getCRGB(|
-switch (currColor.getColorMode()) {
-  // Blend the moving pixel through the entire palette range
-  case FFXColor::FFXColorMode::palette256 : { 
-    currColor.step(| 
-    break; 
-  }
-  // Step through the active colors in the palette - switching at either end of the strip
-  case FFXColor::FFXColorMode::palette16 : { 
-    if (getCurrPhase()==0 || getCurrPhase()==numLeds) { 
-currColor.step(| 
-    } 
-    break; 
-  }
-  default:  { }
-}
+  fadeToBlackBy( bufLeds, numLeds, 50 );
+  bufLeds[getMovementPhase()-1] = currColor.getCRGB();
+  switch (currColor.getColorMode()) {
+    // Blend the moving pixel through the entire palette range
+    case FFXColor::FFXColorMode::palette256 : { 
+      currColor.step(); 
+      break; 
     }
+    // Step through the active colors in the palette - switching at either end of the strip
+    case FFXColor::FFXColorMode::palette16 : { 
+      if (getCurrPhase()==0 || getCurrPhase()==numLeds) { 
+         currColor.step(); 
+      } 
+      break; 
+    }
+    default:  { }
+    }
+  }
 ```
 The full code can be found in [examples/FirstLight_2/FirstLight_2.ino](examples/FirstLight_2/FirstLight_2.ino).  
 Changing the color for our FirstLight effect can be done right after we initialize and add the effect to the FFXController:
@@ -234,25 +234,25 @@ Changing the color for our FirstLight effect can be done right after we initiali
 singleCRGB:
 
 ```c++
-FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor(|
-clr.setCRGB( CRGB::Red |
+FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor();
+clr.setCRGB( CRGB::Red );
 ```
 
 palette256:
 
 ```c++
-   FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor(|
-   clr.setColorMode( FFXColor::FFXColorMode::palette256 |
-   clr.setPalette( NamedPalettes::getInstance()["party"] |
+   FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor();
+   clr.setColorMode( FFXColor::FFXColorMode::palette256 );
+   clr.setPalette( NamedPalettes::getInstance()["party"] );
 ```
 
 palette16: 
 
 ```c++
-    FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor(|
-    clr.setColorMode( FFXColor::FFXColorMode::palette16 |
-    clr.setPalette( NamedPalettes::getInstance()["multi"] |
-    clr.setPaletteRange( 6 |
+    FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor();
+    clr.setColorMode( FFXColor::FFXColorMode::palette16 );
+    clr.setPalette( NamedPalettes::getInstance()["multi"] );
+    clr.setPaletteRange( 6 );
 ```
 
 #### NamedPalettes
@@ -290,32 +290,32 @@ Now that we've built an effect, we can set that effect on any segment that we've
 ```c++
 void setup() {
 
-    pinMode( 5, OUTPUT |
-    FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS|
-    FastLED.clear(|
+    pinMode( 5, OUTPUT );
+    FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
+    FastLED.clear();
 
-    fxctrlr.initialize( new FFXFastLEDPixelController( leds, NUM_LEDS ) |
-    fxctrlr.getPrimarySegment()->setFX( new FirstLightFX( NUM_LEDS ) |
-    fxctrlr.getPrimarySegment()->setBrightness( 100 |
-    fxctrlr.getPrimarySegment()->getFX()->setMovement( FFXBase::MovementType::MVT_BACKFORTH |
+    fxctrlr.initialize( new FFXFastLEDPixelController( leds, NUM_LEDS ) );
+    fxctrlr.getPrimarySegment()->setFX( new FirstLightFX( NUM_LEDS ) );
+    fxctrlr.getPrimarySegment()->setBrightness( 100 );
+    fxctrlr.getPrimarySegment()->getFX()->setMovement( FXBase::MovementType::MVT_BACKFORTH );
     FFXSegment *seg;
-    seg = fxctrlr.addSegment( "Left", 0, 32 |
-    seg->setFX( new FirstLightFX( seg->getLength() ) |
-    seg->getFX()->getFXColor().setCRGB( CRGB::Red |
-    seg->getFX()->setMovement( FFXBase::MovementType::MVT_FORWARD |
+    seg = fxctrlr.addSegment( "Left", 0, 32 );
+    seg->setFX( new FirstLightFX( seg->getLength() ) );
+    seg->getFX()->getFXColor().setCRGB( CRGB::Red );
+    seg->getFX()->setMovement( FFXBase::MovementType::MVT_FORWARD );
     seg->setOpacity(128|
     
-    seg = fxctrlr.addSegment( "Center", 33, 66 |
-    seg->setFX( new FirstLightFX( seg->getLength() ) |
-    seg->getFX()->getFXColor().setCRGB( CRGB::Blue |
-    seg->getFX()->setMovement( FFXBase::MovementType::MVT_BACKFORTH |
-    seg->setOpacity(128|
+    seg = fxctrlr.addSegment( "Center", 33, 66 );
+    seg->setFX( new FirstLightFX( seg->getLength() ) );
+    seg->getFX()->getFXColor().setCRGB( CRGB::Blue );
+    seg->getFX()->setMovement( FFXBase::MovementType::MVT_BACKFORTH );
+    seg->setOpacity(128);
     
-    seg = fxctrlr.addSegment( "Right", 67, 99 |
-    seg->setFX( new FirstLightFX( seg->getLength() ) |
-    seg->getFX()->getFXColor().setCRGB( CRGB::Green |
-    seg->getFX()->setMovement( FFXBase::MovementType::MVT_BACKWARD |
-    seg->setOpacity(128|
+    seg = fxctrlr.addSegment( "Right", 67, 99 );
+    seg->setFX( new FirstLightFX( seg->getLength() ) );
+    seg->getFX()->getFXColor().setCRGB( CRGB::Green );
+    seg->getFX()->setMovement( FFXBase::MovementType::MVT_BACKWARD );
+    seg->setOpacity(128);
 }
 ```
 Now we have 4 versions of this effect running:
