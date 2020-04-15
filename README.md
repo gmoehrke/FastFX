@@ -34,8 +34,6 @@ Thanks for checking out FFX.  This project grew out my desire to have a single c
 
 The examples in the following sections illustrate the basics, but don't touch on everything.  All of the coding and development was done on NodeMCU ESP8266 boards.  While I haven't tested on anything else, outside of the FastLED initialization and pin selection, it doesn't do anything that is processor dependent, so it should run just as well on other platforms.  
 
-
-
 ## Overview
 <a id="markdown-Overview" name="Overview"></a>
 
