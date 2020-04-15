@@ -69,7 +69,8 @@ The programming model for using FastFX differs slightly from coding directly wit
 - **FFXSegment** - A single LED strip is represented by a set of one or more segments.  Each strip contains a *Primary* segment, which represents the entire strip.  If effects will only be displayed along the entire strip, this is the only segment that needs to be present.  If multiple effects are desired, then additional *secondary* segments may be defined.  These segments may each have a different effect and each has its own *opacity* setting (0-255, 0=100% transparent, 255=100% opaque).  The secondary segments do not need to cover the entire length of the primary segment.  Pixels in the primary segment will always be visible unless they are covered by a secondary segment (and the secondary segment's opacity is greater than 0).
 
      Each secondary segment is given a name or _Tag_, which is used to reference that segment on the controller.  The controller provides 2 methods to access the individual segments - getPrimarySegment() and findSegment(String tag), each returns a pointer to the appropriate segment.  Note that these pointers can be dereferenced safely without checking for NULLs, if an invalid segment name is specified for findSegment, a pointer to the primary segment will be returned.  
-![segments](images/segments.jpg)
+     
+![segments](images/Segments.jpg)
 
     Each segment maintains a FFXFrameProvider object that is responsible for returning the frames to be drawn for each update.  The frame provider manages the cross fading, allocating extra buffers when needed.
 
