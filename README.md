@@ -70,7 +70,7 @@ The programming model for using FastFX differs slightly from coding directly wit
 
      Each secondary segment is given a name or _Tag_, which is used to reference that segment on the controller.  The controller provides 2 methods to access the individual segments - getPrimarySegment() and findSegment(String tag), each returns a pointer to the appropriate segment.  Note that these pointers can be dereferenced safely without checking for NULLs, if an invalid segment name is specified for findSegment, a pointer to the primary segment will be returned.  
      
-![segments](images/Segments.jpg)
+    ![segments](images/Segments.jpg)
 
     Each segment maintains a FFXFrameProvider object that is responsible for returning the frames to be drawn for each update.  The frame provider manages the cross fading, allocating extra buffers when needed.
 
@@ -130,13 +130,13 @@ For FastLED, we need the CRGB array that represents the pixels in our strip, and
 
 ```c++
 CRGB leds[NUM_LEDS]
-FFXController fxctrlr = FFXController(|
+FFXController fxctrlr = FFXController();
 ```
 Now we can modify the setup() function to create and initialize an instance of the FFXController, and create and add the effect to the controller:
 
 ```c++
 void setup() {
-    pinMode( 5, OUTPUT |
+    pinMode( 5, OUTPUT );
     FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
     FastLED.clear();
 
@@ -150,7 +150,7 @@ Now that we've built all of the instructions for creating the effect into our Fi
 
 ```c++
 void loop() {
-  fxctrlr.update(|
+  fxctrlr.update();
 }
 ```
 The full code can be found in [examples/FirstLight_1/FirstLight_1.ino](examples/FirstLight_1/FirstLight_1.ino).  
@@ -160,7 +160,7 @@ The full code can be found in [examples/FirstLight_1/FirstLight_1.ino](examples/
 
 When running this example, note that you may select a different interval value to control the speed of the animation.  Thas may be done by calling:
 ```c++
-fxctrlr.getPrimarySegment()->getFX().setInterval( newInterval |
+fxctrlr.getPrimarySegment()->getFX().setInterval( newInterval );
 ```  
 The interval may be changed any time after creating the effect.  By using a larger interval (200+ milliseconds), you may notice that the leading white dot fades in over the duration of that interval to make the animation smoother.  This is because crossfading is enabled by default by the framework.  The extra buffers and frame-blending are all done automatically.  This can be disabled on any individual effect by calling
 ```c++
@@ -324,6 +324,14 @@ Now we have 4 versions of this effect running:
 2.  Running on the segment named "Left", color is red, moving forward only at opacity of 128 (about 50%) so the underlying primary effect will still show below it.
 3.  Running on the segment named "Center", color is green, moving back and forth at opacity of 128.
 4.  Running on the segment named "Right", color is blue, moving backward at opacity of 128.
+
+Note that the main loop remains unchanged - just one line of code:
+
+```c++
+void loop() {
+  fxctrlr.update();
+}
+```
 
 #### Segments
 <a id="markdown-Segments" name="Segments"></a>
