@@ -154,7 +154,7 @@ class SolidFX : public FFXBase {
  */
 class PaletteFX : public FFXBase {
   public:
-     PaletteFX( uint8_t initSize ) : FFXBase( initSize, (uint8_t)255, 10, 1000 ) {
+     PaletteFX( uint8_t initSize ) : FFXBase( initSize, (uint8_t)200, 10, 1000 ) {
        fxid = PALETTE_FX_ID;
        fxName = PALETTE_FX_NAME;
        currColor.setColorMode( FFXColor::FFXColorMode::palette256);
@@ -207,12 +207,12 @@ class ChaseFX : public FFXRotate {
       fxid = CHASE_FX_ID;
       fxName = CHASE_FX_NAME;
       currColor.setColorMode( FFXColor::FFXColorMode::palette16 );
-      currColor.setPalette( ::Multi_p, 4 );
+      currColor.setPalette( ::Multi_p, 6 );
       currColor.setStepDelta( 1 );
       currColor.setShiftDelta(0);
       currColor.reset();
     }
-    ChaseFX( uint8_t initSize ) : ChaseFX( initSize, 10 ){}
+    ChaseFX( uint8_t initSize ) : ChaseFX( initSize, 128 ){}
 
     uint8_t getDotWidth() { return dotWidth; }
     void setDotWidth( uint8_t newWidth ) {
@@ -396,7 +396,7 @@ class JuggleFX : public FFXBase {
             motion.push_back(new FFXTrigMotion(initSize-1, FFXTrigMotion::TRIG_MOTION_TRI, 0, random8(0,8), random16(0, numLeds*2)));
         }
       }
-    JuggleFX(  uint16_t initSize ) : JuggleFX( initSize, 25 ) {}
+    JuggleFX(  uint16_t initSize ) : JuggleFX( initSize, 15 ) {}
 
     ~JuggleFX() { 
       for (auto m : motion) { 
@@ -484,7 +484,7 @@ class CycleFX : public FFXBase {
     CHSV currHSV;
     CHSV nextHSV;
     uint8_t deltahue = 16;
-    StepTimer colorTimer = StepTimer( 10000, false );
+    StepTimer colorTimer = StepTimer( 5000, false );
     StepTimer transitionTimer = StepTimer( 1000, false );  
   
   public:
@@ -492,11 +492,11 @@ class CycleFX : public FFXBase {
       fxid = CYCLE_FX_ID;       
       fxName = CYCLE_FX_NAME;
       currColor.setColorMode( FFXColor::singleCHSV );
-      currHSV = CHSV(1, 255, 255);
+      currHSV = CHSV(random8(15)*16, 255, 255);
       currColor.setCHSV( currHSV );      
     }
     
-    CycleFX( uint16_t initSize) : CycleFX( initSize, 30 ) {};  
+    CycleFX( uint16_t initSize) : CycleFX( initSize, 100 ) {};  
 
     virtual void initLeds( CRGB *bufLeds ) override {
       fill_solid( bufLeds, numLeds, currColor.getCHSV() );
@@ -786,6 +786,10 @@ class WaveOverlayFX : public FFXOverlay {
       CRGBSet leds(pattern, 50);
       currColor.setColorMode(FFXColor::FFXColorMode::palette256);
       setMovement( dir );
+    }
+
+    WaveOverlayFX( uint16_t initSize, uint8_t speed, uint8_t repeat, const CRGBPalette16& pal ) : WaveOverlayFX( initSize, speed, repeat ) {
+      currColor.setPalette(pal);
     }
 
     void fillPattern() {

@@ -34,6 +34,8 @@ Thanks for checking out FFX.  This project grew out my desire to have a single c
 
 The examples in the following sections illustrate the basics, but don't touch on everything.  All of the coding and development was done on NodeMCU ESP8266 boards.  While I haven't tested on anything else, outside of the FastLED initialization and pin selection, it doesn't do anything that is processor dependent, so it should run just as well on other platforms.  
 
+Final Note - The examples included in the framework are optimized for WS2811 strips (12v 3-LEDs per pixel).  Some of the default parameters may need to be tweaked slightly to look best on other strip configurations. 
+
 ## Overview
 <a id="markdown-Overview" name="Overview"></a>
 
@@ -150,7 +152,7 @@ void loop() {
   fxctrlr.update(|
 }
 ```
-The full code can be found in [examples/FFXFirstLight_1.ino](examples/FFXFirstLight_1.ino).  
+The full code can be found in [examples/FirstLight_1/FirstLight_1.ino](examples/FirstLight_1/FirstLight_1.ino).  
 
 #### Speed and Cross-fade
 <a id="markdown-Speed%20and%20Cross-fade" name="Speed%20and%20Cross-fade"></a>
@@ -225,7 +227,7 @@ currColor.step(|
 }
     }
 ```
-
+The full code can be found in [examples/FirstLight_2/FirstLight_2.ino](examples/FirstLight_2/FirstLight_2.ino).  
 Changing the color for our FirstLight effect can be done right after we initialize and add the effect to the FFXController:
 
 singleCRGB:
