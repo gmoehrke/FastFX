@@ -89,29 +89,29 @@ class FirstLightFX : public FFXBase {
   public:    
     // Constructor - provides defaults for interval, minInterval, and maxInterval
     FirstLightFX(uint16_t initSize) : FFXBase( initSize, 10UL, 10UL, 100UL ) {
-    // currColor holds the FFXColor object used to manage colors in effects - this is a
-    // simple single-color effect using RGB colors, so we set the mode to singleCRGB
-    currColor.setColorMode( FFXColor::FXColorMode::singleCRGB );
-    // then supply it the color
-    currColor.setCRGB( CRGB::White );
-    // effect is running on a segment of the strip.
+      // currColor holds the FFXColor object used to manage colors in effects - this is a
+      // simple single-color effect using RGB colors, so we set the mode to singleCRGB
+      currColor.setColorMode( FFXColor::FXColorMode::singleCRGB );
+      // then supply it the color
+      currColor.setCRGB( CRGB::White );
+      // effect is running on a segment of the strip.
     }
 
     // Override initLeds - this method is called only once, right before the first frame is drawn
     // Note that anything done here is not "shown" until after the first call to writeNextFrame()
     virtual void initLeds( CRGB *bufLeds ) override {
-    // Clear the field
-    fill_solid( bufLeds, getNumLeds(), CRGB::Black );
+      // Clear the field
+      fill_solid( bufLeds, getNumLeds(), CRGB::Black );
     }
 
     // Override writeNextFrame - this is what is called for each change.  Note that the controller
     // will only call this once for each frame, so we don't need to track anything about the Timing
     // or coordination with other effects...just write the frame data into the passed CRGB array
     virtual void writeNextFrame( CRGB *bufLeds ) override {
-    // fade any lit pixels to leave a trail behind the moving colored pixel
-    fadeToBlackBy( bufLeds, numLeds, 50 );
-    // set the next pixel to the current value in our FFXColor object (white, in this case)
-    bufLeds[getCurrPhase()-1] = currColor.getCRGB();
+      // fade any lit pixels to leave a trail behind the moving colored pixel
+      fadeToBlackBy( bufLeds, numLeds, 50 );
+      // set the next pixel to the current value in our FFXColor object (white, in this case)
+      bufLeds[getCurrPhase()-1] = currColor.getCRGB();
     }
 };
 ~~~
@@ -298,6 +298,7 @@ void setup() {
     fxctrlr.getPrimarySegment()->setFX( new FirstLightFX( NUM_LEDS ) );
     fxctrlr.getPrimarySegment()->setBrightness( 100 );
     fxctrlr.getPrimarySegment()->getFX()->setMovement( FXBase::MovementType::MVT_BACKFORTH );
+    
     FFXSegment *seg;
     seg = fxctrlr.addSegment( "Left", 0, 32 );
     seg->setFX( new FirstLightFX( seg->getLength() ) );
