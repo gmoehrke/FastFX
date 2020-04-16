@@ -1,0 +1,25 @@
+var class_f_f_x_overlay =
+[
+    [ "FFXOverlay", "class_f_f_x_overlay.html#a9280346aeed5c2f05f0935a6ce01e8f8", null ],
+    [ "FFXOverlay", "class_f_f_x_overlay.html#afa5ea95dc98eda03966b19516087f582", null ],
+    [ "FFXOverlay", "class_f_f_x_overlay.html#a8983dc4d96070fd1e25dbd25dd5fe53a", null ],
+    [ "FFXOverlay", "class_f_f_x_overlay.html#afdf46982912448e87643e9521e097af9", null ],
+    [ "~FFXOverlay", "class_f_f_x_overlay.html#aea4eaeb6064cfe39d039876b3c2566bd", null ],
+    [ "applyOverlay", "class_f_f_x_overlay.html#a428c436b1fcca2c19805dae2f47035d9", null ],
+    [ "getAlpha", "class_f_f_x_overlay.html#a3abc0ff82908ac5d1bedb891fa3cd9fb", null ],
+    [ "getLag", "class_f_f_x_overlay.html#aa2bef9a44b27cddf4830e3f7fbd7a02e", null ],
+    [ "getMaxAlpha", "class_f_f_x_overlay.html#ad57043bdbf2244a71b19d33dfdf0fccb", null ],
+    [ "isDone", "class_f_f_x_overlay.html#a3f359ea10cb1cedb34f90b53ed4c0f0b", null ],
+    [ "moveAintoB", "class_f_f_x_overlay.html#aff5917d23c95a0cb9428decbd95fd902", null ],
+    [ "onVCycleEnd", "class_f_f_x_overlay.html#a02194a99b9b57b8ddd4e146f99dd2127", null ],
+    [ "setLag", "class_f_f_x_overlay.html#ad14c7dbf800bcf1681935ca884f0dcc9", null ],
+    [ "setMaxAlpha", "class_f_f_x_overlay.html#aed2401c2b0b7fa7b31919aff24a522dc", null ],
+    [ "whileFrozen", "class_f_f_x_overlay.html#abfd6695b98ef4c3757c04752ec55c473", null ],
+    [ "alpha", "class_f_f_x_overlay.html#a7327efdd37e6ee6ce7c8f4e2810df6ee", null ],
+    [ "completed", "class_f_f_x_overlay.html#a8244ab83fba3cb5ebdc65f578bc7e540", null ],
+    [ "continuous", "class_f_f_x_overlay.html#a481921f0cc581b5ae8206f747c2d446a", null ],
+    [ "maxAlpha", "class_f_f_x_overlay.html#a4e4601732fc282d6de6775c8552ac513", null ],
+    [ "nextCycleStart", "class_f_f_x_overlay.html#a28b32df2f7093861629af0d0dd898949", null ],
+    [ "repeat", "class_f_f_x_overlay.html#af8d4e47e2dd13be536a0cc967ebeb498", null ],
+    [ "repeatDelayms", "class_f_f_x_overlay.html#ac519f4a5477a4cfe2255e5e725b7d21e", null ]
+];
