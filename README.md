@@ -84,7 +84,7 @@ The programming model for using FastFX differs slightly from coding directly wit
 
 Since each effect is a standalone class, creating a new one is a straightforward task.  Taking from the "FirstLight" example code in the FastLED library, we will create a FastFX version and see how we gain additional functionality with FastFX.  First we'll construct the effect class, which is always a descendant of FFXBase:
 
-~~~c++ 
+```c++ 
 class FirstLightFX : public FFXBase {
   public:    
     // Constructor - provides defaults for interval, minInterval, and maxInterval
@@ -114,7 +114,7 @@ class FirstLightFX : public FFXBase {
       bufLeds[getCurrPhase()-1] = currColor.getCRGB();
     }
 };
-~~~
+```
 
 #### Cycle and Phase
 <a id="markdown-Cycle%20and%20Phase" name="Cycle%20and%20Phase"></a>
