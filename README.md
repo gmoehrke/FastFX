@@ -36,6 +36,9 @@ The examples in the following sections illustrate the basics, but don't touch on
 
 Final Note - The examples included in the framework are optimized for WS2811 strips (12v 3-LEDs per pixel).  Some of the default parameters may need to be tweaked slightly to look best on other strip configurations. 
 
+Complete Documentation is available here:  [https://gmoehrke.github.io/FastFX](https://gmoehrke.github.io/FastFX) 
+
+
 ## Overview
 <a id="markdown-Overview" name="Overview"></a>
 
