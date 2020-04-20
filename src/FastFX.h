@@ -5,3 +5,4 @@
 #include "FFXFastLEDPixelController.h"
 #include "FFXOverlay.h"
 #include "FFXController.h"
+#include "FFXCoreEffects.h"
