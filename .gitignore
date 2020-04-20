@@ -1,3 +1,4 @@
-doc
+doc/html
+doc/xml
 *.pptx
 *.DS_Store
