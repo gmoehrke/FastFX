@@ -78,7 +78,7 @@ void FFXSegment::setFX( FFXBase *newFX ) {
 
   void FFXSegment::setBrightness( uint8_t newBrightness ) {
     if (!hasDimmer()) {
-      localDimmer = new FFXAFDimmer(500);
+      localDimmer = new FFXAFDimmer(500, controller->getPrimarySegment()->getBrightness() );
       controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOCAL_BRIGHTNESS_ENABLED, "Segment:"+ (isPrimary() ? "Primary" : getTag()) );
     }
     localDimmer->setTarget(newBrightness);
@@ -98,6 +98,15 @@ void FFXSegment::setFX( FFXBase *newFX ) {
     if (localDimmer) {return localDimmer; } else {return controller->getPrimarySegment()->getActiveDimmer(); }
   }
 
+  void FFXSegment::removeDimmer() { 
+    if (!isPrimary() && localDimmer) {
+      // set flag to remove dimmer when target is reached
+      removeDimmerPending = true;
+      // set the target to match the primary dimmer
+      localDimmer->setTarget( controller->getPrimarySegment()->getActiveDimmer()->getTarget());
+    }
+  } 
+ 
   bool FFXSegment::isUpdated() {
     bool result = false;
     if (isVisible()) {
@@ -111,6 +120,12 @@ void FFXSegment::setFX( FFXBase *newFX ) {
     if (isVisible()) { 
       if (getActiveDimmer()->isUpdated()) {
         effect->onBrightness(getCurrentBrightness());
+        // If the dimmer is pending - to be removed, and target is reached...
+        if (removeDimmerPending && (localDimmer->getValue()==localDimmer->getTarget())) {
+          delete localDimmer; 
+          localDimmer = nullptr;
+          removeDimmerPending = false;
+        }
       }
       getFrameProvider()->updateFrame( &(frameBuffer[startIdx]), effect );      
       CRGBSet pixels = CRGBSet(frameBuffer, startIdx, endIdx);

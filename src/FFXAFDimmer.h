@@ -25,6 +25,7 @@ class FFXAFDimmer : public FFXAutoFader {
   public:
     FFXAFDimmer() : FFXAutoFader() { }
     FFXAFDimmer(unsigned int initInterval) : FFXAFDimmer() { setInterval(initInterval); }
+    FFXAFDimmer(unsigned int initInterval, uint8_t initValue) : FFXAutoFader(initValue) { setInterval(initInterval);  }
     virtual ~FFXAFDimmer() { }
     virtual void onUpdate( CRGBSet &pixels ) override;    
 };

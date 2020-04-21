@@ -21,6 +21,8 @@
 class FFXAutoFader {
   public:
     FFXAutoFader() { }
+    // Construct with an already existing value 
+    FFXAutoFader( uint8_t initValue) { vValue = initValue; targetValue = initValue; }
     virtual ~FFXAutoFader() { }
     bool isFading() { return fadeTimer.isStarted(); }
     bool isUpdated() { return updated; }

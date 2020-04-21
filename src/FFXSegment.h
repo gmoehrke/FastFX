@@ -58,7 +58,7 @@ public:
   bool isUpdated();
   void updateFrame( CRGB *frameBuffer );
   bool hasDimmer() { return (localDimmer!=nullptr);  }
-  void removeDimmer() { if ((!isPrimary()) && localDimmer) { delete localDimmer; localDimmer = nullptr;} }
+  void removeDimmer();
   void setBrightness( uint8_t newBrightness );
   void setBrightnessInterval( unsigned long newInterval ) { 
     if (!localDimmer) {
@@ -83,6 +83,8 @@ private:
     FFXBase *effect = nullptr;
     FFXFrameProvider *frameView = nullptr;
     FFXAFDimmer *localDimmer = nullptr;
+    // when removing dimmer - set the target to the target of the primary dimmer then make remove "pending" until new target is reached.
+    boolean removeDimmerPending = false;
     FFXController *controller = nullptr;
     FFXAFXFader *opacity = nullptr;
     boolean stateChanged = false;
