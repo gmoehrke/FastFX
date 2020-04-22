@@ -110,7 +110,7 @@ void FFXSegment::setFX( FFXBase *newFX ) {
   bool FFXSegment::isUpdated() {
     bool result = false;
     if (isVisible()) {
-      result = effect->isUpdated() || getActiveDimmer()->isUpdated();
+      result = (effect->isUpdated() || getActiveDimmer()->isUpdated());
       if (opacity) { result = result || opacity->isUpdated(); }
     }
     return result;

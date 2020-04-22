@@ -107,8 +107,11 @@ void FFXController::show() {
 }
 
 void FFXController::update() {
+    bool redraw = false;
     for (auto seg : segments) {
         seg->updateFrame( liveLeds );
+        if (seg->isUpdated()) { redraw=true; }
+        if (seg->isStateChanged()) { this->onFXStateChange(seg); seg->resetStateChanged(); }
     }
     if (ovlFX) {
       ovlFrameView->updateFrame( ovlLeds, ovlFX );
@@ -116,14 +119,9 @@ void FFXController::update() {
         onFXEvent(  "", FX_OVERLAY_COMPLETED, ovlFX->getFXName()); 
         removeOverlayFX(); 
       }      
+      redraw = true;
     }
-
-    bool segUpdated = false;
-    for (auto i : segments) { 
-      if (i->isUpdated()) { segUpdated=true; } 
-      if (i->isStateChanged()) { this->onFXStateChange(i); i->resetStateChanged(); }
-    }
-    if ( segUpdated || ovlFX ) {
+   if (redraw) {
       show();
       showCount++;
     }

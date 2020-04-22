@@ -7,24 +7,26 @@
 #include "FFXAutoFader.h"
 
 void FFXAutoFader::updateFader() {
-  uint8_t oldValue = vValue;
+  // uint8_t oldValue = vValue;
   if (isFading()) {
     if (fadeTimer.isUp()) {
       fadeTimer.stop();
-      vValue = targetValue;      
+      vValue = targetValue;
     }
     else {
-      vValue = fadeTimer.isStarted()  
-                ? fixed_map( fadeTimer.timeSinceTriggered(), 0, fadeTimer.getInterval(), prevValue, targetValue ) 
-                : targetValue; 
+      vValue = fixed_map( fadeTimer.timeSinceTriggered(), 0, fadeTimer.getInterval(), prevValue, targetValue );
     }
+    updated = true;
   }
-  updated = (fadeTimer.isStarted() || (vValue != oldValue));
+  else {
+    updated = false;
+  }
 }
 
 void FFXAutoFader::setTarget( uint8_t newTarget ) {
       if (newTarget != targetValue) {
-        prevValue = targetValue;
+        // Changed from prevValue = targetValue - if changing mid-transition, we want to fade from the current value, not the previous target...
+        prevValue = vValue;
         targetValue = newTarget;
         updated = true;
         if (fadeTimer.isStarted()) {
