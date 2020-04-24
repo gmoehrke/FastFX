@@ -72,19 +72,21 @@ String  FFXBase::fadeMethodStr( FadeType value ) {
    }
 
 CRGB FFXBase::alphaBlend( CRGB &a, CRGB &b, uint8_t alpha, FadeType ftUp, FadeType ftDown ) {
-      uint8_t aLuma = a.getLuma();
-      uint8_t bLuma = b.getLuma();
-      if (aLuma > bLuma) 
-      { 
-        switch (ftUp) {
-          case GAMMA : { alpha = pgm_read_byte(&gamma8[alpha]); break; }
-          case CUBIC : { alpha = ease8InOutApprox(alpha); break; } 
-        }
-      } 
-      else if (bLuma > aLuma) {
-        switch (ftDown) {
-          case GAMMA : { alpha = pgm_read_byte(&gamma8[alpha]); break; }
-          case CUBIC : { alpha = ease8InOutApprox(alpha); break; } 
+      if ( (ftUp != LINEAR) || (ftDown != LINEAR) ) {
+        uint8_t aLuma = a.getLuma();
+        uint8_t bLuma = b.getLuma();
+        if (aLuma > bLuma) 
+        { 
+          switch (ftUp) {
+            case GAMMA : { alpha = pgm_read_byte(&gamma8[alpha]); break; }
+            case CUBIC : { alpha = ease8InOutApprox(alpha); break; } 
+          }
+        } 
+        else if (bLuma > aLuma) {
+          switch (ftDown) {
+            case GAMMA : { alpha = pgm_read_byte(&gamma8[alpha]); break; }
+            case CUBIC : { alpha = ease8InOutApprox(alpha); break; } 
+          }
         }
       }
       return CRGB( alphaBlend( a.r, b.r, alpha ), 

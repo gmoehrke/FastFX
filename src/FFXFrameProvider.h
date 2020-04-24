@@ -56,12 +56,16 @@ class FFXFrameProvider {
 
     bool getCrossFade() { return crossFade; }
     void setCrossFade( boolean newValue );
+    bool getCrossFadePref() { return crossFadePref; }
+    bool setCrossFadePref( boolean newValue ) { crossFadePref = newValue; setCrossFade(crossFadePref); }
+    void checkCrossFade( FFXBase *effect );
     FFXBase::FadeType getFadeMethodUp() { return fadeMethodUp; }    
     FFXBase::FadeType getFadeMethodDown() { return fadeMethodDown; }
     void setFadeMethod( FFXBase::FadeType newValueUp, FFXBase::FadeType newValueDown ) { 
       if (newValueDown != fadeMethodDown) fadeMethodDown = newValueDown; 
       if (newValueUp != fadeMethodUp) fadeMethodUp = newValueUp;
     }
+    unsigned long getCrossFadeThreshold() { return fadeThresholdms; }
     uint8_t getLastBlendSteps() { return blendSteps; }
     uint8_t getLastBlendAmount() { return priorBlendAmt; }
     void updateFrame( CRGB *destLEDs, FFXBase* effect );
@@ -78,7 +82,8 @@ class FFXFrameProvider {
     CRGB *currFrameBuffer=nullptr;            // buffer containing the current frame - during crossfading this keeps the original frame
     CRGB *nextFrameBuffer=nullptr;            // buffer containing the next frame - this is the frame we are cross-fading to
     bool crossFade = true;
-    unsigned long fadeThresholdms = 3;        // Minimum number of ms remaining between cycle steps where there is still time to draw a cross faded frame
+    bool crossFadePref = true;
+    unsigned long fadeThresholdms = 6;        // Minimum number of ms remaining between cycle steps where there is still time to draw a cross faded frame
     FFXBase::FadeType fadeMethodUp = FFXBase::FadeType::LINEAR;
     FFXBase::FadeType fadeMethodDown = FFXBase::FadeType::LINEAR;
     uint8_t priorBlendAmt = 0;             // keep track of the last crossfade blend amount used...when the interval is increased mid-frame, we don't want to jump back to an "earlier" frame.

@@ -49,20 +49,39 @@ void FFXFrameProvider::setCrossFade( boolean newValue ) {
      deallocateBuffer(&nextFrameBuffer);
      crossFade = false;
    }
+   if (segment) {
+     segment->onNotify( segment->getTag(), "FrameProvider:Crossfade", String(crossFade) );
+   }
+  }
+}
+
+void FFXFrameProvider::checkCrossFade( FFXBase *effect ) {
+  if (effect->getInterval() <= fadeThresholdms) {
+    setCrossFade(false);    
+  }
+  else {
+    setCrossFade(getCrossFadePref());
   }
 }
 
 void FFXFrameProvider::updateFrame( CRGB *destLEDs, FFXBase* effect ) {
-  if (effect->isUp() || effect->timeRemaining() <= fadeThresholdms) {    
-    priorBlendAmt = 0;
+  if (effect->isUp() || (effect->timeRemaining() <= fadeThresholdms)) {    
     if (effect->isUp()  || !nextFrameBuffer ) {
+      priorBlendAmt = 0;
       blendSteps = 0;
       step( effect );
       memmove8( destLEDs, currFrameBuffer, segment->getBufferSize() ); 
     }
     else {
-      // Not enough time to draw a blended frame - so draw the next frame...until the timer expires to begin the next transition
-      memmove8( destLEDs, nextFrameBuffer, segment->getBufferSize() ); 
+      // Not enough time to draw a blended frame - so draw a frame...until the timer expires to begin the next transition
+      if (blendSteps>0) {
+        // if a blended frame has already been drawn - then resolve to the next frame
+        memmove8( destLEDs, nextFrameBuffer, segment->getBufferSize() ); 
+      }
+      else {
+        // if nothing has been blended, keep drawning the current frame until the timer expires
+        memmove8( destLEDs, currFrameBuffer, segment->getBufferSize() ); 
+      }
       priorBlendAmt = 255;
     }
   }

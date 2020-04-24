@@ -39,8 +39,12 @@ FFXSegment::FFXSegment( String initTag, uint16_t initStartIdx, uint16_t initEndI
      if (attribute=="LOG") { 
        controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOG, value ); 
      }
+     if (attribute=="Interval") {
+        frameView->checkCrossFade(effect);
+     }
      else {
        controller->onFXEvent( getTag(), FFXController::FXEventType::FX_PARAM_CHANGE, attribute );
+       frameView->checkCrossFade(effect);
      }
      stateChanged = true;
   }
@@ -52,9 +56,10 @@ void FFXSegment::setFX( FFXBase *newFX ) {
       effect = nullptr;
     }
     if (newFX) {
-      effect = newFX;
+      effect = newFX;      
       effect->addObserver(this); 
       effect->start();
+      frameView->checkCrossFade(effect);
       effect->onBrightness(getActiveDimmer()->getValue());
       stateChanged = true;
     }

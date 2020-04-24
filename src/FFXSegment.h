@@ -37,27 +37,27 @@ public:
   
   virtual void onNotify(String source, String attribute, String value ) override;
 
-  FFXBase *getFX() { return effect; }
+  inline FFXBase *getFX() { return effect; }
   void setFX( FFXBase *newFX );
   FFXController *getController() { return controller; }
   bool isPrimary();
-  uint16_t getStart() { return startIdx; }
-  uint16_t getEnd() { return endIdx; }
-  uint16_t getLength() { return endIdx-startIdx+1; }
-  uint16_t getBufferSize() { return getLength()*sizeof(CRGB); }
+  inline uint16_t getStart() { return startIdx; }
+  inline uint16_t getEnd() { return endIdx; }
+  inline uint16_t getLength() { return endIdx-startIdx+1; }
+  inline uint16_t getBufferSize() { return getLength()*sizeof(CRGB); }
   FFXFrameProvider *getFrameProvider() {     
     return frameView; 
   }
   bool isVisible();
   void setOpacity(uint8_t level);
-  uint8_t getOpacity() { if (opacity) { return opacity->getTarget(); } else { return 255; } }
-  uint8_t getCurrentOpacity() { if (opacity) { return opacity->getValue(); } else { return 255; } }
-  FFXAFXFader *getOpacityObj() { return opacity; } 
+  inline uint8_t getOpacity() { if (opacity) { return opacity->getTarget(); } else { return 255; } }
+  inline uint8_t getCurrentOpacity() { if (opacity) { return opacity->getValue(); } else { return 255; } }
+  inline FFXAFXFader *getOpacityObj() { return opacity; } 
   void setOpacityInterval( unsigned long newInterval ) { if (opacity) { opacity->setInterval(newInterval); } }
 
   bool isUpdated();
   void updateFrame( CRGB *frameBuffer );
-  bool hasDimmer() { return (localDimmer!=nullptr);  }
+  inline bool hasDimmer() { return (localDimmer!=nullptr);  }
   void removeDimmer();
   void setBrightness( uint8_t newBrightness );
   void setBrightnessInterval( unsigned long newInterval ) { 
@@ -69,10 +69,10 @@ public:
   FFXAFDimmer *getActiveDimmer();
   uint8_t getBrightness();
   uint8_t getCurrentBrightness();
-  String getTag() { return tag; }
-  void setTag( String newTag ) { tag = newTag; }
-  boolean isStateChanged() { return stateChanged; }
-  void resetStateChanged() { stateChanged = false; }
+  inline String getTag() { return tag; }
+  inline void setTag( String newTag ) { tag = newTag; }
+  inline boolean isStateChanged() { return stateChanged; }
+  inline void resetStateChanged() { stateChanged = false; }
 
   boolean sameAs(FFXSegment &target) { return startIdx==target.getStart() && endIdx==target.getEnd(); }
   boolean compareTag(const String &comp) { return tag==comp; }

@@ -449,7 +449,7 @@ class CylonFX : public FFXBase {
       fxName = CYLON_FX_NAME;
       mt.setLimit( initSize-1 );
       mt.setRangeMin( 0 );
-      mt.setRangeMax( 6 );   
+      mt.setRangeMax( 3 );   
       mt.setMotion(FFXTrigMotion::TRIG_MOTION_TRI);   
       currColor.setColorMode( FFXColor::FFXColorMode::palette16 );
       currColor.setPalette( ::Multi_p, ::Multi_size );
@@ -467,8 +467,14 @@ class CylonFX : public FFXBase {
         fadeToBlackBy( bufLeds, numLeds, 50 );
         uint16_t pos = mt.getPosition();
         bufLeds[pos] = currColor.getCRGB();
+        if (mt.fractComplete() > 0) {
+          bufLeds[mt.getNextPosition()] = FFXBase::alphaBlend( bufLeds[mt.getNextPosition()], bufLeds[pos], mt.fractComplete(), FFXBase::GAMMA, FFXBase::GAMMA ); 
+        }
         if (twin) {
           bufLeds[mirror(pos)] = bufLeds[pos];        
+          if (mt.fractComplete() > 0) {
+            bufLeds[mirror(mt.getNextPosition())] = FFXBase::alphaBlend( bufLeds[mirror(mt.getNextPosition())], bufLeds[mirror(pos)], mt.fractComplete(), FFXBase::GAMMA, FFXBase::GAMMA ); 
+          }
         }
         mt.step();
         setUpdated(true);
