@@ -11,10 +11,11 @@
 #include "FFXFrameProvider.h"
 #include "FFXAFDimmer.h"
 #include "FFXAFXFader.h"
+#include "FFXOverlay.h"
 
 class FFXController;
 
-/*
+/*!
  *  FFXSegment - Class for housing multiple effects in a single pixel array.  Each segment contains a FXFrameProvider to handle
  *  updating the range of pixels it "contains" as well as both a local and global FX dimmer to manage brightness.
  * 
@@ -39,6 +40,9 @@ public:
 
   inline FFXBase *getFX() { return effect; }
   void setFX( FFXBase *newFX );
+  inline FFXOverlay *getOverlay() { return overlay; }
+  void setOverlay( FFXOverlay *newOvl );
+  void removeOverlay();
   FFXController *getController() { return controller; }
   bool isPrimary();
   inline uint16_t getStart() { return startIdx; }
@@ -57,6 +61,7 @@ public:
 
   bool isUpdated();
   void updateFrame( CRGB *frameBuffer );
+  void updateOverlay( CRGB *frameBuffer );
   inline bool hasDimmer() { return (localDimmer!=nullptr);  }
   void removeDimmer();
   void setBrightness( uint8_t newBrightness );
@@ -83,6 +88,10 @@ private:
     FFXBase *effect = nullptr;
     FFXFrameProvider *frameView = nullptr;
     FFXAFDimmer *localDimmer = nullptr;
+    // Overlay objects 
+    FFXOverlay *overlay = nullptr;
+    FFXFrameProvider *ovlFP = nullptr;
+    CRGB *ovlLeds = nullptr;
     // when removing dimmer - set the target to the target of the primary dimmer then make remove "pending" until new target is reached.
     boolean removeDimmerPending = false;
     FFXController *controller = nullptr;

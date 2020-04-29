@@ -34,7 +34,8 @@ void FFXController::setFX( FFXBase *newFX ) {
 }
 
 void FFXController::setOverlayFX( FFXOverlay *newFX ) {
-  if (newFX) {
+  getPrimarySegment()->setOverlay( newFX );
+  /*if (newFX) {
     if (ovlFX) { 
       onFXEvent( "", FX_OVERLAY_STOPPED, ovlFX->getFXName() ); 
       removeOverlayFX(); 
@@ -49,9 +50,10 @@ void FFXController::setOverlayFX( FFXOverlay *newFX ) {
     ovlFX = newFX;
     ovlFX->start();
     onFXEvent(  "", FX_OVERLAY_STARTED, ovlFX->getFXName() );
-  }
+  }*/
 }
 
+/*
 void FFXController::removeOverlayFX() {
   if (ovlFrameView) {
     delete ovlFrameView;
@@ -66,6 +68,7 @@ void FFXController::removeOverlayFX() {
     ovlLeds = nullptr; 
   } 
 }
+*/
 
 FFXSegment *FFXController::addSegment(String initTag, uint16_t initStartIdx, uint16_t initEndIdx, FFXBase* initEffect ) {
   FFXSegment *result = nullptr;
@@ -99,7 +102,7 @@ void FFXController::show() {
       if (centerOffset > 0) {
         FFXBase::rotateBufferForwardWithWrap( liveLeds, liveLeds, numLeds, centerOffset );
       }
-      if (ovlFX) { ovlFX->applyOverlay( ovlLeds, liveLeds ); }
+      //if (ovlFX) { ovlFX->applyOverlay( ovlLeds, liveLeds ); }
       if (centerOffset > 0) {
         FFXBase::rotateBufferBackwardWithWrap( liveLeds, liveLeds, numLeds, centerOffset );
       }
@@ -110,9 +113,13 @@ void FFXController::update() {
     bool redraw = false;
     for (auto seg : segments) {
         seg->updateFrame( liveLeds );
-        if (seg->isUpdated()) { redraw=true; }
         if (seg->isStateChanged()) { this->onFXStateChange(seg); seg->resetStateChanged(); }
     }
+    for (auto seg : segments ) {
+      seg->updateOverlay( liveLeds );
+      if (seg->isUpdated()) { redraw=true; }
+    }
+    /*
     if (ovlFX) {
       ovlFrameView->updateFrame( ovlLeds, ovlFX );
       if (ovlFX->isDone()) { 
@@ -121,7 +128,8 @@ void FFXController::update() {
       }      
       redraw = true;
     }
-   if (redraw) {
+    */
+   if (redraw || true) {
       show();
       showCount++;
     }

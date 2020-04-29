@@ -41,6 +41,13 @@ DEFINE_GRADIENT_PALETTE( orange_wave_gp )  {
     146, 255,  65,   0,
     255, 150,  80,   0};   
 
+DEFINE_GRADIENT_PALETTE( purple_wave_gp )  {
+      0, 25,   0,   45,
+    106, 55,   0,  100,
+    126,255,   0,  255,
+    146, 55,   0,  100,
+    255, 25,   0,   45};  
+
 DEFINE_GRADIENT_PALETTE( soft_white_dim_gp ) {
     0,   0,   0,   0,
    50, 255, 184,  20,

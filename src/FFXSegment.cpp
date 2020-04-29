@@ -65,11 +65,49 @@ void FFXSegment::setFX( FFXBase *newFX ) {
     }
   }
 
+  void FFXSegment::removeOverlay() {
+    if (ovlFP) {
+    delete ovlFP;
+    ovlFP = nullptr;
+    }
+    if (overlay) {
+      delete overlay;
+      overlay = nullptr;
+     }
+    if (ovlLeds) {
+      delete ovlLeds;
+      ovlLeds = nullptr; 
+    } 
+  }
+
+
+  void FFXSegment::setOverlay( FFXOverlay *newOvl ) {
+  if (newOvl) {
+    if (overlay) { 
+      controller->onFXEvent( getTag(), FFXController::FX_OVERLAY_STOPPED, overlay->getFXName() ); 
+      removeOverlay(); 
+    }
+    if (ovlLeds == nullptr) {
+      ovlLeds = new CRGB[getLength()];
+    }
+    fill_solid( ovlLeds, getLength(), CRGB::Black );
+    if (ovlFP == nullptr) { 
+      ovlFP = new FFXFrameProvider(this, ovlLeds); 
+    }
+    overlay = newOvl;
+    overlay->start();
+    controller->onFXEvent(  getTag(), FFXController::FX_OVERLAY_STARTED, overlay->getFXName() );
+  }
+}
+
   bool FFXSegment::isVisible() {
     bool result = false;
-    if (effect) {
-      result = (effect->isStarted());
+    if (overlay) { 
+      result = true; 
     }
+    else if (effect) {
+      result = (effect->isStarted());
+    }    
     return result;
   } 
 
@@ -115,10 +153,29 @@ void FFXSegment::setFX( FFXBase *newFX ) {
   bool FFXSegment::isUpdated() {
     bool result = false;
     if (isVisible()) {
-      result = (effect->isUpdated() || getActiveDimmer()->isUpdated());
+      if (overlay) {
+        result = true;
+      }
+      else {
+        result = (effect->isUpdated() || getActiveDimmer()->isUpdated());
+      }
       if (opacity) { result = result || opacity->isUpdated(); }
     }
     return result;
+  }
+
+  void FFXSegment::updateOverlay( CRGB *frameBuffer ) {
+      if (overlay) {
+        ovlFP->updateFrame( ovlLeds, overlay );
+        if (overlay->isDone()) { 
+          controller->onFXEvent(  getTag(), FFXController::FX_OVERLAY_COMPLETED, overlay->getFXName()); 
+          removeOverlay(); 
+        }  
+        else {
+          overlay->applyOverlay( ovlLeds, &(frameBuffer[startIdx]));
+          // controller->onFXEvent(  getTag(), FFXController::FX_OVERLAY_UPDATED, overlay->getFXName()); 
+        }
+      }
   }
 
   void FFXSegment::updateFrame( CRGB *frameBuffer ) {
@@ -144,6 +201,6 @@ void FFXSegment::setFX( FFXBase *newFX ) {
       }
     }
     else {
-      if (opacity) { opacity->freeBackgroundBuffer(); }
+        if (opacity) { opacity->freeBackgroundBuffer(); }
     }
   }

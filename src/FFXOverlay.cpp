@@ -51,5 +51,7 @@ void FFXOverlay::moveAintoB( byte *a, byte *b,  uint16_t size_a, uint16_t size_b
         memmove8( &b[(end_position-size_a-1)*elementsize], &a[0], size_a*elementsize );
         }
    }
-   else if (size_a==size_b) { memmove8( &b[0], &a[0], size_b*elementsize ); }
+   else if (size_a==size_b) { 
+     memmove8( &b[0], &a[0], size_b*elementsize ); 
+   }
   }

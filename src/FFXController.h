@@ -83,12 +83,12 @@ class FFXController {
 
   public:
     unsigned long long showCount = 0;
-    enum FXEventType { FX_STARTED, FX_STOPPED, FX_OVERLAY_STARTED, FX_OVERLAY_STOPPED, FX_OVERLAY_COMPLETED, FX_PAUSED, FX_RESUMED, FX_BRIGHTNESS_CHANGED, FX_LOCAL_BRIGHTNESS_ENABLED, FX_OPACITY_CHANGED, FX_PARAM_CHANGE, FX_LOG };
+    enum FXEventType { FX_STARTED, FX_STOPPED, FX_OVERLAY_STARTED, FX_OVERLAY_STOPPED, FX_OVERLAY_COMPLETED, FX_OVERLAY_UPDATED, FX_PAUSED, FX_RESUMED, FX_BRIGHTNESS_CHANGED, FX_LOCAL_BRIGHTNESS_ENABLED, FX_OPACITY_CHANGED, FX_PARAM_CHANGE, FX_LOG };
     FFXController( FFXPixelController *initPC );
     FFXController();
     ~FFXController() { 
       if (ledController) { delete ledController; } 
-      if (ovlFX) { delete ovlFX; }
+      // if (ovlFX) { delete ovlFX; }
       if (segments.size() > 0) {
         for (auto seg : segments) {
           delete seg;
@@ -113,8 +113,8 @@ class FFXController {
     unsigned long getUpdateMillis() { return (getFX()==nullptr) ? 250 : getFX()->getInterval(); }
 
     void setOverlayFX( FFXOverlay *newFX );
-    void removeOverlayFX();
-    FFXOverlay *getOverlayFX() { return ovlFX; }
+    //void removeOverlayFX();
+    FFXOverlay *getOverlayFX() { return getPrimarySegment()->getOverlay(); }
     
     String getFXName() { return (getFX() == nullptr ? "None" : getFX()->getFXName()); }
     uint8_t getBrightness() { return getPrimarySegment()->getBrightness(); }
@@ -127,13 +127,13 @@ class FFXController {
      boolean initialized = false;                       
      uint16_t centerOffset = 0;
      std::vector<FFXSegment *> segments = std::vector<FFXSegment *>();
-     FFXFrameProvider *ovlFrameView =nullptr;
+     // FFXFrameProvider *ovlFrameView =nullptr;
 
   protected:
     FFXPixelController *ledController = nullptr;
-    FFXOverlay *ovlFX = nullptr;
+    // FFXOverlay *ovlFX = nullptr;
     CRGB *liveLeds = nullptr;
-    CRGB *ovlLeds = nullptr;
+    // CRGB *ovlLeds = nullptr;
     uint16_t numLeds;    
  };
 

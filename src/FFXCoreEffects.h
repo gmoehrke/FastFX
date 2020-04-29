@@ -75,6 +75,7 @@ DECLARE_GRADIENT_PALETTE( red_wave_gp );
 DECLARE_GRADIENT_PALETTE( yellow_wave_gp );
 DECLARE_GRADIENT_PALETTE( green_wave_gp );
 DECLARE_GRADIENT_PALETTE( orange_wave_gp );
+DECLARE_GRADIENT_PALETTE( purple_wave_gp );
 DECLARE_GRADIENT_PALETTE( soft_white_dim_gp ); 
 
 /*!  NamedPalettes - Singleton class that allows access to pre-defined palettes by name:
@@ -105,6 +106,7 @@ class NamedPalettes {
       addNamedPalette( String("blue"), blue_wave_gp );
       addNamedPalette( String("green"), green_wave_gp );
       addNamedPalette( String("orange"), orange_wave_gp );
+      addNamedPalette( String("purple"), purple_wave_gp );
       addNamedPalette( String("softwhite_scale"), soft_white_dim_gp );   
       addNamedPalette( String("ocean"), OceanColors_p );
       addNamedPalette( String("cloud"), CloudColors_p );
@@ -778,7 +780,7 @@ private:
  */
 /*!
  * WaveOverlayFX - Overlay Effect which moves a wave of gradient color (by palette) across the 
- * entire strip.
+ * entire strip.  Note:  Only works on segments longer than 54 pixels!  
  */
 class WaveOverlayFX : public FFXOverlay {
     
@@ -789,7 +791,6 @@ class WaveOverlayFX : public FFXOverlay {
     WaveOverlayFX( uint16_t initSize, uint8_t speed, uint8_t repeat, MovementType dir = MVT_FORWARD ) : FFXOverlay(initSize, speed, repeat, 0) {
       fxName = WAVE_OVLY_FX_NAME;
       setVCycleRange( numLeds + 50 );
-      CRGBSet leds(pattern, 50);
       currColor.setColorMode(FFXColor::FFXColorMode::palette256);
       setMovement( dir );
     }
@@ -800,7 +801,7 @@ class WaveOverlayFX : public FFXOverlay {
 
     void fillPattern() {
       CRGBPalette16 myPal = currColor.getPalette();
-      fill_palette( &pattern[0], 50, 1, 5, myPal, 255, LINEARBLEND );
+      fill_palette( &pattern[0], 50, 0, 5, myPal, 255, LINEARBLEND );
       for (uint8_t i=0; i<27; i++ ) {
         alphamap[i] = ease8InOutCubic( fixed_map( i, 0, 26, 200, 255 ) );
       }
@@ -823,11 +824,11 @@ class WaveOverlayFX : public FFXOverlay {
         uint16_t centerpos = range/2;
         uint16_t endpos;
         if (currVPhase > centerpos) {
-          endpos = fixed_map( ease8InOutQuad( fixed_map( currVPhase, centerpos, range, 0, 255 ) ), 0, 255, centerpos, range+1 );
+          endpos = fixed_map( ease8InOutCubic( fixed_map( currVPhase, centerpos, range, 0, 255 ) ), 0, 255, centerpos, range+1 );
         }
         else
         {
-          endpos = fixed_map( ease8InOutQuad( fixed_map( currVPhase, 1, centerpos, 0, 255 ) ), 0, 255, 0, centerpos );
+          endpos = fixed_map( ease8InOutCubic( fixed_map( currVPhase, 1, centerpos, 0, 255 ) ), 0, 255, 0, centerpos );
         }
         if (getMovement()==MVT_BACKWARD || (getMovement()==MVT_BACKFORTH && ((currVCycle % 2)==0))) { 
           endpos = mirror(endpos, range); 
@@ -854,6 +855,7 @@ class PulseOverlayFX : public FFXOverlay {
       currColor.setColorMode(FFXColor::FFXColorMode::palette256);
       setMovement( MVT_STILL );
       setMaxAlpha(240);
+      setVCycleRange(100);
       rangeLo = 0;
       rangeHi = numLeds-1;
     }
@@ -875,8 +877,8 @@ class PulseOverlayFX : public FFXOverlay {
 
    virtual void writeNextFrame( CRGB *bufLeds ) override {
       uint8_t valpha;
-      if (getCurrPhase() < numLeds/2) { valpha = ease8InOutCubic( fixed_map(getCurrPhase(), 0, numLeds/2-1, 0, 255 ) ); }
-      else { valpha = ease8InOutCubic( fixed_map(getCurrPhase(), numLeds/2, numLeds, 255, 0 ) ); }
+      if (getCurrVPhase() < getVCycleRange()/2) { valpha = ease8InOutCubic( fixed_map(getCurrVPhase(), 0, getVCycleRange()/2-1, 0, 255 ) ); }
+      else { valpha = ease8InOutCubic( fixed_map(getCurrVPhase(), getVCycleRange()/2, getVCycleRange(), 255, 0 ) ); }
       for (uint16_t i=rangeLo; i<=rangeHi; i++) {
         alpha[i] = valpha;
       }
