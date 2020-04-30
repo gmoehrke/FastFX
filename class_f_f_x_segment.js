@@ -15,6 +15,7 @@ var class_f_f_x_segment =
     [ "getLength", "class_f_f_x_segment.html#abe7780410001dae96a874259b876f793", null ],
     [ "getOpacity", "class_f_f_x_segment.html#a46b7d9e3cac3789513da8d6b2fbd43ec", null ],
     [ "getOpacityObj", "class_f_f_x_segment.html#ab983fad9fdb2648a2518e3fb5e00def9", null ],
+    [ "getOverlay", "class_f_f_x_segment.html#a4cd2f695290079d55a618af03f9d834b", null ],
     [ "getStart", "class_f_f_x_segment.html#a770025de2099ffca75fe98298d130ecc", null ],
     [ "getTag", "class_f_f_x_segment.html#a9a2582ed0f65f3e10f1c9f23fb8ea6e7", null ],
     [ "hasDimmer", "class_f_f_x_segment.html#af8375fab3b7304cf45d53fc6b51bffab", null ],
@@ -24,6 +25,7 @@ var class_f_f_x_segment =
     [ "isVisible", "class_f_f_x_segment.html#a309cf0ff5e64bf7fac0f94347799ef8a", null ],
     [ "onNotify", "class_f_f_x_segment.html#a04515b0bbf427dc60643673aa1796fd9", null ],
     [ "removeDimmer", "class_f_f_x_segment.html#abeb241c1b9d9283ae3203a985a07eddb", null ],
+    [ "removeOverlay", "class_f_f_x_segment.html#ae9508a34350931ffdee2d872ddc11d8d", null ],
     [ "resetStateChanged", "class_f_f_x_segment.html#aaa49c33d290cd3946ac6e8c33d50649b", null ],
     [ "sameAs", "class_f_f_x_segment.html#a1067d68ac6c8bec8dcda1ac45aaa4737", null ],
     [ "setBrightness", "class_f_f_x_segment.html#aea4c57187f0dc34cc81585fa57e65e3f", null ],
@@ -31,6 +33,8 @@ var class_f_f_x_segment =
     [ "setFX", "class_f_f_x_segment.html#a6b19e4eec3bc1fdd53c6470c8a56af51", null ],
     [ "setOpacity", "class_f_f_x_segment.html#afaed139def1a7c05301825ad39b22e23", null ],
     [ "setOpacityInterval", "class_f_f_x_segment.html#a01e2cf9f99b28aa622ee1ddb2aa242cf", null ],
+    [ "setOverlay", "class_f_f_x_segment.html#a598e96baf8765c5fa2071d0c799ee464", null ],
     [ "setTag", "class_f_f_x_segment.html#aee747291ff798652006793d3739b4a4d", null ],
-    [ "updateFrame", "class_f_f_x_segment.html#a4af0396ee0c76d53fbdbddcd9e8c1e6a", null ]
+    [ "updateFrame", "class_f_f_x_segment.html#a4af0396ee0c76d53fbdbddcd9e8c1e6a", null ],
+    [ "updateOverlay", "class_f_f_x_segment.html#a08f39e159ce79532faaa1497b079355e", null ]
 ];

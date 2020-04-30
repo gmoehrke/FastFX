@@ -129,6 +129,7 @@ Intro</h1>
 <p>The examples in the following sections illustrate the basics, but don't touch on everything. All of the coding and development was done on NodeMCU ESP8266 boards. While I haven't tested on anything else, outside of the FastLED initialization and pin selection, it doesn't do anything that is processor dependent, so it should run just as well on other platforms. <br  />
 </p>
 <p>Final Note - The examples included in the framework are optimized for WS2811 strips (12v 3-LEDs per pixel). Some of the default parameters may need to be tweaked slightly to look best on other strip configurations.</p>
+<p>Complete Documentation is available here: <a href="https://gmoehrke.github.io/FastFX">https://gmoehrke.github.io/FastFX</a></p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Overview</h1>
 <p><a class="anchor" id="markdown-Overview"></a></p>
@@ -205,6 +206,8 @@ FirstLight</h2>
 Cycle and Phase</h3>
 <p><a class="anchor" id="markdown-Cycle%20and%20Phase"></a></p>
 <p>Note the use of <code>getCurrPhase()</code> here. All effects have running counters for <em>Phase</em> and <em>Cycle</em>. The Phase counter starts at 1, and increments for each step until it reaches the number of pixels covered by that effect. This is considered one cycle. Once a cycle is completed, the phase is reset to 1. The <code>getCurrCycle()</code> method returns the count of how many times this has been repeated. For an effect running at an interval of 10 (milliseconds) with 100 pixels, a single phase will take 10 milliseconds, while a full cycle will take 1 second (1000 milliseconds). <br  />
+</p>
+<p><a class="el" href="class_f_f_x_base.html">FFXBase</a> also includes capabilities to specify virtual cycle and phase settings which can differ from the length of the segment (using setVCycleRange, getCurrVCycle &amp; getCurrVPhase). <br  />
 </p>
 <p>Note that the use of Phase and Cycle in implementing effects is not mandatory. An effect can completely ignore them and still be 100% functional. They simply provide some convenient reference points and can be very useful for calculating motion and timing when used appropriately.</p>
 <h3><a class="anchor" id="autotoc_md9"></a>
@@ -285,16 +288,16 @@ Color</h3>
 <div class="line">  bufLeds[getMovementPhase()-1] = currColor.getCRGB();</div>
 <div class="line">  <span class="keywordflow">switch</span> (currColor.getColorMode()) {</div>
 <div class="line">    <span class="comment">// Blend the moving pixel through the entire palette range</span></div>
-<div class="line">    <span class="keywordflow">case</span> FFXColor::FFXColorMode::palette256 : { </div>
-<div class="line">      currColor.step(); </div>
-<div class="line">      <span class="keywordflow">break</span>; </div>
+<div class="line">    <span class="keywordflow">case</span> FFXColor::FFXColorMode::palette256 : {</div>
+<div class="line">      currColor.step();</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">// Step through the active colors in the palette - switching at either end of the strip</span></div>
-<div class="line">    <span class="keywordflow">case</span> FFXColor::FFXColorMode::palette16 : { </div>
-<div class="line">      <span class="keywordflow">if</span> (getCurrPhase()==0 || getCurrPhase()==numLeds) { </div>
-<div class="line">         currColor.step(); </div>
-<div class="line">      } </div>
-<div class="line">      <span class="keywordflow">break</span>; </div>
+<div class="line">    <span class="keywordflow">case</span> FFXColor::FFXColorMode::palette16 : {</div>
+<div class="line">      <span class="keywordflow">if</span> (getCurrPhase()==0 || getCurrPhase()==numLeds) {</div>
+<div class="line">         currColor.step();</div>
+<div class="line">      }</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">default</span>:  { }</div>
 <div class="line">    }</div>
@@ -364,20 +367,20 @@ FirstLight 3</h2>
 <div class="line">    fxctrlr.getPrimarySegment()-&gt;setFX( <span class="keyword">new</span> FirstLightFX( NUM_LEDS ) );</div>
 <div class="line">    fxctrlr.getPrimarySegment()-&gt;setBrightness( 100 );</div>
 <div class="line">    fxctrlr.getPrimarySegment()-&gt;getFX()-&gt;setMovement( FXBase::MovementType::MVT_BACKFORTH );</div>
-<div class="line">    </div>
+<div class="line"> </div>
 <div class="line">    <a class="code" href="class_f_f_x_segment.html">FFXSegment</a> *seg;</div>
 <div class="line">    seg = fxctrlr.addSegment( <span class="stringliteral">&quot;Left&quot;</span>, 0, 32 );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#a6b19e4eec3bc1fdd53c6470c8a56af51">setFX</a>( <span class="keyword">new</span> FirstLightFX( seg-&gt;<a class="code" href="class_f_f_x_segment.html#abe7780410001dae96a874259b876f793">getLength</a>() ) );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#ac77439a83bf7267aea333382c0c1d092">getFX</a>()-&gt;<a class="code" href="class_f_f_x_base.html#a460d35bfdba1b665ce9a54d7673cb2ca">getFXColor</a>().<a class="code" href="class_f_f_x_color.html#ae6fd5d166fcda81c18a926d0e66fcac1">setCRGB</a>( CRGB::Red );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#ac77439a83bf7267aea333382c0c1d092">getFX</a>()-&gt;<a class="code" href="class_f_f_x_base.html#a46da8a20feea1e3731b9f28752ed8cc9">setMovement</a>( FFXBase::MovementType::MVT_FORWARD );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#afaed139def1a7c05301825ad39b22e23">setOpacity</a>(128|</div>
-<div class="line">    </div>
+<div class="line"> </div>
 <div class="line">    seg = fxctrlr.addSegment( <span class="stringliteral">&quot;Center&quot;</span>, 33, 66 );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#a6b19e4eec3bc1fdd53c6470c8a56af51">setFX</a>( <span class="keyword">new</span> FirstLightFX( seg-&gt;<a class="code" href="class_f_f_x_segment.html#abe7780410001dae96a874259b876f793">getLength</a>() ) );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#ac77439a83bf7267aea333382c0c1d092">getFX</a>()-&gt;<a class="code" href="class_f_f_x_base.html#a460d35bfdba1b665ce9a54d7673cb2ca">getFXColor</a>().<a class="code" href="class_f_f_x_color.html#ae6fd5d166fcda81c18a926d0e66fcac1">setCRGB</a>( CRGB::Blue );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#ac77439a83bf7267aea333382c0c1d092">getFX</a>()-&gt;<a class="code" href="class_f_f_x_base.html#a46da8a20feea1e3731b9f28752ed8cc9">setMovement</a>( FFXBase::MovementType::MVT_BACKFORTH );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#afaed139def1a7c05301825ad39b22e23">setOpacity</a>(128);</div>
-<div class="line">    </div>
+<div class="line"> </div>
 <div class="line">    seg = fxctrlr.addSegment( <span class="stringliteral">&quot;Right&quot;</span>, 67, 99 );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#a6b19e4eec3bc1fdd53c6470c8a56af51">setFX</a>( <span class="keyword">new</span> FirstLightFX( seg-&gt;<a class="code" href="class_f_f_x_segment.html#abe7780410001dae96a874259b876f793">getLength</a>() ) );</div>
 <div class="line">    seg-&gt;<a class="code" href="class_f_f_x_segment.html#ac77439a83bf7267aea333382c0c1d092">getFX</a>()-&gt;<a class="code" href="class_f_f_x_base.html#a460d35bfdba1b665ce9a54d7673cb2ca">getFXColor</a>().<a class="code" href="class_f_f_x_color.html#ae6fd5d166fcda81c18a926d0e66fcac1">setCRGB</a>( CRGB::Green );</div>
@@ -418,7 +421,7 @@ Segments</h3>
 <h3><a class="anchor" id="autotoc_md17"></a>
 Overlay Effects</h3>
 <p><a class="anchor" id="markdown-Overlay%20Effects"></a></p>
-<p>Overlay effects are momentary sequences that can be run over existing effects. Overlay sequences are run over the top of the primary segment they are typically short sequences, which run one or more times. Depending on how they are written - then can overlay the entire strip, just a portion, or a moving section leaving the remaining animations running in the background. There are 2 example overlay effects in the <a class="el" href="_f_f_x_core_effects_8h.html">FFXCoreEffects.h</a> file <code><a class="el" href="class_pulse_overlay_f_x.html">PulseOverlayFX</a></code> and <code><a class="el" href="class_wave_overlay_f_x.html">WaveOverlayFX</a></code>. <br  />
+<p>Overlay effects are momentary sequences that can be run over existing effects. Overlay sequences are run over the top of the primary segment they are typically short sequences, which run one or more times. Depending on how they are written - then can overlay the entire strip, just a portion, or a moving section leaving the remaining animations running in the background. There are 2 example overlay effects in the <a class="el" href="_f_f_x_core_effects_8h.html">FFXCoreEffects.h</a> file <code><a class="el" href="class_pulse_overlay_f_x.html">PulseOverlayFX</a></code>, <code><a class="el" href="class_zip_overlay_f_x.html">ZipOverlayFX</a></code> and <code><a class="el" href="class_wave_overlay_f_x.html">WaveOverlayFX</a></code> (<a class="el" href="class_wave_overlay_f_x.html">WaveOverlayFX</a> is limited to strips with over 54 pixels). <br  />
 </p>
 <p>Adding an overlay effect is as easy as adding an effect, however overlays are added at the controller, rather than the segment. Only one overlay effect may be added at a given time. Overlay effects are automatically removed and deleted when they have completed so once they've been added, nothing more needs to be done. Here's what the addition of an overlay looks like:</p>
 <div class="fragment"><div class="line"><a class="code" href="class_pulse_overlay_f_x.html">PulseOverlayFX</a> *newFX= <span class="keyword">new</span> <a class="code" href="class_pulse_overlay_f_x.html">PulseOverlayFX</a>( fxctrlr.getPrimarySegment()-&gt;getLength(), 220, 1, color );</div>
@@ -446,7 +449,7 @@ Timers</h3>
 <div class="line"><span class="comment">//...</span></div>
 <div class="line"><span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
 <div class="line">  <span class="keywordflow">if</span> timer.isUp() {</div>
-<div class="line">    <span class="comment">// do stuff here - realize that stuff done here is &quot;after cycle&quot; so each cycle will </span></div>
+<div class="line">    <span class="comment">// do stuff here - realize that stuff done here is &quot;after cycle&quot; so each cycle will</span></div>
 <div class="line">    <span class="comment">// use the time elapsed by the timer PLUS whatever time is taken by steps performed here.</span></div>
 <div class="line">    timer.step();  <span class="comment">// timer will be &quot;up&quot; again exactly 1000 ms after this line...       </span></div>
 <div class="line">    <span class="comment">// ...or do stuff here - this is occuring while the timer is &quot;running&quot;.  So, as long</span></div>

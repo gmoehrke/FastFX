@@ -111,12 +111,20 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a64d257f298c99b22c92ab8414e24e236"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a355349a715aede0b100ceb3d7220f376"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#a355349a715aede0b100ceb3d7220f376">setCrossFade</a> (boolean newValue)</td></tr>
 <tr class="separator:a355349a715aede0b100ceb3d7220f376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a312c94f58a885c726e6bebd7b56499bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#a312c94f58a885c726e6bebd7b56499bd">getCrossFadePref</a> ()</td></tr>
+<tr class="separator:a312c94f58a885c726e6bebd7b56499bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a932a0f4b878e79396761a7f4cf026181"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#a932a0f4b878e79396761a7f4cf026181">setCrossFadePref</a> (boolean newValue)</td></tr>
+<tr class="separator:a932a0f4b878e79396761a7f4cf026181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cde1d783071cf398a390e9bdc5d403c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#a5cde1d783071cf398a390e9bdc5d403c">checkCrossFade</a> (<a class="el" href="class_f_f_x_base.html">FFXBase</a> *effect)</td></tr>
+<tr class="separator:a5cde1d783071cf398a390e9bdc5d403c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02635716340eec992ddb555f646c3989"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_base.html#aaed61217b7fda203a905fd6c7c8e8249">FFXBase::FadeType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#a02635716340eec992ddb555f646c3989">getFadeMethodUp</a> ()</td></tr>
 <tr class="separator:a02635716340eec992ddb555f646c3989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae037df2e8d9acf670b88a94207cb9453"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_base.html#aaed61217b7fda203a905fd6c7c8e8249">FFXBase::FadeType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#ae037df2e8d9acf670b88a94207cb9453">getFadeMethodDown</a> ()</td></tr>
 <tr class="separator:ae037df2e8d9acf670b88a94207cb9453"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab625770169558efc8faf868fd52644f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#ab625770169558efc8faf868fd52644f9">setFadeMethod</a> (<a class="el" href="class_f_f_x_base.html#aaed61217b7fda203a905fd6c7c8e8249">FFXBase::FadeType</a> newValueUp, <a class="el" href="class_f_f_x_base.html#aaed61217b7fda203a905fd6c7c8e8249">FFXBase::FadeType</a> newValueDown)</td></tr>
 <tr class="separator:ab625770169558efc8faf868fd52644f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54aab5fdc83f0f6fa04ab5e0b66f6316"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#a54aab5fdc83f0f6fa04ab5e0b66f6316">getCrossFadeThreshold</a> ()</td></tr>
+<tr class="separator:a54aab5fdc83f0f6fa04ab5e0b66f6316"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f5579afe9d2e0fad098bad2c725cb10"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#a4f5579afe9d2e0fad098bad2c725cb10">getLastBlendSteps</a> ()</td></tr>
 <tr class="separator:a4f5579afe9d2e0fad098bad2c725cb10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecd6918a35acc612a21fbd36735ce612"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_frame_provider.html#aecd6918a35acc612a21fbd36735ce612">getLastBlendAmount</a> ()</td></tr>
@@ -269,6 +277,24 @@ the FrameViewController will fill as many steps as it can in that time.
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5cde1d783071cf398a390e9bdc5d403c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cde1d783071cf398a390e9bdc5d403c">&#9670;&nbsp;</a></span>checkCrossFade()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FFXFrameProvider::checkCrossFade </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_f_f_x_base.html">FFXBase</a> *&#160;</td>
+          <td class="paramname"><em>effect</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a64d257f298c99b22c92ab8414e24e236"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a64d257f298c99b22c92ab8414e24e236">&#9670;&nbsp;</a></span>getCrossFade()</h2>
 
@@ -280,6 +306,56 @@ the FrameViewController will fill as many steps as it can in that time.
       <table class="memname">
         <tr>
           <td class="memname">bool FFXFrameProvider::getCrossFade </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a312c94f58a885c726e6bebd7b56499bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a312c94f58a885c726e6bebd7b56499bd">&#9670;&nbsp;</a></span>getCrossFadePref()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FFXFrameProvider::getCrossFadePref </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a54aab5fdc83f0f6fa04ab5e0b66f6316"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54aab5fdc83f0f6fa04ab5e0b66f6316">&#9670;&nbsp;</a></span>getCrossFadeThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long FFXFrameProvider::getCrossFadeThreshold </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -517,6 +593,32 @@ the FrameViewController will fill as many steps as it can in that time.
           <td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a932a0f4b878e79396761a7f4cf026181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a932a0f4b878e79396761a7f4cf026181">&#9670;&nbsp;</a></span>setCrossFadePref()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FFXFrameProvider::setCrossFadePref </td>
+          <td>(</td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>newValue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

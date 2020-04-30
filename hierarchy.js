@@ -17,7 +17,8 @@ var hierarchy =
         [ "DimUsingPaletteFX", "class_dim_using_palette_f_x.html", null ],
         [ "FFXOverlay", "class_f_f_x_overlay.html", [
           [ "PulseOverlayFX", "class_pulse_overlay_f_x.html", null ],
-          [ "WaveOverlayFX", "class_wave_overlay_f_x.html", null ]
+          [ "WaveOverlayFX", "class_wave_overlay_f_x.html", null ],
+          [ "ZipOverlayFX", "class_zip_overlay_f_x.html", null ]
         ] ],
         [ "FFXRotate", "class_f_f_x_rotate.html", [
           [ "ChaseFX", "class_chase_f_x.html", null ]

@@ -106,14 +106,16 @@ Public Types</h2></td></tr>
 <a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73a7deb8ed1efa98b3bdf8b5e6ab67052ec">FX_OVERLAY_STOPPED</a>, 
 <br />
 &#160;&#160;<a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73aad6bf4e00c89dbb15b9e056ef38a28e9">FX_OVERLAY_COMPLETED</a>, 
+<a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73ae5b6fe6190b427786ff6d2f9459d6985">FX_OVERLAY_UPDATED</a>, 
 <a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73aab80be37805f64c26fedcb3dde73f2f6">FX_PAUSED</a>, 
 <a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73a1d11c6e6826c73d73d8742ed26d1ee49">FX_RESUMED</a>, 
-<a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73af65007324cf71ca835e7e05d3c283740">FX_BRIGHTNESS_CHANGED</a>, 
 <br />
-&#160;&#160;<a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73a83078932050d16a9f62c73ff7466dbb2">FX_LOCAL_BRIGHTNESS_ENABLED</a>, 
+&#160;&#160;<a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73af65007324cf71ca835e7e05d3c283740">FX_BRIGHTNESS_CHANGED</a>, 
+<a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73a83078932050d16a9f62c73ff7466dbb2">FX_LOCAL_BRIGHTNESS_ENABLED</a>, 
 <a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73a43878144dfc79dcc9fe6991d90df8568">FX_OPACITY_CHANGED</a>, 
 <a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73aca891dac0d5ab05fc93ba25f50be5484">FX_PARAM_CHANGE</a>, 
-<a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73aa78ebad9e98b5416567c5900b66ce12b">FX_LOG</a>
+<br />
+&#160;&#160;<a class="el" href="class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73aa78ebad9e98b5416567c5900b66ce12b">FX_LOG</a>
 <br />
  }</td></tr>
 <tr class="separator:a21a2381b2e64fd29d9db820ecb16be73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,8 +152,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac781c40593336af535c325c69bf9517c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac480fcc611389f0a01dd75c4672b482d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#ac480fcc611389f0a01dd75c4672b482d">setOverlayFX</a> (<a class="el" href="class_f_f_x_overlay.html">FFXOverlay</a> *newFX)</td></tr>
 <tr class="separator:ac480fcc611389f0a01dd75c4672b482d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29b005c73064eb8d302d64495a43de1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#a29b005c73064eb8d302d64495a43de1f">removeOverlayFX</a> ()</td></tr>
-<tr class="separator:a29b005c73064eb8d302d64495a43de1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a306400ad20cec694579f15f9ef45d6b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_overlay.html">FFXOverlay</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#a306400ad20cec694579f15f9ef45d6b7">getOverlayFX</a> ()</td></tr>
 <tr class="separator:a306400ad20cec694579f15f9ef45d6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06ae397207c1f5ccb05ee0c7f8ffe6d6"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#a06ae397207c1f5ccb05ee0c7f8ffe6d6">getFXName</a> ()</td></tr>
@@ -174,12 +174,8 @@ Public Attributes</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:aee9fde2a3532a0eec9033a4daa4eb984"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_pixel_controller.html">FFXPixelController</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#aee9fde2a3532a0eec9033a4daa4eb984">ledController</a> = nullptr</td></tr>
 <tr class="separator:aee9fde2a3532a0eec9033a4daa4eb984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a866baca89b4df7b310b5322fc4868c20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_overlay.html">FFXOverlay</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#a866baca89b4df7b310b5322fc4868c20">ovlFX</a> = nullptr</td></tr>
-<tr class="separator:a866baca89b4df7b310b5322fc4868c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7660b681b9bacc1d2bcc1df726b83eb5"><td class="memItemLeft" align="right" valign="top">CRGB *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#a7660b681b9bacc1d2bcc1df726b83eb5">liveLeds</a> = nullptr</td></tr>
 <tr class="separator:a7660b681b9bacc1d2bcc1df726b83eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a533c8edf90f223c6c1b4ab8e25ae826b"><td class="memItemLeft" align="right" valign="top">CRGB *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#a533c8edf90f223c6c1b4ab8e25ae826b">ovlLeds</a> = nullptr</td></tr>
-<tr class="separator:a533c8edf90f223c6c1b4ab8e25ae826b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5254c0a546aaad374dcdbc6d3325fecd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_controller.html#a5254c0a546aaad374dcdbc6d3325fecd">numLeds</a></td></tr>
 <tr class="separator:a5254c0a546aaad374dcdbc6d3325fecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -228,6 +224,7 @@ Protected Attributes</h2></td></tr>
 <tr><td class="fieldname"><a id="a21a2381b2e64fd29d9db820ecb16be73a2c2b964f40cfc425b33575008231171e"></a>FX_OVERLAY_STARTED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a21a2381b2e64fd29d9db820ecb16be73a7deb8ed1efa98b3bdf8b5e6ab67052ec"></a>FX_OVERLAY_STOPPED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a21a2381b2e64fd29d9db820ecb16be73aad6bf4e00c89dbb15b9e056ef38a28e9"></a>FX_OVERLAY_COMPLETED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a21a2381b2e64fd29d9db820ecb16be73ae5b6fe6190b427786ff6d2f9459d6985"></a>FX_OVERLAY_UPDATED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a21a2381b2e64fd29d9db820ecb16be73aab80be37805f64c26fedcb3dde73f2f6"></a>FX_PAUSED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a21a2381b2e64fd29d9db820ecb16be73a1d11c6e6826c73d73d8742ed26d1ee49"></a>FX_RESUMED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a21a2381b2e64fd29d9db820ecb16be73af65007324cf71ca835e7e05d3c283740"></a>FX_BRIGHTNESS_CHANGED&#160;</td><td class="fielddoc"></td></tr>
@@ -662,23 +659,6 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a29b005c73064eb8d302d64495a43de1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29b005c73064eb8d302d64495a43de1f">&#9670;&nbsp;</a></span>removeOverlayFX()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void FFXController::removeOverlayFX </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a48784f5ce7337e801fe9fe174d0e4246"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a48784f5ce7337e801fe9fe174d0e4246">&#9670;&nbsp;</a></span>setBrightness()</h2>
 
@@ -831,50 +811,6 @@ Protected Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">uint16_t FFXController::numLeds</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a866baca89b4df7b310b5322fc4868c20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a866baca89b4df7b310b5322fc4868c20">&#9670;&nbsp;</a></span>ovlFX</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_f_f_x_overlay.html">FFXOverlay</a>* FFXController::ovlFX = nullptr</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a533c8edf90f223c6c1b4ab8e25ae826b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a533c8edf90f223c6c1b4ab8e25ae826b">&#9670;&nbsp;</a></span>ovlLeds</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CRGB* FFXController::ovlLeds = nullptr</td>
         </tr>
       </table>
   </td>

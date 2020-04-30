@@ -6,6 +6,7 @@ var class_f_f_x_controller =
       [ "FX_OVERLAY_STARTED", "class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73a2c2b964f40cfc425b33575008231171e", null ],
       [ "FX_OVERLAY_STOPPED", "class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73a7deb8ed1efa98b3bdf8b5e6ab67052ec", null ],
       [ "FX_OVERLAY_COMPLETED", "class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73aad6bf4e00c89dbb15b9e056ef38a28e9", null ],
+      [ "FX_OVERLAY_UPDATED", "class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73ae5b6fe6190b427786ff6d2f9459d6985", null ],
       [ "FX_PAUSED", "class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73aab80be37805f64c26fedcb3dde73f2f6", null ],
       [ "FX_RESUMED", "class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73a1d11c6e6826c73d73d8742ed26d1ee49", null ],
       [ "FX_BRIGHTNESS_CHANGED", "class_f_f_x_controller.html#a21a2381b2e64fd29d9db820ecb16be73af65007324cf71ca835e7e05d3c283740", null ],
@@ -30,7 +31,6 @@ var class_f_f_x_controller =
     [ "initialize", "class_f_f_x_controller.html#a912237eee10b6562a6a69c6ddedb800b", null ],
     [ "onFXEvent", "class_f_f_x_controller.html#ac4f647fd8956cd0467ed00d8c8b54cef", null ],
     [ "onFXStateChange", "class_f_f_x_controller.html#a61f4085d9af2f25a2e23d1b25facbb6f", null ],
-    [ "removeOverlayFX", "class_f_f_x_controller.html#a29b005c73064eb8d302d64495a43de1f", null ],
     [ "setBrightness", "class_f_f_x_controller.html#a48784f5ce7337e801fe9fe174d0e4246", null ],
     [ "setFX", "class_f_f_x_controller.html#a43c0ef212db38b8aa112797bf09211e6", null ],
     [ "setOverlayFX", "class_f_f_x_controller.html#ac480fcc611389f0a01dd75c4672b482d", null ],
@@ -39,7 +39,5 @@ var class_f_f_x_controller =
     [ "ledController", "class_f_f_x_controller.html#aee9fde2a3532a0eec9033a4daa4eb984", null ],
     [ "liveLeds", "class_f_f_x_controller.html#a7660b681b9bacc1d2bcc1df726b83eb5", null ],
     [ "numLeds", "class_f_f_x_controller.html#a5254c0a546aaad374dcdbc6d3325fecd", null ],
-    [ "ovlFX", "class_f_f_x_controller.html#a866baca89b4df7b310b5322fc4868c20", null ],
-    [ "ovlLeds", "class_f_f_x_controller.html#a533c8edf90f223c6c1b4ab8e25ae826b", null ],
     [ "showCount", "class_f_f_x_controller.html#a4a9b2d66b7ec5e1cbe38feb2b44957e4", null ]
 ];

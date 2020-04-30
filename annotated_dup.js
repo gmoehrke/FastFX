@@ -30,5 +30,6 @@ var annotated_dup =
     [ "SolidFX", "class_solid_f_x.html", "class_solid_f_x" ],
     [ "StepTimer", "class_step_timer.html", "class_step_timer" ],
     [ "TwinkleFX", "class_twinkle_f_x.html", "class_twinkle_f_x" ],
-    [ "WaveOverlayFX", "class_wave_overlay_f_x.html", "class_wave_overlay_f_x" ]
+    [ "WaveOverlayFX", "class_wave_overlay_f_x.html", "class_wave_overlay_f_x" ],
+    [ "ZipOverlayFX", "class_zip_overlay_f_x.html", "class_zip_overlay_f_x" ]
 ];

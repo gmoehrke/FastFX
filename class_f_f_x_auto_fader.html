@@ -110,6 +110,8 @@ $(document).ready(function(){initNavTree('class_f_f_x_auto_fader.html',''); init
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad29196814ac0f84530c72203c4b7792a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_auto_fader.html#ad29196814ac0f84530c72203c4b7792a">FFXAutoFader</a> ()</td></tr>
 <tr class="separator:ad29196814ac0f84530c72203c4b7792a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafd9989cfd8e0428d86684d10e4b46d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_auto_fader.html#aafd9989cfd8e0428d86684d10e4b46d0">FFXAutoFader</a> (uint8_t initValue)</td></tr>
+<tr class="separator:aafd9989cfd8e0428d86684d10e4b46d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04aed9e0564b675ee656ddb1b3b15f8c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_auto_fader.html#a04aed9e0564b675ee656ddb1b3b15f8c">~FFXAutoFader</a> ()</td></tr>
 <tr class="separator:a04aed9e0564b675ee656ddb1b3b15f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae33a743ec38da8b776303b490be322da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_auto_fader.html#ae33a743ec38da8b776303b490be322da">isFading</a> ()</td></tr>
@@ -137,7 +139,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p><a class="el" href="class_f_f_x_auto_fader.html">FFXAutoFader</a> - Abstract class to implement timed fading. Abstract method <a class="el" href="class_f_f_x_auto_fader.html#a2ea6f384e231976798e89cecd18ab8b1">onUpdate( CRGBSet&amp; )</a> should be overriden in descendant classes to implement the "effect". The <a class="el" href="class_f_f_x_auto_fader.html#a925feb0d9a95e6b05e8a6b5366762cad">update()</a> method is included in looping to "track" the status of the fader. Target attribute always refers to the desired/set value (0-255), while the Value attribute refers to the current value. Upon a call to <a class="el" href="class_f_f_x_auto_fader.html#a5a742b8cbf2e371008e9c60dfc063429">setTarget()</a>, the fader will move consistently from its current value to the target value over the desired interval. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad29196814ac0f84530c72203c4b7792a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad29196814ac0f84530c72203c4b7792a">&#9670;&nbsp;</a></span>FFXAutoFader()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad29196814ac0f84530c72203c4b7792a">&#9670;&nbsp;</a></span>FFXAutoFader() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -149,6 +151,32 @@ Public Member Functions</h2></td></tr>
           <td class="memname">FFXAutoFader::FFXAutoFader </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aafd9989cfd8e0428d86684d10e4b46d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafd9989cfd8e0428d86684d10e4b46d0">&#9670;&nbsp;</a></span>FFXAutoFader() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">FFXAutoFader::FFXAutoFader </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>initValue</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

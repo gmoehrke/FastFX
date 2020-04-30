@@ -75,8 +75,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_f_f_x_a_f_dimmer_8cpp.html",
-"class_f_f_x_color.html#a800202c7154ddb5b5cc51a5959cfaeae",
-"class_named_palettes.html#aa86f9cb9a2299ab7240cf52f69539965"
+"class_f_f_x_color.html#a5107082e6375d270ab1e2753ab7ad690",
+"class_juggle_f_x.html#aed3f6d5ec68994f1ffc3e98576aac7ff"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

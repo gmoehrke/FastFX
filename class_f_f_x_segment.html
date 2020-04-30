@@ -117,6 +117,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac77439a83bf7267aea333382c0c1d092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b19e4eec3bc1fdd53c6470c8a56af51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#a6b19e4eec3bc1fdd53c6470c8a56af51">setFX</a> (<a class="el" href="class_f_f_x_base.html">FFXBase</a> *newFX)</td></tr>
 <tr class="separator:a6b19e4eec3bc1fdd53c6470c8a56af51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cd2f695290079d55a618af03f9d834b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_overlay.html">FFXOverlay</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#a4cd2f695290079d55a618af03f9d834b">getOverlay</a> ()</td></tr>
+<tr class="separator:a4cd2f695290079d55a618af03f9d834b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a598e96baf8765c5fa2071d0c799ee464"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#a598e96baf8765c5fa2071d0c799ee464">setOverlay</a> (<a class="el" href="class_f_f_x_overlay.html">FFXOverlay</a> *newOvl)</td></tr>
+<tr class="separator:a598e96baf8765c5fa2071d0c799ee464"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9508a34350931ffdee2d872ddc11d8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#ae9508a34350931ffdee2d872ddc11d8d">removeOverlay</a> ()</td></tr>
+<tr class="separator:ae9508a34350931ffdee2d872ddc11d8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49ef880e792cbfc3414c220ff28c20a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_controller.html">FFXController</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#a49ef880e792cbfc3414c220ff28c20a5">getController</a> ()</td></tr>
 <tr class="separator:a49ef880e792cbfc3414c220ff28c20a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2be6917e353c49303aa0bd9b8786f98f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#a2be6917e353c49303aa0bd9b8786f98f">isPrimary</a> ()</td></tr>
@@ -147,6 +153,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad6ad5a9d9ca8eeb4217b16d922975b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4af0396ee0c76d53fbdbddcd9e8c1e6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#a4af0396ee0c76d53fbdbddcd9e8c1e6a">updateFrame</a> (CRGB *frameBuffer)</td></tr>
 <tr class="separator:a4af0396ee0c76d53fbdbddcd9e8c1e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08f39e159ce79532faaa1497b079355e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#a08f39e159ce79532faaa1497b079355e">updateOverlay</a> (CRGB *frameBuffer)</td></tr>
+<tr class="separator:a08f39e159ce79532faaa1497b079355e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8375fab3b7304cf45d53fc6b51bffab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#af8375fab3b7304cf45d53fc6b51bffab">hasDimmer</a> ()</td></tr>
 <tr class="separator:af8375fab3b7304cf45d53fc6b51bffab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abeb241c1b9d9283ae3203a985a07eddb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_segment.html#abeb241c1b9d9283ae3203a985a07eddb">removeDimmer</a> ()</td></tr>
@@ -179,7 +187,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a400e3ac1d9120372c93492a52142787b inherit pub_methods_class_f_f_x_state_observer"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_state_observer.html#a400e3ac1d9120372c93492a52142787b">~FFXStateObserver</a> ()</td></tr>
 <tr class="separator:a400e3ac1d9120372c93492a52142787b inherit pub_methods_class_f_f_x_state_observer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="class_f_f_x_segment.html">FFXSegment</a> - Class for housing multiple effects in a single pixel array. Each segment contains a FXFrameProvider to handle updating the range of pixels it "contains" as well as both a local and global FX dimmer to manage brightness.</p>
+<p>An <a class="el" href="class_f_f_x_controller.html">FFXController</a> will always have at least 1 segment - the Primary segment. This represents the entire array and is always considered to be visible. Subsequent segments are defined "over" this segment and may be 0-100% transparent. Each non-primary segment has an opacity controller, which sets the level of opacity/transparency. At opacity level of 0, the primary segment shows through 100%. At opacity 255, the segment shows at 100% and the underlying portion of the primary segment is not visible at all. The primary segment has no opacity control and calls to <code><a class="el" href="class_f_f_x_segment.html#afaed139def1a7c05301825ad39b22e23">setOpacity()</a></code> do nothing, while calls to <code><a class="el" href="class_f_f_x_segment.html#a46b7d9e3cac3789513da8d6b2fbd43ec">getOpacity()</a></code> always return 255.</p>
+<p>Each segment may or may not have a brightness controller (dimmer). The primary segment will always have a brighness controller. Additional segments will "inherit" the brightness of the primary segment until a call to <a class="el" href="class_f_f_x_segment.html#aea4c57187f0dc34cc81585fa57e65e3f">setBrightness()</a> overrides this behavior. At that point, the segment has its own brightness controller and will remain independent from the primary segment's brightness. A subsequent call to <a class="el" href="class_f_f_x_segment.html#abeb241c1b9d9283ae3203a985a07eddb">removeDimmer()</a> will remove the segments dimmer and revert back to using the brightness of the primary controller. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac954e1c228320892cec92cad42a2d1be"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac954e1c228320892cec92cad42a2d1be">&#9670;&nbsp;</a></span>FFXSegment()</h2>
 
@@ -560,6 +572,31 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a4cd2f695290079d55a618af03f9d834b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cd2f695290079d55a618af03f9d834b">&#9670;&nbsp;</a></span>getOverlay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_f_x_overlay.html">FFXOverlay</a>* FFXSegment::getOverlay </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a770025de2099ffca75fe98298d130ecc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a770025de2099ffca75fe98298d130ecc">&#9670;&nbsp;</a></span>getStart()</h2>
 
@@ -760,9 +797,6 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void FFXSegment::removeDimmer </td>
@@ -771,11 +805,23 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae9508a34350931ffdee2d872ddc11d8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9508a34350931ffdee2d872ddc11d8d">&#9670;&nbsp;</a></span>removeOverlay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FFXSegment::removeOverlay </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
@@ -937,6 +983,24 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a598e96baf8765c5fa2071d0c799ee464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a598e96baf8765c5fa2071d0c799ee464">&#9670;&nbsp;</a></span>setOverlay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FFXSegment::setOverlay </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_f_f_x_overlay.html">FFXOverlay</a> *&#160;</td>
+          <td class="paramname"><em>newOvl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aee747291ff798652006793d3739b4a4d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aee747291ff798652006793d3739b4a4d">&#9670;&nbsp;</a></span>setTag()</h2>
 
@@ -971,6 +1035,24 @@ Public Member Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void FFXSegment::updateFrame </td>
+          <td>(</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>frameBuffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a08f39e159ce79532faaa1497b079355e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08f39e159ce79532faaa1497b079355e">&#9670;&nbsp;</a></span>updateOverlay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FFXSegment::updateOverlay </td>
           <td>(</td>
           <td class="paramtype">CRGB *&#160;</td>
           <td class="paramname"><em>frameBuffer</em></td><td>)</td>

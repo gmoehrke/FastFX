@@ -1,6 +1,7 @@
 var class_f_f_x_auto_fader =
 [
     [ "FFXAutoFader", "class_f_f_x_auto_fader.html#ad29196814ac0f84530c72203c4b7792a", null ],
+    [ "FFXAutoFader", "class_f_f_x_auto_fader.html#aafd9989cfd8e0428d86684d10e4b46d0", null ],
     [ "~FFXAutoFader", "class_f_f_x_auto_fader.html#a04aed9e0564b675ee656ddb1b3b15f8c", null ],
     [ "getInterval", "class_f_f_x_auto_fader.html#af41946bd879f288cdde5d51af712715c", null ],
     [ "getTarget", "class_f_f_x_auto_fader.html#a193946d027a8634ddf1868c456ae49b7", null ],

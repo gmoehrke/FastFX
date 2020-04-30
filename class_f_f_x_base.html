@@ -164,6 +164,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1c5f291045453e43b70a277a258697b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78248b52f493584c019ddb1d2034a466"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_base.html#ae8ecce4d01fa252dad008bbaa17f6a11">MovementType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a78248b52f493584c019ddb1d2034a466">getMovement</a> ()</td></tr>
 <tr class="separator:a78248b52f493584c019ddb1d2034a466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c4d99efa36672155c95f77f2c9c1c9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_base.html#ae8ecce4d01fa252dad008bbaa17f6a11">FFXBase::MovementType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a9c4d99efa36672155c95f77f2c9c1c9e">getCurrMovement</a> (uint16_t cycle)</td></tr>
+<tr class="separator:a9c4d99efa36672155c95f77f2c9c1c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46da8a20feea1e3731b9f28752ed8cc9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a46da8a20feea1e3731b9f28752ed8cc9">setMovement</a> (<a class="el" href="class_f_f_x_base.html#ae8ecce4d01fa252dad008bbaa17f6a11">MovementType</a> newMovement)</td></tr>
 <tr class="separator:a46da8a20feea1e3731b9f28752ed8cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a460d35bfdba1b665ce9a54d7673cb2ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_f_x_color.html">FFXColor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a460d35bfdba1b665ce9a54d7673cb2ca">getFXColor</a> ()</td></tr>
@@ -200,6 +202,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a780f4ab4907c3aaf8fef918be878eb4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9852906c87b04634d1c00427a4732a1a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a9852906c87b04634d1c00427a4732a1a">getMovementPhase</a> ()</td></tr>
 <tr class="separator:a9852906c87b04634d1c00427a4732a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab80e52ffff93b842c235d9f4af0d104"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#aab80e52ffff93b842c235d9f4af0d104">getMovementVPhase</a> ()</td></tr>
+<tr class="separator:aab80e52ffff93b842c235d9f4af0d104"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae927731c7144999d13db35a1edfbea51"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#ae927731c7144999d13db35a1edfbea51">getNumLeds</a> ()</td></tr>
 <tr class="separator:ae927731c7144999d13db35a1edfbea51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea8cc06fe361c43a3aacc710efa6ecee"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#aea8cc06fe361c43a3aacc710efa6ecee">getVCycleRange</a> ()</td></tr>
@@ -212,30 +216,30 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a183a87c9d9baff7f649f98cd749191aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a5100b58a8f8c6cea97a94ff3808a2c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a9a5100b58a8f8c6cea97a94ff3808a2c">onEachSecond</a> (unsigned long secsRunning)</td></tr>
 <tr class="separator:a9a5100b58a8f8c6cea97a94ff3808a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ed63d12193093b011642dea72a493e8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a1ed63d12193093b011642dea72a493e8">onCycleStart</a> ()</td></tr>
-<tr class="separator:a1ed63d12193093b011642dea72a493e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3edb3e15607f733f03dc202005dabbd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#ad3edb3e15607f733f03dc202005dabbd">onCycleEnd</a> ()</td></tr>
-<tr class="separator:ad3edb3e15607f733f03dc202005dabbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e79768b820e786a8a8fa20e74bfc686"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a8e79768b820e786a8a8fa20e74bfc686">whileFrozen</a> ()</td></tr>
-<tr class="separator:a8e79768b820e786a8a8fa20e74bfc686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac654db9f2aeaff59e628195ba93833dd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#ac654db9f2aeaff59e628195ba93833dd">onVCycleStart</a> ()</td></tr>
-<tr class="separator:ac654db9f2aeaff59e628195ba93833dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a614bd4160a38bef5c32cf4b06dddc42b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a614bd4160a38bef5c32cf4b06dddc42b">onVCycleEnd</a> ()</td></tr>
-<tr class="separator:a614bd4160a38bef5c32cf4b06dddc42b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc98a4b4eb96bc98d44b087d7984b8a9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#afc98a4b4eb96bc98d44b087d7984b8a9">onCycleStart</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:afc98a4b4eb96bc98d44b087d7984b8a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e00a8e7566ebbdb5aaca7b498f93224"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a0e00a8e7566ebbdb5aaca7b498f93224">onCycleEnd</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:a0e00a8e7566ebbdb5aaca7b498f93224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a299332c260afb1e365b0af4ec813b545"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a299332c260afb1e365b0af4ec813b545">whileFrozen</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:a299332c260afb1e365b0af4ec813b545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab299a648391aea6f084fd86903884a8b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#ab299a648391aea6f084fd86903884a8b">onVCycleStart</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:ab299a648391aea6f084fd86903884a8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1c022bed9ce83f1f030ee5f7d42343b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#ad1c022bed9ce83f1f030ee5f7d42343b">onVCycleEnd</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:ad1c022bed9ce83f1f030ee5f7d42343b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c1dec52aeee805dcce7f251c86f0660"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a1c1dec52aeee805dcce7f251c86f0660">onBrightness</a> (uint8_t newBrightness)</td></tr>
 <tr class="separator:a1c1dec52aeee805dcce7f251c86f0660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b87b093056a46882e3649f6d79ff737"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a9b87b093056a46882e3649f6d79ff737">initLeds</a> (CRGB *bufLeds)</td></tr>
 <tr class="separator:a9b87b093056a46882e3649f6d79ff737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9e3d2fba5e2629ba4651760e3c48745"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#aa9e3d2fba5e2629ba4651760e3c48745">writeNextFrame</a> (CRGB *frameBuffer)=0</td></tr>
 <tr class="separator:aa9e3d2fba5e2629ba4651760e3c48745"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e0c6e99879c708045102723404f0323"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a6e0c6e99879c708045102723404f0323">vCycleStart</a> ()</td></tr>
-<tr class="separator:a6e0c6e99879c708045102723404f0323"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aade70e7896b7f6d73eae28183c5548d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#aade70e7896b7f6d73eae28183c5548d0">vCycleEnd</a> ()</td></tr>
-<tr class="separator:aade70e7896b7f6d73eae28183c5548d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77d37f97a3cb8ec9217ada29e34af712"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a77d37f97a3cb8ec9217ada29e34af712">cycleStart</a> ()</td></tr>
-<tr class="separator:a77d37f97a3cb8ec9217ada29e34af712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0a16d7d4510dd6b52c991ac28d7c688"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#ae0a16d7d4510dd6b52c991ac28d7c688">cycleEnd</a> ()</td></tr>
-<tr class="separator:ae0a16d7d4510dd6b52c991ac28d7c688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aead6c3284ec25c10b3edc6cb5e0dd33a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#aead6c3284ec25c10b3edc6cb5e0dd33a">vCycleStart</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:aead6c3284ec25c10b3edc6cb5e0dd33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a999dd1d4f7ef1739a262cc9ff265435a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a999dd1d4f7ef1739a262cc9ff265435a">vCycleEnd</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:a999dd1d4f7ef1739a262cc9ff265435a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff4e907c9815b7023a132a0a8ef7a2cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#aff4e907c9815b7023a132a0a8ef7a2cf">cycleStart</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:aff4e907c9815b7023a132a0a8ef7a2cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a774d8e67032261b8abc7f687d21e5f4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a774d8e67032261b8abc7f687d21e5f4c">cycleEnd</a> (CRGB *currFrame)</td></tr>
+<tr class="separator:a774d8e67032261b8abc7f687d21e5f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a669cf7b48b9387439742b0c85c4aede7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a669cf7b48b9387439742b0c85c4aede7">freeze</a> ()</td></tr>
 <tr class="separator:a669cf7b48b9387439742b0c85c4aede7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e664e7f89fe63cffa697d497bce554a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_f_x_base.html#a2e664e7f89fe63cffa697d497bce554a">unFreeze</a> ()</td></tr>
@@ -436,7 +440,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Calculate the "mirror" image position of a given pixel (i.e. same distance from center, on the other side):</p>
 <p><a class="el" href="class_f_f_x_base.html#a67fbe49ef5304d27ec2385cd81bf71e2">mirror( uint16_t position )</a></p>
 <p>Several virtual methods are provided, which can be overriden in descendent classes</p>
-<p><a class="el" href="class_f_f_x_base.html#a9a5100b58a8f8c6cea97a94ff3808a2c">onEachSecond(unsigned long)</a> // called for each elapsed second while effect is running (udpate() called within a loop) <a class="el" href="class_f_f_x_base.html#a1ed63d12193093b011642dea72a493e8">onCycleStart()</a> <a class="el" href="class_f_f_x_base.html#ad3edb3e15607f733f03dc202005dabbd">onCycleEnd()</a> <a class="el" href="class_f_f_x_base.html#ac654db9f2aeaff59e628195ba93833dd">onVCycleStart()</a> <a class="el" href="class_f_f_x_base.html#a614bd4160a38bef5c32cf4b06dddc42b">onVCycleEnd()</a> <a class="el" href="class_f_f_x_base.html#a1c1dec52aeee805dcce7f251c86f0660">onBrightness()</a> // called when brightness is changed (by FXXSegment) <a class="el" href="class_f_f_x_base.html#a8e79768b820e786a8a8fa20e74bfc686">whileFrozen()</a> // called each time <a class="el" href="class_f_f_x_base.html#ab4268f4326fd00e899f14782c43718db">update()</a> is called while effect is "Frozen"/paused </p>
+<p><a class="el" href="class_f_f_x_base.html#a9a5100b58a8f8c6cea97a94ff3808a2c">onEachSecond(unsigned long)</a> // called for each elapsed second while effect is running (udpate() called within a loop) <a class="el" href="class_f_f_x_base.html#afc98a4b4eb96bc98d44b087d7984b8a9">onCycleStart()</a> <a class="el" href="class_f_f_x_base.html#a0e00a8e7566ebbdb5aaca7b498f93224">onCycleEnd()</a> <a class="el" href="class_f_f_x_base.html#ab299a648391aea6f084fd86903884a8b">onVCycleStart()</a> <a class="el" href="class_f_f_x_base.html#ad1c022bed9ce83f1f030ee5f7d42343b">onVCycleEnd()</a> <a class="el" href="class_f_f_x_base.html#a1c1dec52aeee805dcce7f251c86f0660">onBrightness()</a> // called when brightness is changed (by FXXSegment) <a class="el" href="class_f_f_x_base.html#a299332c260afb1e365b0af4ec813b545">whileFrozen()</a> // called each time <a class="el" href="class_f_f_x_base.html#ab4268f4326fd00e899f14782c43718db">update()</a> is called while effect is "Frozen"/paused </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="aaed61217b7fda203a905fd6c7c8e8249"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaed61217b7fda203a905fd6c7c8e8249">&#9670;&nbsp;</a></span>FadeType</h2>
@@ -856,8 +860,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ae0a16d7d4510dd6b52c991ac28d7c688"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0a16d7d4510dd6b52c991ac28d7c688">&#9670;&nbsp;</a></span>cycleEnd()</h2>
+<a id="a774d8e67032261b8abc7f687d21e5f4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a774d8e67032261b8abc7f687d21e5f4c">&#9670;&nbsp;</a></span>cycleEnd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -868,7 +872,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void FFXBase::cycleEnd </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -881,8 +886,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a77d37f97a3cb8ec9217ada29e34af712"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77d37f97a3cb8ec9217ada29e34af712">&#9670;&nbsp;</a></span>cycleStart()</h2>
+<a id="aff4e907c9815b7023a132a0a8ef7a2cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff4e907c9815b7023a132a0a8ef7a2cf">&#9670;&nbsp;</a></span>cycleStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -893,7 +898,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void FFXBase::cycleStart </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1004,6 +1010,25 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9c4d99efa36672155c95f77f2c9c1c9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c4d99efa36672155c95f77f2c9c1c9e">&#9670;&nbsp;</a></span>getCurrMovement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_f_x_base.html#ae8ecce4d01fa252dad008bbaa17f6a11">FFXBase::MovementType</a> FFXBase::getCurrMovement </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>cycle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the current movement resulting from the MovementType setting - only differs from getMovement when using back and forth movement - this will return the current direction </p>
 
 </div>
 </div>
@@ -1190,6 +1215,23 @@ Additional Inherited Members</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">uint16_t FFXBase::getMovementPhase </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aab80e52ffff93b842c235d9f4af0d104"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab80e52ffff93b842c235d9f4af0d104">&#9670;&nbsp;</a></span>getMovementVPhase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t FFXBase::getMovementVPhase </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1391,7 +1433,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_pulse_overlay_f_x.html#a81634782933e0b3a49550dacbfe85010">PulseOverlayFX</a>, <a class="el" href="class_wave_overlay_f_x.html#a6ce54526d683ce134077d6810488cd1f">WaveOverlayFX</a>, <a class="el" href="class_dim_using_palette_f_x.html#a52cc07ccbaf1f78e99ae22b0e412bf72">DimUsingPaletteFX</a>, <a class="el" href="class_twinkle_f_x.html#a645834c340b52370fe4a4388d9dee719">TwinkleFX</a>, <a class="el" href="class_cycle_f_x.html#a6a0606234db7b3075fb4504f7434c6da">CycleFX</a>, <a class="el" href="class_cylon_f_x.html#a00da9d33ad00c9e90f33b0cf1b605f91">CylonFX</a>, <a class="el" href="class_juggle_f_x.html#ae8206475e315b1b97c080e8ff6d821fa">JuggleFX</a>, <a class="el" href="class_motion_f_x.html#a4e1626eaef64c7f39b4fc35f31377b5a">MotionFX</a>, <a class="el" href="class_chase_f_x.html#a358ef91fb1b15c0a2b8cacc23a214247">ChaseFX</a>, and <a class="el" href="class_solid_f_x.html#afd8fdcf2b603075a5dafbb6f04cbc3c1">SolidFX</a>.</p>
+<p>Reimplemented in <a class="el" href="class_zip_overlay_f_x.html#aca87ae81be6d7c42ef404091f0313ec4">ZipOverlayFX</a>, <a class="el" href="class_pulse_overlay_f_x.html#a81634782933e0b3a49550dacbfe85010">PulseOverlayFX</a>, <a class="el" href="class_wave_overlay_f_x.html#a6ce54526d683ce134077d6810488cd1f">WaveOverlayFX</a>, <a class="el" href="class_dim_using_palette_f_x.html#a52cc07ccbaf1f78e99ae22b0e412bf72">DimUsingPaletteFX</a>, <a class="el" href="class_twinkle_f_x.html#a645834c340b52370fe4a4388d9dee719">TwinkleFX</a>, <a class="el" href="class_cycle_f_x.html#a6a0606234db7b3075fb4504f7434c6da">CycleFX</a>, <a class="el" href="class_cylon_f_x.html#a00da9d33ad00c9e90f33b0cf1b605f91">CylonFX</a>, <a class="el" href="class_juggle_f_x.html#ae8206475e315b1b97c080e8ff6d821fa">JuggleFX</a>, <a class="el" href="class_motion_f_x.html#a4e1626eaef64c7f39b4fc35f31377b5a">MotionFX</a>, <a class="el" href="class_chase_f_x.html#a358ef91fb1b15c0a2b8cacc23a214247">ChaseFX</a>, and <a class="el" href="class_solid_f_x.html#afd8fdcf2b603075a5dafbb6f04cbc3c1">SolidFX</a>.</p>
 
 </div>
 </div>
@@ -1561,8 +1603,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ad3edb3e15607f733f03dc202005dabbd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3edb3e15607f733f03dc202005dabbd">&#9670;&nbsp;</a></span>onCycleEnd()</h2>
+<a id="a0e00a8e7566ebbdb5aaca7b498f93224"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e00a8e7566ebbdb5aaca7b498f93224">&#9670;&nbsp;</a></span>onCycleEnd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1573,7 +1615,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">virtual void FFXBase::onCycleEnd </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1586,8 +1629,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a1ed63d12193093b011642dea72a493e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ed63d12193093b011642dea72a493e8">&#9670;&nbsp;</a></span>onCycleStart()</h2>
+<a id="afc98a4b4eb96bc98d44b087d7984b8a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc98a4b4eb96bc98d44b087d7984b8a9">&#9670;&nbsp;</a></span>onCycleStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1598,7 +1641,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">virtual void FFXBase::onCycleStart </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1637,8 +1681,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a614bd4160a38bef5c32cf4b06dddc42b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a614bd4160a38bef5c32cf4b06dddc42b">&#9670;&nbsp;</a></span>onVCycleEnd()</h2>
+<a id="ad1c022bed9ce83f1f030ee5f7d42343b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1c022bed9ce83f1f030ee5f7d42343b">&#9670;&nbsp;</a></span>onVCycleEnd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1649,7 +1693,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">virtual void FFXBase::onVCycleEnd </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1660,12 +1705,12 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_f_f_x_overlay.html#a02194a99b9b57b8ddd4e146f99dd2127">FFXOverlay</a>.</p>
+<p>Reimplemented in <a class="el" href="class_f_f_x_overlay.html#aab2bb1e69b4a914cebe8b7ff00efd6ce">FFXOverlay</a>.</p>
 
 </div>
 </div>
-<a id="ac654db9f2aeaff59e628195ba93833dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac654db9f2aeaff59e628195ba93833dd">&#9670;&nbsp;</a></span>onVCycleStart()</h2>
+<a id="ab299a648391aea6f084fd86903884a8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab299a648391aea6f084fd86903884a8b">&#9670;&nbsp;</a></span>onVCycleStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1676,7 +1721,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">virtual void FFXBase::onVCycleStart </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1686,6 +1732,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_zip_overlay_f_x.html#a1615caf7d2717b9ebe399773aae591d5">ZipOverlayFX</a>.</p>
 
 </div>
 </div>
@@ -2158,8 +2206,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="aade70e7896b7f6d73eae28183c5548d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aade70e7896b7f6d73eae28183c5548d0">&#9670;&nbsp;</a></span>vCycleEnd()</h2>
+<a id="a999dd1d4f7ef1739a262cc9ff265435a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a999dd1d4f7ef1739a262cc9ff265435a">&#9670;&nbsp;</a></span>vCycleEnd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2170,7 +2218,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void FFXBase::vCycleEnd </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -2183,8 +2232,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a6e0c6e99879c708045102723404f0323"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e0c6e99879c708045102723404f0323">&#9670;&nbsp;</a></span>vCycleStart()</h2>
+<a id="aead6c3284ec25c10b3edc6cb5e0dd33a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aead6c3284ec25c10b3edc6cb5e0dd33a">&#9670;&nbsp;</a></span>vCycleStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2195,7 +2244,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void FFXBase::vCycleStart </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -2208,8 +2258,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a8e79768b820e786a8a8fa20e74bfc686"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e79768b820e786a8a8fa20e74bfc686">&#9670;&nbsp;</a></span>whileFrozen()</h2>
+<a id="a299332c260afb1e365b0af4ec813b545"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a299332c260afb1e365b0af4ec813b545">&#9670;&nbsp;</a></span>whileFrozen()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2220,7 +2270,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">virtual void FFXBase::whileFrozen </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">CRGB *&#160;</td>
+          <td class="paramname"><em>currFrame</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -2231,7 +2282,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_f_f_x_overlay.html#abfd6695b98ef4c3757c04752ec55c473">FFXOverlay</a>.</p>
+<p>Reimplemented in <a class="el" href="class_f_f_x_overlay.html#a5bb50a1b04b658dae0fafeafe551ea0b">FFXOverlay</a>.</p>
 
 </div>
 </div>
@@ -2259,7 +2310,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_pulse_overlay_f_x.html#aafcf2e09e76b27da7df3e978a523c380">PulseOverlayFX</a>, <a class="el" href="class_wave_overlay_f_x.html#a386987b9b37208db9fc9056d7233a54f">WaveOverlayFX</a>, <a class="el" href="class_pacifica_f_x.html#a3943f7b0e54ca68e7406dc3cb7eda44e">PacificaFX</a>, <a class="el" href="class_dim_using_palette_f_x.html#ab7c7f534b217da9fb09a75d055fcb1c3">DimUsingPaletteFX</a>, <a class="el" href="class_twinkle_f_x.html#aa2cbda575a04f9a826d42a607ffd4294">TwinkleFX</a>, <a class="el" href="class_cycle_f_x.html#a56b5fa89c6e7cd964ced67671331dcd2">CycleFX</a>, <a class="el" href="class_cylon_f_x.html#a721ae4720d138fbc84bee49b8a0eaa30">CylonFX</a>, <a class="el" href="class_juggle_f_x.html#a983d542f5b7d6184423afbcc3fba4aa1">JuggleFX</a>, <a class="el" href="class_rainbow_f_x.html#a08ac35554d30354ae349cfa2751b348b">RainbowFX</a>, <a class="el" href="class_motion_f_x.html#ae4714af0c2e4a9470d940509f31c5604">MotionFX</a>, <a class="el" href="class_chase_f_x.html#a3d86ea82bd103c91085765f2cd14f038">ChaseFX</a>, <a class="el" href="class_solid_f_x.html#a974a49d844bab5acaa0be891ef070afe">SolidFX</a>, <a class="el" href="class_f_f_x_rotate.html#a83a85cd04f1974112ea224569c59de9d">FFXRotate</a>, and <a class="el" href="class_palette_f_x.html#a2d8d6870812dce81c4aaabc59d8a112b">PaletteFX</a>.</p>
+<p>Implemented in <a class="el" href="class_zip_overlay_f_x.html#aaa668fd5fb3829e4becd23f658724c41">ZipOverlayFX</a>, <a class="el" href="class_pulse_overlay_f_x.html#aafcf2e09e76b27da7df3e978a523c380">PulseOverlayFX</a>, <a class="el" href="class_wave_overlay_f_x.html#a386987b9b37208db9fc9056d7233a54f">WaveOverlayFX</a>, <a class="el" href="class_pacifica_f_x.html#a3943f7b0e54ca68e7406dc3cb7eda44e">PacificaFX</a>, <a class="el" href="class_dim_using_palette_f_x.html#ab7c7f534b217da9fb09a75d055fcb1c3">DimUsingPaletteFX</a>, <a class="el" href="class_twinkle_f_x.html#aa2cbda575a04f9a826d42a607ffd4294">TwinkleFX</a>, <a class="el" href="class_cycle_f_x.html#a56b5fa89c6e7cd964ced67671331dcd2">CycleFX</a>, <a class="el" href="class_cylon_f_x.html#a721ae4720d138fbc84bee49b8a0eaa30">CylonFX</a>, <a class="el" href="class_juggle_f_x.html#a983d542f5b7d6184423afbcc3fba4aa1">JuggleFX</a>, <a class="el" href="class_rainbow_f_x.html#a08ac35554d30354ae349cfa2751b348b">RainbowFX</a>, <a class="el" href="class_motion_f_x.html#ae4714af0c2e4a9470d940509f31c5604">MotionFX</a>, <a class="el" href="class_chase_f_x.html#a3d86ea82bd103c91085765f2cd14f038">ChaseFX</a>, <a class="el" href="class_solid_f_x.html#a974a49d844bab5acaa0be891ef070afe">SolidFX</a>, <a class="el" href="class_f_f_x_rotate.html#a83a85cd04f1974112ea224569c59de9d">FFXRotate</a>, and <a class="el" href="class_palette_f_x.html#a2d8d6870812dce81c4aaabc59d8a112b">PaletteFX</a>.</p>
 
 </div>
 </div>

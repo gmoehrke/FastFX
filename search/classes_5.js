@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['namedpalettes_443',['NamedPalettes',['../class_named_palettes.html',1,'']]]
+  ['namedpalettes_454',['NamedPalettes',['../class_named_palettes.html',1,'']]]
 ];
