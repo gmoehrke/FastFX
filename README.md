@@ -34,9 +34,9 @@ Thanks for checking out FFX.  This project grew out my desire to have a single c
 
 The examples in the following sections illustrate the basics, but don't touch on everything.  All of the coding and development was done on NodeMCU ESP8266 boards.  While I haven't tested on anything else, outside of the FastLED initialization and pin selection, it doesn't do anything that is processor dependent, so it should run just as well on other platforms.  
 
-Final Note - The examples included in the framework are optimized for WS2811 strips (12v 3-LEDs per pixel).  Some of the default parameters may need to be tweaked slightly to look best on other strip configurations. 
+Final Note - The examples included in the framework are optimized for WS2811 strips (12v 3-LEDs per pixel).  Some of the default parameters may need to be tweaked slightly to look best on other strip configurations.
 
-Complete Documentation is available here:  [https://gmoehrke.github.io/FastFX](https://gmoehrke.github.io/FastFX) 
+Complete Documentation is available here:  [https://gmoehrke.github.io/FastFX](https://gmoehrke.github.io/FastFX)
 
 
 ## Overview
@@ -72,7 +72,7 @@ The programming model for using FastFX differs slightly from coding directly wit
 - **FFXSegment** - A single LED strip is represented by a set of one or more segments.  Each strip contains a *Primary* segment, which represents the entire strip.  If effects will only be displayed along the entire strip, this is the only segment that needs to be present.  If multiple effects are desired, then additional *secondary* segments may be defined.  These segments may each have a different effect and each has its own *opacity* setting (0-255, 0=100% transparent, 255=100% opaque).  The secondary segments do not need to cover the entire length of the primary segment.  Pixels in the primary segment will always be visible unless they are covered by a secondary segment (and the secondary segment's opacity is greater than 0).
 
      Each secondary segment is given a name or _Tag_, which is used to reference that segment on the controller.  The controller provides 2 methods to access the individual segments - getPrimarySegment() and findSegment(String tag), each returns a pointer to the appropriate segment.  Note that these pointers can be dereferenced safely without checking for NULLs, if an invalid segment name is specified for findSegment, a pointer to the primary segment will be returned.  
-     
+
     ![segments](images/Segments.jpg)
 
     Each segment maintains a FFXFrameProvider object that is responsible for returning the frames to be drawn for each update.  The frame provider manages the cross fading, allocating extra buffers when needed.
@@ -87,7 +87,7 @@ The programming model for using FastFX differs slightly from coding directly wit
 
 Since each effect is a standalone class, creating a new one is a straightforward task.  Taking from the "FirstLight" example code in the FastLED library, we will create a FastFX version and see how we gain additional functionality with FastFX.  First we'll construct the effect class, which is always a descendant of FFXBase:
 
-```c++ 
+```{cpp}
 class FirstLightFX : public FFXBase {
   public:    
     // Constructor - provides defaults for interval, minInterval, and maxInterval
@@ -124,6 +124,8 @@ class FirstLightFX : public FFXBase {
 
 Note the use of `getCurrPhase()` here.  All effects have running counters for _Phase_ and _Cycle_.  The Phase counter starts at 1, and increments for each step until it reaches the number of pixels covered by that effect.  This is considered one cycle.  Once a cycle is completed, the phase is reset to 1.  The `getCurrCycle()` method returns the count of how many times this has been repeated.  For an effect running at an interval of 10 (milliseconds) with 100 pixels, a single phase will take 10 milliseconds, while a full cycle will take 1 second (1000 milliseconds).   
 
+FFXBase also includes capabilities to specify virtual cycle and phase settings which can differ from the length of the segment (using setVCycleRange, getCurrVCycle & getCurrVPhase).  
+
 Note that the use of Phase and Cycle in implementing effects is not mandatory. An effect can completely ignore them and still be 100% functional.  They simply provide some convenient reference points and can be very useful for calculating motion and timing when used appropriately.
 
 #### Initialization
@@ -131,13 +133,13 @@ Note that the use of Phase and Cycle in implementing effects is not mandatory. A
 
 For FastLED, we need the CRGB array that represents the pixels in our strip, and we will also need a FFXController object for FastFX.  So, the following 2 globals are defined:
 
-```c++
+```{cpp}
 CRGB leds[NUM_LEDS]
 FFXController fxctrlr = FFXController();
 ```
 Now we can modify the setup() function to create and initialize an instance of the FFXController, and create and add the effect to the controller:
 
-```c++
+```{cpp}
 void setup() {
     pinMode( 5, OUTPUT );
     FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
@@ -151,7 +153,7 @@ void setup() {
 
 Now that we've built all of the instructions for creating the effect into our FirstLightFX class and added it to the controller, the main loop simply needs to make sure the controller continues to run:
 
-```c++
+```{cpp}
 void loop() {
   fxctrlr.update();
 }
@@ -162,11 +164,11 @@ The full code can be found in [examples/FirstLight_1/FirstLight_1.ino](examples/
 <a id="markdown-Speed%20and%20Cross-fade" name="Speed%20and%20Cross-fade"></a>
 
 When running this example, note that you may select a different interval value to control the speed of the animation.  Thas may be done by calling:
-```c++
+```{cpp}
 fxctrlr.getPrimarySegment()->getFX().setInterval( newInterval );
 ```  
 The interval may be changed any time after creating the effect.  By using a larger interval (200+ milliseconds), you may notice that the leading white dot fades in over the duration of that interval to make the animation smoother.  This is because crossfading is enabled by default by the framework.  The extra buffers and frame-blending are all done automatically.  This can be disabled on any individual effect by calling
-```c++
+```{cpp}
 fxctrlr.getPrimarySegment()->getFrameProvider()->setCrossFade(false)
 ```
 
@@ -210,22 +212,22 @@ There is no requirement for Effects to use this object at all - colors may also 
 
 A small change to the `writeNextFrame()` method will allow us to support the palette color modes as follows:  if the mode is palette16, the effect will step to the next color at either end of the strip (or segment) on which it is running. In palette256 mode, the effect will simply step through entire palette as it moves.
 
-```c++
+```{cpp}
 virtual void writeNextFrame( CRGB *bufLeds ) override {
   fadeToBlackBy( bufLeds, numLeds, 50 );
   bufLeds[getMovementPhase()-1] = currColor.getCRGB();
   switch (currColor.getColorMode()) {
     // Blend the moving pixel through the entire palette range
-    case FFXColor::FFXColorMode::palette256 : { 
-      currColor.step(); 
-      break; 
+    case FFXColor::FFXColorMode::palette256 : {
+      currColor.step();
+      break;
     }
     // Step through the active colors in the palette - switching at either end of the strip
-    case FFXColor::FFXColorMode::palette16 : { 
-      if (getCurrPhase()==0 || getCurrPhase()==numLeds) { 
-         currColor.step(); 
-      } 
-      break; 
+    case FFXColor::FFXColorMode::palette16 : {
+      if (getCurrPhase()==0 || getCurrPhase()==numLeds) {
+         currColor.step();
+      }
+      break;
     }
     default:  { }
     }
@@ -236,22 +238,22 @@ Changing the color for our FirstLight effect can be done right after we initiali
 
 singleCRGB:
 
-```c++
+```{cpp}
 FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor();
 clr.setCRGB( CRGB::Red );
 ```
 
 palette256:
 
-```c++
+```{cpp}
    FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor();
    clr.setColorMode( FFXColor::FFXColorMode::palette256 );
    clr.setPalette( NamedPalettes::getInstance()["party"] );
 ```
 
-palette16: 
+palette16:
 
-```c++
+```{cpp}
     FFXColor &clr = fxctrlr.getPrimarySegment()->getFX()->getFXColor();
     clr.setColorMode( FFXColor::FFXColorMode::palette16 );
     clr.setPalette( NamedPalettes::getInstance()["multi"] );
@@ -281,7 +283,7 @@ Note in the above palette examples, the use of a singleton object "NamedPalettes
 
 To add a named palette to the global object, use the following:
 
-```c++
+```{cpp}
 NamedPalettes.getInstance().addNamedPalette( "myPalette", myPalette_p );
 ```
 
@@ -290,7 +292,7 @@ NamedPalettes.getInstance().addNamedPalette( "myPalette", myPalette_p );
 
 Now that we've built an effect, we can set that effect on any segment that we've defined on our FFXController.  So far, we've only used the default Primary segment.  In the next example, we will create 3 secondary segments on our controller and have a variation of our effect running on each segment (including the Primary segment).  This only requires modificaitons to our initialization block in the setup() function:
 
-```c++
+```{cpp}
 void setup() {
 
     pinMode( 5, OUTPUT );
@@ -301,20 +303,20 @@ void setup() {
     fxctrlr.getPrimarySegment()->setFX( new FirstLightFX( NUM_LEDS ) );
     fxctrlr.getPrimarySegment()->setBrightness( 100 );
     fxctrlr.getPrimarySegment()->getFX()->setMovement( FXBase::MovementType::MVT_BACKFORTH );
-    
+
     FFXSegment *seg;
     seg = fxctrlr.addSegment( "Left", 0, 32 );
     seg->setFX( new FirstLightFX( seg->getLength() ) );
     seg->getFX()->getFXColor().setCRGB( CRGB::Red );
     seg->getFX()->setMovement( FFXBase::MovementType::MVT_FORWARD );
     seg->setOpacity(128|
-    
+
     seg = fxctrlr.addSegment( "Center", 33, 66 );
     seg->setFX( new FirstLightFX( seg->getLength() ) );
     seg->getFX()->getFXColor().setCRGB( CRGB::Blue );
     seg->getFX()->setMovement( FFXBase::MovementType::MVT_BACKFORTH );
     seg->setOpacity(128);
-    
+
     seg = fxctrlr.addSegment( "Right", 67, 99 );
     seg->setFX( new FirstLightFX( seg->getLength() ) );
     seg->getFX()->getFXColor().setCRGB( CRGB::Green );
@@ -330,7 +332,7 @@ Now we have 4 versions of this effect running:
 
 Note that the main loop remains unchanged - just one line of code:
 
-```c++
+```{cpp}
 void loop() {
   fxctrlr.update();
 }
@@ -356,11 +358,11 @@ Changes to brightness and opacity, both utilize *auto-fader* settings.  This mea
 #### Overlay Effects
 <a id="markdown-Overlay%20Effects" name="Overlay%20Effects"></a>
 
-Overlay effects are momentary sequences that can be run over existing effects.  Overlay sequences are run over the top of the primary segment they are typically short sequences, which run one or more times.  Depending on how they are written - then can overlay the entire strip, just a portion, or a moving section leaving the remaining animations running in the background.  There are 2 example overlay effects in the FFXCoreEffects.h file ```PulseOverlayFX``` and ```WaveOverlayFX```.  
+Overlay effects are momentary sequences that can be run over existing effects.  Overlay sequences are run over the top of the primary segment they are typically short sequences, which run one or more times.  Depending on how they are written - then can overlay the entire strip, just a portion, or a moving section leaving the remaining animations running in the background.  There are 2 example overlay effects in the FFXCoreEffects.h file ```PulseOverlayFX```, ```ZipOverlayFX``` and ```WaveOverlayFX``` (WaveOverlayFX is limited to strips with over 54 pixels).  
 
 Adding an overlay effect is as easy as adding an effect, however overlays are added at the controller, rather than the segment.  Only one overlay effect may be added at a given time.  Overlay effects are automatically removed and deleted when they have completed so once they've been added, nothing more needs to be done.  Here's what the addition of an overlay looks like:
 
-```c++
+```{cpp}
 PulseOverlayFX *newFX= new PulseOverlayFX( fxctrlr.getPrimarySegment()->getLength(), 220, 1, color );
     newFX->setPixelRange( 34, 64 );
     fxctrlr.setOverlayFX(newFX);  
@@ -380,14 +382,14 @@ There are two timer classes used for various functions throughout the framework.
 
 Here is sample code:
 
-```c++
+```{cpp}
  StepTimer timer( 1000 );
  //...
  timer.start();
  //...
  while (true) {
    if timer.isUp() {
-     // do stuff here - realize that stuff done here is "after cycle" so each cycle will 
+     // do stuff here - realize that stuff done here is "after cycle" so each cycle will
      // use the time elapsed by the timer PLUS whatever time is taken by steps performed here.
      timer.step();  // timer will be "up" again exactly 1000 ms after this line...       
      // ...or do stuff here - this is occuring while the timer is "running".  So, as long
@@ -397,4 +399,3 @@ Here is sample code:
   }
 ```
 See FlexTimer.h for details on StepTimer and FlexTimer classes.
-

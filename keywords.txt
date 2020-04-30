@@ -47,6 +47,7 @@ getFXID	KEYWORD2
 setInterval	KEYWORD2
 setColor	KEYWORD2
 getMovement	KEYWORD2
+getCurrMovement	KEYWORD2
 setMovement	KEYWORD2
 getFXColor	KEYWORD2
 getColor	KEYWORD2
@@ -65,6 +66,7 @@ getCurrVPhase	KEYWORD2
 getCurrCycle	KEYWORD2
 getCurrVCycle	KEYWORD2
 getMovementPhase	KEYWORD2
+getMovementVPhase	KEYWORD2
 getNumLeds	KEYWORD2
 getVCycleRange	KEYWORD2
 setVCycleRange	KEYWORD2
@@ -163,7 +165,6 @@ getPrimarySegment	KEYWORD2
 getStripController	KEYWORD2
 getUpdateMillis	KEYWORD2
 setOverlayFX	KEYWORD2
-removeOverlayFX	KEYWORD2
 getOverlayFX	KEYWORD2
 getFXName	KEYWORD2
 getBrightness	KEYWORD2
@@ -176,6 +177,7 @@ FX_STOPPED	LITERAL1
 FX_OVERLAY_STARTED	LITERAL1
 FX_OVERLAY_STOPPED	LITERAL1
 FX_OVERLAY_COMPLETED	LITERAL1
+FX_OVERLAY_UPDATED	LITERAL1
 FX_PAUSED	LITERAL1
 FX_RESUMED	LITERAL1
 FX_BRIGHTNESS_CHANGED	LITERAL1
@@ -191,9 +193,13 @@ FFXFrameProvider	KEYWORD1
 getCurrentFrame	KEYWORD2
 getCrossFade	KEYWORD2
 setCrossFade	KEYWORD2
+getCrossFadePref	KEYWORD2
+setCrossFadePref	KEYWORD2
+checkCrossFade	KEYWORD2
 getFadeMethodUp	KEYWORD2
 getFadeMethodDown	KEYWORD2
 setFadeMethod	KEYWORD2
+getCrossFadeThreshold	KEYWORD2
 getLastBlendSteps	KEYWORD2
 getLastBlendAmount	KEYWORD2
 updateFrame	KEYWORD2
@@ -236,6 +242,9 @@ FFXSegment	KEYWORD1
 onNotify	KEYWORD2
 getFX	KEYWORD2
 setFX	KEYWORD2
+getOverlay	KEYWORD2
+setOverlay	KEYWORD2
+removeOverlay	KEYWORD2
 getController	KEYWORD2
 isPrimary	KEYWORD2
 getStart	KEYWORD2
@@ -251,6 +260,7 @@ getOpacityObj	KEYWORD2
 setOpacityInterval	KEYWORD2
 isUpdated	KEYWORD2
 updateFrame	KEYWORD2
+updateOverlay	KEYWORD2
 hasDimmer	KEYWORD2
 removeDimmer	KEYWORD2
 setBrightness	KEYWORD2
@@ -384,4 +394,9 @@ GettingDimmerAgain	LITERAL1
 WaveOverlayFX	KEYWORD1
 fillPattern	KEYWORD2
 initLeds	KEYWORD2
+writeNextFrame	KEYWORD2
+ZipOverlayFX	KEYWORD1
+setPixelRange	KEYWORD2
+initLeds	KEYWORD2
+onVCycleStart	KEYWORD2
 writeNextFrame	KEYWORD2
