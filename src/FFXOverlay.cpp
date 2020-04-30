@@ -21,13 +21,13 @@ void FFXOverlay::applyOverlay( CRGB* overlay, CRGB* leds ) {
   }
 }
 
-void FFXOverlay::whileFrozen() {
+void FFXOverlay::whileFrozen( CRGB *currFrame ) {
    if ( GET_TIME_MILLIS >= nextCycleStart ) {
      unFreeze();
    }
 }
 
-void FFXOverlay::onVCycleEnd() {
+void FFXOverlay::onVCycleEnd( CRGB *currFrame ) {
    if (currVCycle>=repeat && !continuous) {
      completed = true;
    }

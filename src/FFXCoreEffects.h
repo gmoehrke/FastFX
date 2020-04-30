@@ -53,6 +53,7 @@
 
 #define WAVE_OVLY_FX_NAME "Wave"
 #define PULSE_OVLY_FX_NAME "Pulse"
+#define ZIP_OVLY_FX_NAME "Zip"
 
 const CRGBPalette16 Multi_p = CRGBPalette16( CRGB::Red,CRGB::Blue,CRGB::DarkOrange,CRGB::Green,
                                              CRGB(255,25,0), CRGB::Purple, CRGB(50,100,255), CRGB::Red,
@@ -76,6 +77,7 @@ DECLARE_GRADIENT_PALETTE( yellow_wave_gp );
 DECLARE_GRADIENT_PALETTE( green_wave_gp );
 DECLARE_GRADIENT_PALETTE( orange_wave_gp );
 DECLARE_GRADIENT_PALETTE( purple_wave_gp );
+DECLARE_GRADIENT_PALETTE( teal_wave_gp );
 DECLARE_GRADIENT_PALETTE( soft_white_dim_gp ); 
 
 /*!  NamedPalettes - Singleton class that allows access to pre-defined palettes by name:
@@ -107,6 +109,7 @@ class NamedPalettes {
       addNamedPalette( String("green"), green_wave_gp );
       addNamedPalette( String("orange"), orange_wave_gp );
       addNamedPalette( String("purple"), purple_wave_gp );
+      addNamedPalette( String("teal"), teal_wave_gp );
       addNamedPalette( String("softwhite_scale"), soft_white_dim_gp );   
       addNamedPalette( String("ocean"), OceanColors_p );
       addNamedPalette( String("cloud"), CloudColors_p );
@@ -892,5 +895,71 @@ class PulseOverlayFX : public FFXOverlay {
 };
 
 
+/*!
+ * ZipOverlayFX - Overlay Effect which moves in from both sides to the center and back.  Set movement to backward
+ * and it starts in the middle and works out and back.
+ */
+class ZipOverlayFX : public FFXOverlay {
+ 
+  public:
+    ZipOverlayFX( uint16_t initSize, uint8_t speed, uint8_t repeat ) : FFXOverlay(initSize, speed, repeat, 0) {
+      fxName = ZIP_OVLY_FX_NAME;
+      currColor.setColorMode(FFXColor::FFXColorMode::palette256);
+      setMovement( MVT_FORWARD );
+      setMaxAlpha(240);
+      setVCycleRange(100);
+      setPixelRange(0, numLeds-1);
+    }
+    
+    ZipOverlayFX( uint16_t initSize, uint8_t speed, uint8_t repeat, const CRGBPalette16 &pal) : ZipOverlayFX(initSize, speed, repeat) { currColor.setPalette(pal); }
+
+  void setPixelRange( uint16_t lo, uint16_t hi ) {
+      rangeLo = lo > (numLeds-1) ? numLeds-1 : lo;
+      rangeHi = hi < rangeLo ? rangeLo : ( hi > (numLeds-1) ? (numLeds-1) : hi );
+      rangeMid = (rangeHi-rangeLo+1)/2;
+   }
+
+    virtual void initLeds(CRGB *bufLeds ) override {
+      for (uint16_t i=rangeLo; i<=rangeHi; i++) {
+        bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(i,rangeLo,rangeHi,0,255) );
+      }      
+      setUpdated(true);
+    }
+
+   virtual void onVCycleStart( CRGB *currFrame ) override {
+     // set all pixels to transparent
+     for (uint16_t i=rangeLo; i<=rangeHi; i++) { alpha[i]=0; }
+     // if starting in the center - set the middle 3 pixels opaque and move outward from there...
+     if (getCurrMovement(getCurrVCycle())==MVT_BACKWARD) {
+        alpha[rangeMid+1]=255;
+        alpha[rangeMid]=255;
+        alpha[rangeMid-1]=255;
+     }
+     // call parent class' method in case it needs to do something
+     FFXOverlay::onVCycleStart( currFrame );
+   }
+
+   virtual void writeNextFrame( CRGB *bufLeds ) override {
+      uint8_t a;
+      uint16_t vindex = fixed_map( getMovementVPhase(), 1, getVCycleRange(), rangeLo, rangeHi);            
+      if (vindex <= rangeMid) { 
+        a = (getCurrMovement(getCurrVCycle())==MVT_BACKWARD) ? 0 : 255;        
+        alpha[vindex] = a; 
+        alpha[mirror(vindex)] = a;
+      }
+      else { 
+        a = (getCurrMovement(getCurrVCycle())==MVT_BACKWARD) ? 255 : 0;        
+        alpha[vindex-rangeMid-1] = a; 
+        alpha[mirror(vindex-rangeMid-1)] = a;        
+      }
+      setUpdated(true);
+    }
+
+  private:
+    uint16_t rangeLo = 0;
+    uint16_t rangeHi = 0;
+    uint16_t rangeMid = 0;
+    uint16_t slowdown = 1000;
+};
 
 #endif

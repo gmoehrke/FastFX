@@ -48,6 +48,13 @@ DEFINE_GRADIENT_PALETTE( purple_wave_gp )  {
     146, 55,   0,  100,
     255, 25,   0,   45};  
 
+DEFINE_GRADIENT_PALETTE( teal_wave_gp ) {
+      0,   0,140,  85,
+    106,   0,225, 120,
+    126,  85,255, 113,
+    146,   0,225, 120,
+    255,   0,140,  85};
+
 DEFINE_GRADIENT_PALETTE( soft_white_dim_gp ) {
     0,   0,   0,   0,
    50, 255, 184,  20,
@@ -55,9 +62,6 @@ DEFINE_GRADIENT_PALETTE( soft_white_dim_gp ) {
   240, 255, 184,  20,    // Note that the max entry goes in 240 since after that it will begin to wrap/blend back to the 0th entry
   255, 255, 184,  20 
 };     
-
-
-
 
 const CRGBPalette16 NamedPalettes::operator[](String index) {
           auto it = std::find_if( plist.begin(), plist.end(), [&index](const std::pair<String, const CRGBPalette16&>& element) -> bool {return index.equals(element.first);} );

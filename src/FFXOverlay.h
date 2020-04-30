@@ -49,9 +49,9 @@ class FFXOverlay : public FFXBase {
 
      std::vector<uint8_t> *getAlpha() { return &alpha; }
      virtual void applyOverlay( CRGB* overlay, CRGB* leds );
-     virtual void whileFrozen() override;
+     virtual void whileFrozen( CRGB *currFrame ) override;
 
-     virtual void onVCycleEnd() override;
+     virtual void onVCycleEnd( CRGB *currFrame ) override;
      bool isDone() { return completed; }
 
     void setLag( unsigned long newLag ) { if (repeatDelayms != newLag) { repeatDelayms = newLag; } }

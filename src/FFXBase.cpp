@@ -52,15 +52,28 @@ String FFXBase::movementTypeStr( MovementType mvt ) {
 }
 
 uint16_t FFXBase::getMovementPhase() {
-  switch (currMovement) {
+  switch (getCurrMovement(getCurrCycle())) {
     case MVT_FORWARD : { return currPhase; break; }
     case MVT_BACKWARD : { return mirror(currPhase-1)+1; break; }
-    case MVT_BACKFORTH : { return ( ((currCycle & 1)==1) ? mirror(currPhase-1)+1 : currPhase); break; }
     case MVT_RANDOM : { return 1+random16(numLeds-1); break; }
     case MVT_STILL : { return 1; break; }
     default : {return currPhase; break; }
   }
 }
+
+uint16_t FFXBase::getMovementVPhase() {
+  switch (getCurrMovement(getCurrVCycle())) {
+    case MVT_FORWARD : { return currVPhase; break; }
+    case MVT_BACKWARD : { return mirror(currVPhase-1,getVCycleRange())+1; break; }
+    case MVT_RANDOM : { return 1+random16(getVCycleRange()-1); break; }
+    case MVT_STILL : { return 1; break; }
+    default : {return currVPhase; break; }
+  }
+}
+
+FFXBase::MovementType FFXBase::getCurrMovement(uint16_t cycle) { 
+  return (currMovement==MVT_BACKFORTH) ? (cycle & 1 ==1) ? MVT_BACKWARD : MVT_FORWARD : currMovement;
+} 
 
 String  FFXBase::fadeMethodStr( FadeType value ) { 
     switch (value) {
@@ -135,25 +148,25 @@ void FFXBase::update(CRGB *frameBuffer ) {
             initialized = true;
          }
         if (currPhase == 1) {
-           cycleStart();
+           cycleStart( frameBuffer );
         }
         if (currVPhase == 1) {
-           vCycleStart();
+           vCycleStart( frameBuffer );
         }
         if (currColor.isUpdated()) { changed = true; }
         writeNextFrame( frameBuffer );
         uint16_t next = getNextPhase();
         if ( next==1 ) {
-          cycleEnd();
+          cycleEnd( frameBuffer );
         }
         uint16_t vNext = getNextVPhase();
         if ( vNext==1 ) {
-          vCycleEnd();
+          vCycleEnd( frameBuffer );
         }
         currPhase = next;
         currVPhase = vNext;
       }
-      else { whileFrozen(); }
+      else { whileFrozen( frameBuffer ); }
       if ( timeSinceStarted() > ((secondsElapsed+1)*1000) ) {
         onEachSecond(++secondsElapsed);
       }

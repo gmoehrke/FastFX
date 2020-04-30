@@ -122,6 +122,11 @@ public:
    virtual void setColor( CRGB newColor );
 
    MovementType getMovement() { return currMovement; }
+   
+   /*! Returns the current movement resulting from the MovementType setting - only differs from getMovement when using 
+       back and forth movement - this will return the current direction*/
+   FFXBase::MovementType getCurrMovement(uint16_t cycle);
+
    void setMovement( MovementType newMovement ) { 
      currMovement = newMovement;
      notify( getFXName(), "Movement", movementTypeStr(newMovement) ); 
@@ -193,6 +198,7 @@ public:
    unsigned long getCurrVCycle() { return currVCycle; }
 
    uint16_t getMovementPhase(); 
+   uint16_t getMovementVPhase();
 
    uint16_t getNumLeds() { return numLeds; }
    uint16_t getVCycleRange() { return vCycleRange; }
@@ -206,11 +212,11 @@ public:
    int timingDelta( unsigned long sourceMillis ) { return timingDelta( currPhase, sourceMillis ); }
 
    virtual void onEachSecond( unsigned long secsRunning ) { }
-   virtual void onCycleStart( ) { }
-   virtual void onCycleEnd( ) { }
-   virtual void whileFrozen() { }
-   virtual void onVCycleStart() { }
-   virtual void onVCycleEnd() { }
+   virtual void onCycleStart( CRGB *currFrame ) { }
+   virtual void onCycleEnd( CRGB *currFrame ) { }
+   virtual void whileFrozen( CRGB *currFrame ) { }
+   virtual void onVCycleStart( CRGB *currFrame ) { }
+   virtual void onVCycleEnd( CRGB *currFrame ) { }
    virtual void onBrightness( uint8_t newBrightness ) { }
    
    // initLeds is called once before the first call to writeNextFrame.  This can be overridden to do any additional initialization, clear the background, set colors, etc.
@@ -222,11 +228,11 @@ public:
    // that contains the current frame data and into which the next frame is written.
    virtual void writeNextFrame(CRGB *frameBuffer) = 0;
 
-   void vCycleStart() { onVCycleStart();  }
-   void vCycleEnd() { onVCycleEnd(); currVCycle += 1;  }
+   void vCycleStart( CRGB *currFrame ) { onVCycleStart( currFrame );  }
+   void vCycleEnd( CRGB *currFrame ) { onVCycleEnd( currFrame ); currVCycle += 1;  }
 
-   void cycleStart() { onCycleStart(); }
-   void cycleEnd() { onCycleEnd(); currCycle += 1;  }
+   void cycleStart( CRGB *currFrame ) { onCycleStart( currFrame ); }
+   void cycleEnd( CRGB *currFrame ) { onCycleEnd( currFrame ); currCycle += 1;  }
 
    void freeze() { frozen = true; }
    void unFreeze() { frozen = false; }
