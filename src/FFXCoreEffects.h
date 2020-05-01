@@ -928,7 +928,7 @@ class ZipOverlayFX : public FFXOverlay {
 
    virtual void onVCycleStart( CRGB *currFrame ) override {
      // set all pixels to transparent
-     for (uint16_t i=rangeLo; i<=rangeHi; i++) { alpha[i]=0; }
+     clearAlpha();
      // if starting in the center - set the middle 3 pixels opaque and move outward from there...
      if (getCurrMovement(getCurrVCycle())==MVT_BACKWARD) {
         alpha[rangeMid+1]=255;
@@ -938,6 +938,12 @@ class ZipOverlayFX : public FFXOverlay {
      // call parent class' method in case it needs to do something
      FFXOverlay::onVCycleStart( currFrame );
    }
+
+  virtual void onVCycleEnd( CRGB *currFrame ) override {
+     clearAlpha();
+     // call parent class' method in case it needs to do something
+     FFXOverlay::onVCycleEnd( currFrame );
+  }
 
    virtual void writeNextFrame( CRGB *bufLeds ) override {
       uint8_t a;

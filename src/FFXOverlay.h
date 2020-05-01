@@ -57,10 +57,10 @@ class FFXOverlay : public FFXBase {
     void setLag( unsigned long newLag ) { if (repeatDelayms != newLag) { repeatDelayms = newLag; } }
     unsigned long getLag() { return repeatDelayms; }
     
+    void clearAlpha() { for (uint16_t i = 0; i<numLeds; i++) { alpha[i] = 0; } }
     void setMaxAlpha( uint8_t newMax ) {
       if (newMax != maxAlpha) { maxAlpha = newMax; }
     }
-
     uint8_t getMaxAlpha() { return maxAlpha; }
     
   protected:

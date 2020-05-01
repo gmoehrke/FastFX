@@ -17,7 +17,6 @@
 #include "FFXSegment.h"
 
 #define PRIMARY_SEG_NAME "FXController::PrimarySegmentName"
-
 /*!  FFXController - Primary class used for displaying/running effects/colors/etc.  Initialize with a PixelController
  *   like: new FXController( new FFXFastLEDPixelController( ledBufferPtr, numberOfLEDs ) );
  * 
@@ -73,7 +72,13 @@
  *   FFXController.setFX( FX );
  *   OFX = new PulseOveralyFX( numberOfLEDs, speed );
  *   OFX.getFXColor().setPalette( myPal );
+ *
  *   FFXController.setOverlayFX( OFX );
+ * 
+ *   or 
+ * 
+ *   FFXController.findSegment("name")->setOverlay( OFX );
+ * 
  *   ```
  * 
  *   Note that FFXController() automatically deletes the overlay FX, when it is complete so it MUST be created using - new OverlayFX(...);
@@ -112,8 +117,10 @@ class FFXController {
     FFXPixelController *getStripController() { return ledController; }
     unsigned long getUpdateMillis() { return (getFX()==nullptr) ? 250 : getFX()->getInterval(); }
 
+    /*! Note v1.1.0 Overlay moved to FFXSegment - setOverlayFX is still implemented on FFXController
+     *  this method now adds the overlay to the primary segment.
+     */
     void setOverlayFX( FFXOverlay *newFX );
-    //void removeOverlayFX();
     FFXOverlay *getOverlayFX() { return getPrimarySegment()->getOverlay(); }
     
     String getFXName() { return (getFX() == nullptr ? "None" : getFX()->getFXName()); }
@@ -127,13 +134,11 @@ class FFXController {
      boolean initialized = false;                       
      uint16_t centerOffset = 0;
      std::vector<FFXSegment *> segments = std::vector<FFXSegment *>();
-     // FFXFrameProvider *ovlFrameView =nullptr;
 
   protected:
     FFXPixelController *ledController = nullptr;
-    // FFXOverlay *ovlFX = nullptr;
+    StepTimer minRefreshTimer = StepTimer(2000);
     CRGB *liveLeds = nullptr;
-    // CRGB *ovlLeds = nullptr;
     uint16_t numLeds;    
  };
 

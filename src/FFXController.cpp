@@ -25,6 +25,7 @@ void FFXController::initialize( FFXPixelController *initPC ) {
   numLeds = ledController->getNumLeds();
   liveLeds = ledController->getLeds();
   addSegment( PRIMARY_SEG_NAME, 0, numLeds-1, nullptr );
+  minRefreshTimer.start();
 }
 
 void FFXController::setFX( FFXBase *newFX ) {
@@ -35,40 +36,7 @@ void FFXController::setFX( FFXBase *newFX ) {
 
 void FFXController::setOverlayFX( FFXOverlay *newFX ) {
   getPrimarySegment()->setOverlay( newFX );
-  /*if (newFX) {
-    if (ovlFX) { 
-      onFXEvent( "", FX_OVERLAY_STOPPED, ovlFX->getFXName() ); 
-      removeOverlayFX(); 
-    }
-    if (ovlLeds == nullptr) {
-      ovlLeds = new CRGB[numLeds];
-    }
-    fill_solid( ovlLeds, numLeds, CRGB::Black );
-    if (ovlFrameView == nullptr) { 
-      ovlFrameView = new FFXFrameProvider(getPrimarySegment(), ovlLeds); 
-    }
-    ovlFX = newFX;
-    ovlFX->start();
-    onFXEvent(  "", FX_OVERLAY_STARTED, ovlFX->getFXName() );
-  }*/
 }
-
-/*
-void FFXController::removeOverlayFX() {
-  if (ovlFrameView) {
-    delete ovlFrameView;
-    ovlFrameView = nullptr;
-  }
-  if (ovlFX) {
-    delete ovlFX;
-    ovlFX = nullptr;
-   }
-  if (ovlLeds) {
-    delete ovlLeds;
-    ovlLeds = nullptr; 
-  } 
-}
-*/
 
 FFXSegment *FFXController::addSegment(String initTag, uint16_t initStartIdx, uint16_t initEndIdx, FFXBase* initEffect ) {
   FFXSegment *result = nullptr;
@@ -119,17 +87,12 @@ void FFXController::update() {
       seg->updateOverlay( liveLeds );
       if (seg->isUpdated()) { redraw=true; }
     }
-    /*
-    if (ovlFX) {
-      ovlFrameView->updateFrame( ovlLeds, ovlFX );
-      if (ovlFX->isDone()) { 
-        onFXEvent(  "", FX_OVERLAY_COMPLETED, ovlFX->getFXName()); 
-        removeOverlayFX(); 
-      }      
+    // v1.1.1 - add timer to force refresh at specified interval 
+    if (minRefreshTimer.isUp()) {
       redraw = true;
+      minRefreshTimer.step();
     }
-    */
-   if (redraw || true) {
+    if (redraw) {
       show();
       showCount++;
     }

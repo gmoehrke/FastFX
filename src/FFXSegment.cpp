@@ -166,14 +166,15 @@ void FFXSegment::setFX( FFXBase *newFX ) {
 
   void FFXSegment::updateOverlay( CRGB *frameBuffer ) {
       if (overlay) {
-        ovlFP->updateFrame( ovlLeds, overlay );
+        // v1.1.1 Moved this check here so overlay will not be removed before last frame is drawn
         if (overlay->isDone()) { 
           controller->onFXEvent(  getTag(), FFXController::FX_OVERLAY_COMPLETED, overlay->getFXName()); 
           removeOverlay(); 
         }  
         else {
-          overlay->applyOverlay( ovlLeds, &(frameBuffer[startIdx]));
+          ovlFP->updateFrame( ovlLeds, overlay );
           // controller->onFXEvent(  getTag(), FFXController::FX_OVERLAY_UPDATED, overlay->getFXName()); 
+          overlay->applyOverlay( ovlLeds, &(frameBuffer[startIdx]));
         }
       }
   }
