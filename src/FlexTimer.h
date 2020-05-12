@@ -28,9 +28,10 @@
  *                spread of the range between the minimum and maximum interval values.
  *                
  */
+#ifndef GP_TIMER_LIB
+
 #ifndef FLEX_TIMER_H
 #define FLEX_TIMER_H
-#define GP_TIMER_LIB
 
 #ifndef DEFAULT_TIMER_INTERVAL
 #define DEFAULT_TIMER_INTERVAL 250UL
@@ -136,5 +137,7 @@ class FlexTimer : public StepTimer {
     unsigned long currDelta = 0;                          // Can adjust a step while it is occuring by setting a delta value to be added to the interval - delaying the triger by currDelta ms.
     boolean startExpired = false;                         // Set to true to start timer in the "Up" state - isUp() will return true immediately until step() is called
 };  
+
+#endif
 
 #endif

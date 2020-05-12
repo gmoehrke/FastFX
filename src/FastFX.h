@@ -1,3 +1,6 @@
+#ifndef GP_TIMER_LIB
+  #include "FlexTimer.h"
+#endif 
 #include "FFXColor.h"
 #include "FFXBase.h"
 #include "FFXFrameProvider.h"
