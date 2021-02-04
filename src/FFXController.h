@@ -126,7 +126,7 @@ class FFXController {
     String getFXName() { return (getFX() == nullptr ? "None" : getFX()->getFXName()); }
     uint8_t getBrightness() { return getPrimarySegment()->getBrightness(); }
     void setBrightness( uint8_t newBrightness ) { getPrimarySegment()->setBrightness(newBrightness); }
-
+    void setMinRefreshInterval( unsigned long newVal ) {  if (newVal!=minRefreshTimer.getInterval()) { minRefreshTimer.setInterval(newVal);} }
     void show();
     void update();
 
@@ -137,7 +137,8 @@ class FFXController {
 
   protected:
     FFXPixelController *ledController = nullptr;
-    StepTimer minRefreshTimer = StepTimer(2000);
+    //  Changed default to much shorter time here due to some strips not keeping stable color at very dim levels.  Added setMinRefreshInterval() method to ease customization of min timer value.
+    StepTimer minRefreshTimer = StepTimer(500);
     CRGB *liveLeds = nullptr;
     uint16_t numLeds;    
  };

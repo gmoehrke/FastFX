@@ -58,7 +58,7 @@ public:
   inline uint8_t getCurrentOpacity() { if (opacity) { return opacity->getValue(); } else { return 255; } }
   inline FFXAFXFader *getOpacityObj() { return opacity; } 
   void setOpacityInterval( unsigned long newInterval ) { if (opacity) { opacity->setInterval(newInterval); } }
-
+  bool isFading() { return ((opacity ? (opacity->isFading()) : false) || (getActiveDimmer()->isFading())); }
   bool isUpdated();
   void updateFrame( CRGB *frameBuffer );
   void updateOverlay( CRGB *frameBuffer );

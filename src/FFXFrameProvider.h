@@ -57,7 +57,7 @@ class FFXFrameProvider {
     bool getCrossFade() { return crossFade; }
     void setCrossFade( boolean newValue );
     bool getCrossFadePref() { return crossFadePref; }
-    bool setCrossFadePref( boolean newValue ) { crossFadePref = newValue; setCrossFade(crossFadePref); }
+    bool setCrossFadePref( boolean newValue ) { crossFadePref = newValue; setCrossFade(crossFadePref); return crossFadePref; }
     void checkCrossFade( FFXBase *effect );
     FFXBase::FadeType getFadeMethodUp() { return fadeMethodUp; }    
     FFXBase::FadeType getFadeMethodDown() { return fadeMethodDown; }

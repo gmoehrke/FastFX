@@ -81,7 +81,7 @@ void FFXController::update() {
     bool redraw = false;
     for (auto seg : segments) {
         seg->updateFrame( liveLeds );
-        if (seg->isStateChanged()) { this->onFXStateChange(seg); seg->resetStateChanged(); }
+        if (seg->isStateChanged()) { if (!seg->isFading()) { this->onFXStateChange(seg); seg->resetStateChanged(); } }
     }
     for (auto seg : segments ) {
       seg->updateOverlay( liveLeds );

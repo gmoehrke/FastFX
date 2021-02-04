@@ -55,6 +55,14 @@ DEFINE_GRADIENT_PALETTE( teal_wave_gp ) {
     146,   0,225, 120,
     255,   0,140,  85};
 
+DEFINE_GRADIENT_PALETTE( white_wave_gp ) {
+    0, 255, 184,  20,
+  106, 255, 184,  20,
+  126, 255, 179,  40,
+  246, 255, 184,  20,    // Note that the max entry goes in 240 since after that it will begin to wrap/blend back to the 0th entry
+  255, 255, 184,  20 
+};
+
 DEFINE_GRADIENT_PALETTE( soft_white_dim_gp ) {
     0,   0,   0,   0,
    50, 255, 184,  20,

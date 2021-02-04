@@ -61,6 +61,13 @@ const CRGBPalette16 Multi_p = CRGBPalette16( CRGB::Red,CRGB::Blue,CRGB::DarkOran
                                              CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
 const uint8_t Multi_size = 7;                
 
+const CRGBPalette16 rwb_p = CRGBPalette16( CRGB::Red,CRGB(255,255,85),CRGB::Blue,CRGB(255,255,85),
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
+const uint8_t rwb_size = 4;                
+
+
 const CRGBPalette16 pacifica_palette_1 = 
       { 0x000507, 0x000409, 0x00030B, 0x00030D, 0x000210, 0x000212, 0x000114, 0x000117, 
         0x000019, 0x00001C, 0x000026, 0x000031, 0x00003B, 0x000046, 0x14554B, 0x28AA50 };
@@ -78,6 +85,7 @@ DECLARE_GRADIENT_PALETTE( green_wave_gp );
 DECLARE_GRADIENT_PALETTE( orange_wave_gp );
 DECLARE_GRADIENT_PALETTE( purple_wave_gp );
 DECLARE_GRADIENT_PALETTE( teal_wave_gp );
+DECLARE_GRADIENT_PALETTE( white_wave_gp );
 DECLARE_GRADIENT_PALETTE( soft_white_dim_gp ); 
 
 /*!  NamedPalettes - Singleton class that allows access to pre-defined palettes by name:
@@ -103,6 +111,7 @@ class NamedPalettes {
     NamedPalettes() { 
       plist = std::vector<std::pair<String, CRGBPalette16>>();
       addNamedPalette( String("multi"), Multi_p );
+      addNamedPalette( String("rwb"), rwb_p );      
       addNamedPalette( String("red"), red_wave_gp );
       addNamedPalette( String("yellow"), yellow_wave_gp );
       addNamedPalette( String("blue"), blue_wave_gp );
@@ -110,6 +119,7 @@ class NamedPalettes {
       addNamedPalette( String("orange"), orange_wave_gp );
       addNamedPalette( String("purple"), purple_wave_gp );
       addNamedPalette( String("teal"), teal_wave_gp );
+      addNamedPalette( String("white"), white_wave_gp );
       addNamedPalette( String("softwhite_scale"), soft_white_dim_gp );   
       addNamedPalette( String("ocean"), OceanColors_p );
       addNamedPalette( String("cloud"), CloudColors_p );
@@ -312,7 +322,7 @@ class MotionFX : public FFXBase {
     MotionFX( uint16_t initSize, CRGBPalette16 initPal ) : MotionFX( initSize, 20, initPal ) { };
     
     uint8_t getNormalizationRange() { return normRange; }
-    uint8_t setNormalizationRange( uint8_t newRange ) { normRange = newRange; }
+    uint8_t setNormalizationRange( uint8_t newRange ) { normRange = newRange; return normRange;}
 
 
     void updatePaletteHue( CRGBPalette16 &pal, uint8_t newHue, uint8_t newSat, uint8_t newVal ) {
@@ -396,7 +406,8 @@ class JuggleFX : public FFXBase {
          currColor.setPalette( ::Multi_p, ::Multi_size );
          currColor.setStepDelta( 1 );
          currColor.setShiftDelta( 0 );
-         currColor.reset();       
+         currColor.reset();
+         motion.reserve(balls);       
          for( uint16_t i = 0; i < balls; i++) { 
             motion.push_back(new FFXTrigMotion(initSize-1, FFXTrigMotion::TRIG_MOTION_TRI, 0, random8(0,8), random16(0, numLeds*2)));
         }
@@ -407,7 +418,6 @@ class JuggleFX : public FFXBase {
       for (auto m : motion) { 
         delete m; 
       }
-      motion.clear(); 
     }
     
     virtual void initLeds(CRGB *bufLeds) override {            
@@ -492,9 +502,8 @@ class CylonFX : public FFXBase {
  */
 class CycleFX : public FFXBase {
   private:
-    CHSV currHSV;
-    CHSV nextHSV;
-    uint8_t deltahue = 16;
+    CRGB currRGBColor;
+    CRGB nextRGBColor;
     StepTimer colorTimer = StepTimer( 5000, false );
     StepTimer transitionTimer = StepTimer( 1000, false );  
   
@@ -502,39 +511,39 @@ class CycleFX : public FFXBase {
     CycleFX( uint16_t initSize, unsigned long initTimer ) :FFXBase( initSize, initTimer, 10UL, 1000UL )  { 
       fxid = CYCLE_FX_ID;       
       fxName = CYCLE_FX_NAME;
-      currColor.setColorMode( FFXColor::singleCHSV );
-      currHSV = CHSV(random8(15)*16, 255, 255);
-      currColor.setCHSV( currHSV );      
+      currColor.setColorMode( FFXColor::palette16 );
+      currColor.setPalette( ::Multi_p, ::Multi_size );
+      currColor.setStepDelta( 1 );
+      currColor.setShiftDelta( 0 );
+      currColor.reset();       
     }
     
     CycleFX( uint16_t initSize) : CycleFX( initSize, 100 ) {};  
 
     virtual void initLeds( CRGB *bufLeds ) override {
-      fill_solid( bufLeds, numLeds, currColor.getCHSV() );
+      fill_solid( bufLeds, numLeds, currColor.getCRGB() );
       colorTimer.start();
     }
     
     virtual void writeNextFrame( CRGB *bufLeds ) override {
         if (colorTimer.isStarted() && colorTimer.isUp()) {
-          nextHSV = CHSV( random8(15)*16, currHSV.s, currHSV.v);
+          currColor.step();
+          //nextRGBColor = currColor.getCRGB();
           transitionTimer.start();
           colorTimer.stop();
         }
         if (transitionTimer.isStarted()) {
           if (transitionTimer.isUp()) {
-            currHSV = nextHSV;
-            currColor.setCHSV( currHSV );
-            fill_solid( bufLeds, numLeds, currColor.getCHSV() );            
+            currRGBColor = currColor.getCRGB();
+            fill_solid( bufLeds, numLeds, currColor.getCRGB() );            
             transitionTimer.stop();
             colorTimer.start();
             setUpdated(true);
           }
-          else {
-            CHSV transHSV;
-            transHSV = blend( currHSV, nextHSV, fixed_map( transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), 0, 255 ) );
-            if (transHSV != currColor.getCHSV()) {
-              currColor.setCHSV(transHSV );
-              fill_solid( bufLeds, numLeds, currColor.getCHSV() );
+          else {            
+            CRGB transRGB = blend( currRGBColor, currColor.getCRGB(), fixed_map( transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), 0, 255 ) );
+            if (transRGB != currRGBColor) {              
+              fill_solid( bufLeds, numLeds, transRGB );
               setUpdated(true);
             }
           }  
@@ -629,9 +638,12 @@ class DimUsingPaletteFX : public FFXBase {
     }
 
    virtual void onBrightness( uint8_t newBrightness ) override {
-      currBrightness = newBrightness;
-      currColor.setPaletteIndex(scale8(currBrightness,240));
-      currColor.setUpdated(true);
+      if (currBrightness!=newBrightness) {
+        currBrightness = newBrightness;
+        currColor.setPaletteIndex(scale8(currBrightness,240));
+        currColor.setUpdated(true);
+        setUpdated(true);
+      }
    }
 
    virtual void initLeds( CRGB *bufLeds ) override {
@@ -640,13 +652,13 @@ class DimUsingPaletteFX : public FFXBase {
    }
 
   virtual void writeNextFrame( CRGB *bufLeds ) override {
-    if (currColor.isUpdated()) {      
+    // if (currColor.isUpdated()) {      
       fill_solid( bufLeds, numLeds, getColor() );
       setUpdated(true);
-    } 
-    else {
-      setUpdated(false);
-    }
+    //} 
+    //else {
+    //  setUpdated(false);
+    //}
   }
   private:
     uint8_t currBrightness = 255;

@@ -14,7 +14,7 @@ FFXPixelController::FFXPixelController( CRGB *initLeds, uint16_t initNum ) {
 void FFXPixelController::setBrightness(uint8_t newBrightness) {
   if (newBrightness != currBrightness) {
     currBrightness = newBrightness;
-    updateBrightness( newBrightness );
-    show();
+    this->updateBrightness( newBrightness );
+    this->show();
   }
 }
