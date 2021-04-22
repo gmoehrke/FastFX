@@ -324,7 +324,7 @@ void setup() {
     seg->setFX( new FirstLightFX( seg->getLength() ) );
     seg->getFX()->getFXColor().setCRGB( CRGB::Red );
     seg->getFX()->setMovement( FFXBase::MovementType::MVT_FORWARD );
-    seg->setOpacity(128|
+    seg->setOpacity(128);
 
     seg = fxctrlr.addSegment( "Center", 33, 66 );
     seg->setFX( new FirstLightFX( seg->getLength() ) );

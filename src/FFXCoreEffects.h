@@ -218,7 +218,7 @@ class ChaseFX : public FFXRotate {
     uint16_t shiftDelay = 3;
 
   public:
-    ChaseFX( uint8_t initSize, uint8_t initSpeed ) : FFXRotate( initSize, initSpeed, 10UL, 2000UL ) {
+    ChaseFX( uint8_t initSize, uint8_t initSpeed ) : FFXRotate( initSize, initSpeed, 25UL, 2000UL ) {
       fxid = CHASE_FX_ID;
       fxName = CHASE_FX_NAME;
       currColor.setColorMode( FFXColor::FFXColorMode::palette16 );
@@ -371,7 +371,7 @@ class RainbowFX : public FFXBase {
     uint8_t deltahue = 0;
   
   public:
-    RainbowFX( uint16_t initSize, unsigned long initTimer ) :FFXBase( initSize, initTimer, 25UL, 1000UL )  { 
+    RainbowFX( uint16_t initSize, unsigned long initTimer ) :FFXBase( initSize, initTimer, 10UL, 1000UL )  { 
       fxid = RAINBOW_FX_ID;       
       fxName = RAINBOW_FX_NAME;
       deltahue = 256/numLeds;
@@ -399,7 +399,7 @@ class JuggleFX : public FFXBase {
     std::vector<FFXTrigMotion *> motion = std::vector<FFXTrigMotion *>();
 
   public:
-    JuggleFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 10UL, 1000UL ) {
+    JuggleFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 1UL, 1000UL ) {
          fxid = JUGGLE_FX_ID;  
          fxName = JUGGLE_FX_NAME;   
          currColor.setColorMode( FFXColor::FFXColorMode::palette16 );
@@ -459,7 +459,7 @@ class CylonFX : public FFXBase {
     bool twin = false;
 
   public:
-    CylonFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 5UL, 150UL ) {
+    CylonFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 1UL, 150UL ) {
       fxid = CYLON_FX_ID;
       fxName = CYLON_FX_NAME;
       mt.setLimit( initSize-1 );
