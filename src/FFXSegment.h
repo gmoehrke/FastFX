@@ -74,6 +74,7 @@ public:
   FFXAFDimmer *getActiveDimmer();
   uint8_t getBrightness();
   uint8_t getCurrentBrightness();
+  uint8_t getSetBrightness() { return( isPrimary() ? this->getBrightness() : (forcedOff ? savedBrightness : this->getBrightness() ));}
   inline String getTag() { return tag; }
   inline void setTag( String newTag ) { tag = newTag; }
   inline boolean isStateChanged() { return stateChanged; }
@@ -97,6 +98,9 @@ private:
     FFXController *controller = nullptr;
     FFXAFXFader *opacity = nullptr;
     boolean stateChanged = false;
+    boolean offWithPrimary = true;
+    boolean forcedOff = false;
+    uint8_t savedBrightness = 0;
     FFXSegment() {}
 };
 

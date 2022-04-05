@@ -59,13 +59,25 @@ const CRGBPalette16 Multi_p = CRGBPalette16( CRGB::Red,CRGB::Blue,CRGB::DarkOran
                                              CRGB(255,25,0), CRGB::Purple, CRGB(50,100,255), CRGB::Red,
                                              CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,
                                              CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
-const uint8_t Multi_size = 7;                
+const uint8_t Multi_size = 6;                
 
 const CRGBPalette16 rwb_p = CRGBPalette16( CRGB::Red,CRGB(255,255,85),CRGB::Blue,CRGB(255,255,85),
-                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,
+                                           CRGB::Red, CRGB::Black, CRGB::Black, CRGB::Black,
                                            CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,
                                            CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
 const uint8_t rwb_size = 4;                
+
+const CRGBPalette16 Valentine_p = CRGBPalette16( CRGB::Red,CRGB(255,109,130),CRGB(255,255,85),CRGB(255,0,127),
+                                           CRGB::Red, CRGB::Black, CRGB::Black, CRGB::Black,
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
+const uint8_t valentine_size = 4;                
+
+const CRGBPalette16 Irish_p = CRGBPalette16( CRGB::Green,CRGB::Black,CRGB::Black, CRGB::Green, 
+                                           CRGB(255,255,85), CRGB::Green, CRGB::Black, CRGB::Black, 
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
+const uint8_t irish_size = 5;                
 
 
 const CRGBPalette16 pacifica_palette_1 = 
@@ -169,12 +181,16 @@ class SolidFX : public FFXBase {
  */
 class PaletteFX : public FFXBase {
   public:
-     PaletteFX( uint8_t initSize ) : FFXBase( initSize, (uint8_t)200, 10, 1000 ) {
+     PaletteFX( uint8_t initSize ) : FFXBase( initSize, (uint8_t)200, 10, 250 ) {
        fxid = PALETTE_FX_ID;
        fxName = PALETTE_FX_NAME;
        currColor.setColorMode( FFXColor::FFXColorMode::palette256);
-       currColor.setPalette( Multi_p );
+       currColor.setPalette( Multi_p, 4 );       
      }
+
+  void setPalette( CRGBPalette16 newPalette, uint8_t newRange ) {
+    currColor.setPalette( newPalette, newRange );
+  }
 
   virtual void writeNextFrame( CRGB *bufLeds ) {
     uint16_t currPhase = getCurrPhase();
@@ -182,8 +198,8 @@ class PaletteFX : public FFXBase {
       for (uint16_t i = 0; i<numLeds; i++) {
         if (currColor.getColorMode()==FFXColor::FFXColorMode::palette256) {
           switch (getMovement()) {
-            case FFXBase::MVT_FORWARD : { bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(StepTimer::subtractOffsetWithWrap(currPhase,i,numLeds), 1, numLeds, 0, 255), 255, LINEARBLEND ); break; }
-            case FFXBase::MVT_BACKWARD: { bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(StepTimer::addOffsetWithWrap(currPhase,i,numLeds), 1, numLeds, 0, 255), 255, LINEARBLEND ); break; }
+            case FFXBase::MVT_FORWARD : { bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(StepTimer::subtractOffsetWithWrap(currPhase,i,numLeds), 1, numLeds, 0, 16*currColor.getPaletteRange()-1), 255, LINEARBLEND ); break; }
+            case FFXBase::MVT_BACKWARD: { bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(StepTimer::addOffsetWithWrap(currPhase,i,numLeds), 1, numLeds, 0, 16*currColor.getPaletteRange()-1), 255, LINEARBLEND ); break; }
             default: { bufLeds[i] =  ColorFromPalette( currColor.getPalette(), fixed_map(i,  0, numLeds-1, 0, 255), 255, LINEARBLEND ); break; }
           }
         }
@@ -311,7 +327,7 @@ class MotionFX : public FFXBase {
     uint8_t normRange = 136;
       
   public:
-    MotionFX( uint16_t initSize, unsigned long initInterval, CRGBPalette16 initPal ) : FFXBase( initSize, initInterval, 10UL, 250UL ) {
+    MotionFX( uint16_t initSize, unsigned long initInterval, CRGBPalette16 initPal ) : FFXBase( initSize, initInterval, 1UL, 100UL ) {
       fxid = MOTION_FX_ID;
       fxName = MOTION_FX_NAME;
       currColor.setColorMode( FFXColor::FFXColorMode::singleCHSV );
@@ -505,10 +521,10 @@ class CycleFX : public FFXBase {
     CRGB currRGBColor;
     CRGB nextRGBColor;
     StepTimer colorTimer = StepTimer( 5000, false );
-    StepTimer transitionTimer = StepTimer( 1000, false );  
+    StepTimer transitionTimer = StepTimer( 2000, false );  
   
   public:
-    CycleFX( uint16_t initSize, unsigned long initTimer ) :FFXBase( initSize, initTimer, 10UL, 1000UL )  { 
+    CycleFX( uint16_t initSize, unsigned long initTimer ) :FFXBase( initSize, initTimer, 10UL, 100UL )  { 
       fxid = CYCLE_FX_ID;       
       fxName = CYCLE_FX_NAME;
       currColor.setColorMode( FFXColor::palette16 );
@@ -518,33 +534,35 @@ class CycleFX : public FFXBase {
       currColor.reset();       
     }
     
-    CycleFX( uint16_t initSize) : CycleFX( initSize, 100 ) {};  
+    CycleFX( uint16_t initSize) : CycleFX( initSize, 1 ) {};  
 
     virtual void initLeds( CRGB *bufLeds ) override {
-      fill_solid( bufLeds, numLeds, currColor.getCRGB() );
+      currRGBColor = currColor.getCRGB();
+      fill_solid( bufLeds, numLeds, currRGBColor );
       colorTimer.start();
     }
     
     virtual void writeNextFrame( CRGB *bufLeds ) override {
         if (colorTimer.isStarted() && colorTimer.isUp()) {
           currColor.step();
-          //nextRGBColor = currColor.getCRGB();
+          nextRGBColor = currColor.getCRGB();
           transitionTimer.start();
           colorTimer.stop();
         }
         if (transitionTimer.isStarted()) {
           if (transitionTimer.isUp()) {
-            currRGBColor = currColor.getCRGB();
-            fill_solid( bufLeds, numLeds, currColor.getCRGB() );            
+            currRGBColor = nextRGBColor; //currColor.getCRGB();
+            fill_solid( bufLeds, numLeds, currRGBColor );            
             transitionTimer.stop();
             colorTimer.start();
             setUpdated(true);
           }
           else {            
-            CRGB transRGB = blend( currRGBColor, currColor.getCRGB(), fixed_map( transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), 0, 255 ) );
+            CRGB transRGB = blend( currRGBColor, nextRGBColor, fixed_map( transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), 0, 255 ));
             if (transRGB != currRGBColor) {              
               fill_solid( bufLeds, numLeds, transRGB );
               setUpdated(true);
+              //currRGBColor = transRGB;
             }
           }  
         }

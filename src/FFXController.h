@@ -111,8 +111,13 @@ class FFXController {
 
     FFXSegment *addSegment(String initTag, uint16_t initStartIdx, uint16_t initEndIdx, FFXBase* initEffect );
     FFXSegment *addSegment(String initTag, uint16_t initStartIdx, uint16_t initEndIdx) { return addSegment(initTag, initStartIdx, initEndIdx, nullptr ); }
-    FFXSegment *findSegment(String &tag);
+    FFXSegment *findSegment(String tag);
     FFXSegment *getPrimarySegment() { return segments[0]; }
+    void notifySegments( boolean includePrimary, String source, String attribute, String value ) {
+      for (FFXSegment *seg : segments) {
+        if (includePrimary || !seg->isPrimary()) { seg->onNotify(source, attribute, value); }
+      }
+    }
   
     FFXPixelController *getStripController() { return ledController; }
     unsigned long getUpdateMillis() { return (getFX()==nullptr) ? 250 : getFX()->getInterval(); }
@@ -133,9 +138,9 @@ class FFXController {
   private:
      boolean initialized = false;                       
      uint16_t centerOffset = 0;
-     std::vector<FFXSegment *> segments = std::vector<FFXSegment *>();
 
   protected:
+    std::vector<FFXSegment *> segments = std::vector<FFXSegment *>();
     FFXPixelController *ledController = nullptr;
     //  Changed default to much shorter time here due to some strips not keeping stable color at very dim levels.  Added setMinRefreshInterval() method to ease customization of min timer value.
     StepTimer minRefreshTimer = StepTimer(500);

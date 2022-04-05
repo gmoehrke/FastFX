@@ -7,6 +7,7 @@
 #ifndef FFXCOLOR_H
 #define FFXCOLOR_H
 
+
 #include "FastLED.h"
 
 /*! FFXColor - Provides a common interface for dealing with color, color changes, and palettes in effects.

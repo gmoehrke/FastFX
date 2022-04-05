@@ -81,8 +81,8 @@ class FFXFrameProvider {
     FFXSegment *segment;
     CRGB *currFrameBuffer=nullptr;            // buffer containing the current frame - during crossfading this keeps the original frame
     CRGB *nextFrameBuffer=nullptr;            // buffer containing the next frame - this is the frame we are cross-fading to
-    bool crossFade = false;
-    bool crossFadePref = false;
+    bool crossFade = true;
+    bool crossFadePref = true;
     unsigned long fadeThresholdms = 6;        // Minimum number of ms remaining between cycle steps where there is still time to draw a cross faded frame
     FFXBase::FadeType fadeMethodUp = FFXBase::FadeType::LINEAR;
     FFXBase::FadeType fadeMethodDown = FFXBase::FadeType::LINEAR;

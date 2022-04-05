@@ -108,7 +108,7 @@ void FFXFrameProvider::getLastFrame(CRGB *destLEDs, uint16_t startIdx, uint16_t 
     memmove8( destLEDs, &(currFrameBuffer[startIdx]), sizeof(CRGB)*(endIdx-startIdx+1) );
   }
   else {
-    if ((priorBlendAmt == 0)||(!nextFrameBuffer)&&currFrameBuffer) {
+    if ((priorBlendAmt == 0)||((!nextFrameBuffer)&&currFrameBuffer)) {
       memmove8( destLEDs, &(currFrameBuffer[startIdx]), sizeof(CRGB)*(endIdx-startIdx+1) );
     }
     else if ((priorBlendAmt == 255)&&(nextFrameBuffer)) {

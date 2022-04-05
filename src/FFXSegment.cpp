@@ -39,15 +39,28 @@ FFXSegment::FFXSegment( String initTag, uint16_t initStartIdx, uint16_t initEndI
      if (attribute=="LOG") { 
        controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOG, value ); 
      }
-     if (attribute=="Interval") {
+     else if (attribute=="Interval") {
         frameView->checkCrossFade(effect);
+     }
+     else if (attribute=="Brightness" && source=="Primary") {
+        if (offWithPrimary && !isPrimary()) {
+          if (value == "0") {
+            savedBrightness = getBrightness();
+            this->setBrightness(0);
+            forcedOff = true;
+          }
+          else {            
+            forcedOff = false;
+            this->setBrightness(savedBrightness);            
+          }
+        }
      }
      else {
        controller->onFXEvent( getTag(), FFXController::FXEventType::FX_PARAM_CHANGE, attribute );
        frameView->checkCrossFade(effect);
      }
      stateChanged = true;
-  }
+  }  
 
 void FFXSegment::setFX( FFXBase *newFX ) { 
     if (effect) {
@@ -106,7 +119,10 @@ void FFXSegment::setFX( FFXBase *newFX ) {
       result = true; 
     }
     else if (effect) {
-      result = (effect->isStarted());
+      result = (effect->isStarted() //&&
+                //(this->isPrimary() ||
+                //!(offWithPrimary && getController()->getPrimarySegment()->getCurrentBrightness()==0))
+                );
     }    
     return result;
   } 
@@ -120,13 +136,19 @@ void FFXSegment::setFX( FFXBase *newFX ) {
   }
 
   void FFXSegment::setBrightness( uint8_t newBrightness ) {
-    if (!hasDimmer()) {
-      localDimmer = new FFXAFDimmer(500, controller->getPrimarySegment()->getBrightness() );
-      controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOCAL_BRIGHTNESS_ENABLED, "Segment:"+ (isPrimary() ? "Primary" : getTag()) );
+    if (forcedOff) {
+        savedBrightness = newBrightness;
+    }        
+    else {
+      if (!hasDimmer()) {
+        localDimmer = new FFXAFDimmer(500, controller->getPrimarySegment()->getBrightness() );
+        controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOCAL_BRIGHTNESS_ENABLED, "Segment:"+ (isPrimary() ? "Primary" : getTag()) );
+      }
+      localDimmer->setTarget(newBrightness);
+      controller->onFXEvent( getTag(), FFXController::FXEventType::FX_BRIGHTNESS_CHANGED, "Segment:"+ (isPrimary() ? "Primary" : getTag()) );
+      if (isPrimary()) { controller->notifySegments( false, "Primary", "Brightness", String(newBrightness)); }
+      stateChanged = true;
     }
-    localDimmer->setTarget(newBrightness);
-    controller->onFXEvent( getTag(), FFXController::FXEventType::FX_BRIGHTNESS_CHANGED, "Segment:"+ (isPrimary() ? "Primary" : getTag()) );
-    stateChanged = true;
   }
 
   uint8_t FFXSegment::getBrightness() { 

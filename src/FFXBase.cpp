@@ -72,7 +72,7 @@ uint16_t FFXBase::getMovementVPhase() {
 }
 
 FFXBase::MovementType FFXBase::getCurrMovement(uint16_t cycle) { 
-  return (currMovement==MVT_BACKFORTH) ? (cycle & 1 ==1) ? MVT_BACKWARD : MVT_FORWARD : currMovement;
+  return (currMovement==MVT_BACKFORTH) ? ((cycle & 1) ==1) ? MVT_BACKWARD : MVT_FORWARD : currMovement;
 } 
 
 String  FFXBase::fadeMethodStr( FadeType value ) { 
@@ -93,12 +93,14 @@ CRGB FFXBase::alphaBlend( CRGB &a, CRGB &b, uint8_t alpha, FadeType ftUp, FadeTy
           switch (ftUp) {
             case GAMMA : { alpha = pgm_read_byte(&gamma8[alpha]); break; }
             case CUBIC : { alpha = ease8InOutApprox(alpha); break; } 
+            case LINEAR : { break; }
           }
         } 
         else if (bLuma > aLuma) {
           switch (ftDown) {
             case GAMMA : { alpha = pgm_read_byte(&gamma8[alpha]); break; }
             case CUBIC : { alpha = ease8InOutApprox(alpha); break; } 
+            case LINEAR : { break; }
           }
         }
       }

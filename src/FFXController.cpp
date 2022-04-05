@@ -24,6 +24,8 @@ void FFXController::initialize( FFXPixelController *initPC ) {
   ledController->setBrightness(255);
   numLeds = ledController->getNumLeds();
   liveLeds = ledController->getLeds();
+  fill_solid( liveLeds, CRGB::Black, numLeds );
+  ledController->show();
   addSegment( PRIMARY_SEG_NAME, 0, numLeds-1, nullptr );
   minRefreshTimer.start();
 }
@@ -55,7 +57,7 @@ FFXSegment *FFXController::addSegment(String initTag, uint16_t initStartIdx, uin
   return result;
 }
 
-FFXSegment *FFXController::findSegment(String &tag) {
+FFXSegment *FFXController::findSegment(String tag) {
     auto it = std::find_if( segments.begin(), segments.end(), [&tag](FFXSegment*& element) -> bool { return element->compareTag(tag); } ); 
     if (it==segments.end()) { 
       return getPrimarySegment(); 

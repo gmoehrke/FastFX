@@ -1,8 +1,8 @@
 # FFX - FastFX library
-<a id="markdown-FFX%20-%20FastFX%20library" name="FFX%20-%20FastFX%20library"></a>
+<a id="markdown-ffx---fastfx-library" name="ffx---fastfx-library"></a>
 
 ## Table of Contents
-<a id="markdown-Table%20of%20Contents" name="Table%20of%20Contents"></a>
+<a id="markdown-table-of-contents" name="table-of-contents"></a>
 
 <!-- TOC depthfrom:2 withlinks:true -->
 
@@ -29,7 +29,7 @@
 <!-- /TOC -->
 
 ## Intro
-<a id="markdown-Intro" name="Intro"></a>
+<a id="markdown-intro" name="intro"></a>
 
 Thanks for checking out FFX.  This project grew out my desire to have a single code-base for several different LED Strips I have installed in various locations around my home.  My goal was to have a single firmware image that could be downloaded on every controller, yet have the ability to change the colors/effects/etc. independently.  That goal has been realized in a forthcoming framework that utilizes MQTT, JSON and a message based system for configuration and control of individual nodes (LED Controllers, sensors, relays, etc).  The FFX library is the foundation for the LED controller used in that architecture.
 
@@ -40,7 +40,7 @@ Final Note - The examples included in the framework are optimized for WS2811 str
 Complete Documentation is available here:  [https://gmoehrke.github.io/FastFX](https://gmoehrke.github.io/FastFX)
 
 ## Version History
-<a id="markdown-Version%20History" name="Version%20History"></a>
+<a id="markdown-version-history" name="version-history"></a>
 
 v1.0.0 
   - Initial release
@@ -53,7 +53,7 @@ v1.1.0
 
 
 ## Overview
-<a id="markdown-Overview" name="Overview"></a>
+<a id="markdown-overview" name="overview"></a>
 
 FFX is an Arduino library that for creating LED Strip effects and animations.  The principle idea behind the library is to provide a set of reusable classes/objects to create and display multiple colors/animations/etc. consistently in any sketch.  Effects are written as classes/subclasses and displayed by a common controller object. By defining effects as objects, FFX is able to provide capabilities that are common to all effects without the need to custom code them for each individual effect.  These capabilities include:
 
@@ -67,14 +67,14 @@ FFX is an Arduino library that for creating LED Strip effects and animations.  T
 - Auto-faders for dimming and transparency - allows for smooth transitions when changing brightness and/or transparency levels.  Timing can be set independently for each.  
 
 ### Dependency
-<a id="markdown-Dependency" name="Dependency"></a>
+<a id="markdown-dependency" name="dependency"></a>
 
 The FastFX library requires the FastLED library: https://github.com/FastLED/FastLED.  Users attempting to use this library should have a basic understanding of FastLED and have the library installed and working (version 3.3 or greater).
 
 The library also makes use of 2 timer classes (StepTimer, FlexTimer).  These are included in the repository, but may be released as a separate library at some time in the future.
 
 ## Model
-<a id="markdown-Model" name="Model"></a>
+<a id="markdown-model" name="model"></a>
 
 The programming model for using FastFX differs slightly from coding directly with FastLED. The following is a brief description of the classes needed to create a sketch using FastFX:
 
@@ -93,10 +93,10 @@ The programming model for using FastFX differs slightly from coding directly wit
 - **FFXController** - This is the main interface for the FastFX framework.  Every FastFX sketch will create an FFXController object and then use that object to define segments, start/stop effects and set various other parameters (brightness, opacity, speed, etc).
 
 ## Tutorial & Examples
-<a id="markdown-Tutorial%20%26%20Examples" name="Tutorial%20%26%20Examples"></a>
+<a id="markdown-tutorial-%26-examples" name="tutorial-%26-examples"></a>
 
 ### FirstLight
-<a id="markdown-FirstLight" name="FirstLight"></a>
+<a id="markdown-firstlight" name="firstlight"></a>
 
 Since each effect is a standalone class, creating a new one is a straightforward task.  Taking from the "FirstLight" example code in the FastLED library, we will create a FastFX version and see how we gain additional functionality with FastFX.  First we'll construct the effect class, which is always a descendant of FFXBase:
 
@@ -133,7 +133,7 @@ class FirstLightFX : public FFXBase {
 ```
 
 #### Cycle and Phase
-<a id="markdown-Cycle%20and%20Phase" name="Cycle%20and%20Phase"></a>
+<a id="markdown-cycle-and-phase" name="cycle-and-phase"></a>
 
 Note the use of `getCurrPhase()` here.  All effects have running counters for _Phase_ and _Cycle_.  The Phase counter starts at 1, and increments for each step until it reaches the number of pixels covered by that effect.  This is considered one cycle.  Once a cycle is completed, the phase is reset to 1.  The `getCurrCycle()` method returns the count of how many times this has been repeated.  For an effect running at an interval of 10 (milliseconds) with 100 pixels, a single phase will take 10 milliseconds, while a full cycle will take 1 second (1000 milliseconds).   
 
@@ -142,7 +142,7 @@ FFXBase also includes capabilities to specify virtual cycle and phase settings w
 Note that the use of Phase and Cycle in implementing effects is not mandatory. An effect can completely ignore them and still be 100% functional.  They simply provide some convenient reference points and can be very useful for calculating motion and timing when used appropriately.
 
 #### Initialization
-<a id="markdown-Initialization" name="Initialization"></a>
+<a id="markdown-initialization" name="initialization"></a>
 
 For FastLED, we need the CRGB array that represents the pixels in our strip, and we will also need a FFXController object for FastFX.  So, the following 2 globals are defined:
 
@@ -174,7 +174,7 @@ void loop() {
 The full code can be found in [examples/FirstLight_1/FirstLight_1.ino](examples/FirstLight_1/FirstLight_1.ino).  
 
 #### Speed and Cross-fade
-<a id="markdown-Speed%20and%20Cross-fade" name="Speed%20and%20Cross-fade"></a>
+<a id="markdown-speed-and-cross-fade" name="speed-and-cross-fade"></a>
 
 When running this example, note that you may select a different interval value to control the speed of the animation.  Thas may be done by calling:
 ```c++
@@ -186,10 +186,10 @@ fxctrlr.getPrimarySegment()->getFrameProvider()->setCrossFade(false)
 ```
 
 ### FirstLight 2
-<a id="markdown-FirstLight%202" name="FirstLight%202"></a>
+<a id="markdown-firstlight-2" name="firstlight-2"></a>
 
 #### MovementType
-<a id="markdown-MovementType" name="MovementType"></a>
+<a id="markdown-movementtype" name="movementtype"></a>
 
  In the above example, the movement is uni-directional - in only goes from low to high and starts over.  All FastFX effect have a MovementType setting, which can be set using `setMovement( MovementType )` and inspected using `getMovement()`.  This may be used to support more flexible patterns of motion without having to code each individually.  The Phase of the effect can be inspected normally through `getCurrPhase()`, but it may also be interpreted through `getMovementPhase()`, which will interpret the Phase in respect to the MovementType setting on the effect as follows:
 
@@ -203,7 +203,7 @@ fxctrlr.getPrimarySegment()->getFrameProvider()->setCrossFade(false)
 
 
 #### Color
-<a id="markdown-Color" name="Color"></a>
+<a id="markdown-color" name="color"></a>
 
 All effect objects (descendant of FFXBase) have a FFXColor object that may be accessed by calling `getFXColor()`.  This can be used to modify the way the color behaves any time after the initial construction.  The FFXColor object returned has methods to change and inspect the current color.  The `getCRGB()` method returns the current CRGB value for a given pixel based on the settings and the *mode* specified for the FFXColor object.  Mode may be set to the following values:
 
@@ -274,7 +274,7 @@ palette16:
 ```
 
 #### NamedPalettes
-<a id="markdown-NamedPalettes" name="NamedPalettes"></a>
+<a id="markdown-namedpalettes" name="namedpalettes"></a>
 
 Note in the above palette examples, the use of a singleton object "NamedPalettes".  This is a class defined in FFXCoreEffects and may be used to reference global palettes using a String rather than hard-coding them.  By default, most of the global FastLED palettes are present and available for use. They are obtained using `NamedPalettes::getInstance()[ String paletteName ]`.  
 
@@ -303,7 +303,7 @@ NamedPalettes.getInstance().addNamedPalette( "myPalette", myPalette_p );
 ```
 
 ### FirstLight 3
-<a id="markdown-FirstLight%203" name="FirstLight%203"></a>
+<a id="markdown-firstlight-3" name="firstlight-3"></a>
 
 Now that we've built an effect, we can set that effect on any segment that we've defined on our FFXController.  So far, we've only used the default Primary segment.  In the next example, we will create 3 secondary segments on our controller and have a variation of our effect running on each segment (including the Primary segment).  This only requires modificaitons to our initialization block in the setup() function:
 
@@ -354,7 +354,7 @@ void loop() {
 ```
 
 #### Segments
-<a id="markdown-Segments" name="Segments"></a>
+<a id="markdown-segments" name="segments"></a>
 
 The above code illustrates how to create segments using `addSegment()` Each segment is given a *Name* (or *Tag*).  This name is used to reference the segment any time after it has been added.  A pointer to the segment is returned by the `AddSegment()` method, but may also be obtained later using the `FFXController.findSegment(String name)` method.  Once the segment has been created, the following methods may be used to control how it is shown:
 
@@ -371,7 +371,7 @@ Changes to brightness and opacity, both utilize *auto-fader* settings.  This mea
 
 
 #### Overlay Effects
-<a id="markdown-Overlay%20Effects" name="Overlay%20Effects"></a>
+<a id="markdown-overlay-effects" name="overlay-effects"></a>
 
 Overlay effects are momentary sequences that can be run over existing effects.  Overlay sequences are run over the top of ANY segment they are typically short sequences, which run one or more times.  Depending on how they are written - then can overlay the entire segment, just a portion, or a moving section leaving the remaining animations running in the background.  There are 3 example overlay effects in the FFXCoreEffects.h file ```PulseOverlayFX```, ```ZipOverlayFX``` and ```WaveOverlayFX``` (WaveOverlayFX is limited to strips with over 54 pixels).  
 
@@ -390,7 +390,7 @@ or
 ```
 
 #### Timers
-<a id="markdown-Timers" name="Timers"></a>
+<a id="markdown-timers" name="timers"></a>
 
 There are two timer classes used for various functions throughout the framework.  These are a handy way to time events without having to rely on callbacks or iterrupts.  I refer to these as *passive* timers, because they do not actively fire when the time has elapsed - they must be checked repeatedly to see if the time has expired, then re-armed if needed.  The usage model is as follows:
 
