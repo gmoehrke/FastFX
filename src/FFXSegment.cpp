@@ -43,7 +43,7 @@ FFXSegment::FFXSegment( String initTag, uint16_t initStartIdx, uint16_t initEndI
         frameView->checkCrossFade(effect);
      }
      else if (attribute=="Brightness" && source=="Primary") {
-        if (offWithPrimary && !isPrimary()) {
+        if (localDimmer && offWithPrimary && !isPrimary()) {
           if (value == "0") {
             savedBrightness = getBrightness();
             this->setBrightness(0);

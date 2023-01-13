@@ -12,6 +12,7 @@
 #ifndef FFX_CORE_FX_H
 #define FFX_CORE_FX_H
 
+#include <Arduino.h>
 #include "FFXRotate.h"
 #include "FFXTrigMotion.h"
 #include "FFXOverlay.h"
@@ -51,6 +52,9 @@
 #define PACIFICA_FX_ID 10
 #define PACIFICA_FX_NAME "Pacifica"
 
+#define FIRE_FX_ID 12
+#define FIRE_FX_NAME "Fire"
+
 #define WAVE_OVLY_FX_NAME "Wave"
 #define PULSE_OVLY_FX_NAME "Pulse"
 #define ZIP_OVLY_FX_NAME "Zip"
@@ -79,6 +83,18 @@ const CRGBPalette16 Irish_p = CRGBPalette16( CRGB::Green,CRGB::Black,CRGB::Black
                                            CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
 const uint8_t irish_size = 5;                
 
+
+const CRGBPalette16 Haloween_p = CRGBPalette16( CRGB(255,0,255),CRGB(255,0,255),CRGB(255,0,255), CRGB(255,0,255), 
+                                           CRGB(255,46,0), CRGB(255,46,0), CRGB(255,46,0), CRGB(255,46,0),
+                                           CRGB(255,0,255), CRGB(255,0,255), CRGB(255,0,255), CRGB(255,0,255),                                            
+                                           CRGB(255,46,0), CRGB(255,46,0), CRGB(255,46,0), CRGB(255,46,0) );
+const uint8_t Haloween_size = 16; 
+/*
+const CRGBPalette16 Haloween_p = CRGBPalette16( CRGB(255,0,255),CRGB(255,0,255),CRGB(0,255,86), CRGB(255,150,0), 
+                                           CRGB(255,0,255),CRGB(255,0,255),CRGB(0,255,86), CRGB(255,150,0),
+                                           CRGB(255,0,255),CRGB(255,0,255),CRGB(0,255,86), CRGB(255,150,0),
+                                           CRGB(255,0,255),CRGB(255,0,255),CRGB(0,255,86), CRGB(255,150,0));
+const uint8_t Haloween_size = 4; */
 
 const CRGBPalette16 pacifica_palette_1 = 
       { 0x000507, 0x000409, 0x00030B, 0x00030D, 0x000210, 0x000212, 0x000114, 0x000117, 
@@ -139,6 +155,7 @@ class NamedPalettes {
       addNamedPalette( String("lava"), LavaColors_p );
       addNamedPalette( String("heat"), HeatColors_p );   
       addNamedPalette( String("party"), PartyColors_p );
+      addNamedPalette( String("haloween"), Haloween_p );
     };
     ~NamedPalettes() {    
       plist.clear();
@@ -198,8 +215,8 @@ class PaletteFX : public FFXBase {
       for (uint16_t i = 0; i<numLeds; i++) {
         if (currColor.getColorMode()==FFXColor::FFXColorMode::palette256) {
           switch (getMovement()) {
-            case FFXBase::MVT_FORWARD : { bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(StepTimer::subtractOffsetWithWrap(currPhase,i,numLeds), 1, numLeds, 0, 16*currColor.getPaletteRange()-1), 255, LINEARBLEND ); break; }
-            case FFXBase::MVT_BACKWARD: { bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(StepTimer::addOffsetWithWrap(currPhase,i,numLeds), 1, numLeds, 0, 16*currColor.getPaletteRange()-1), 255, LINEARBLEND ); break; }
+            case FFXBase::MVT_FORWARD : { bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(StepTimer::subtractOffsetWithWrap(currPhase,i,numLeds-1), 1, numLeds, 0, 16*currColor.getPaletteRange()-1), 255, LINEARBLEND ); break; }
+            case FFXBase::MVT_BACKWARD: { bufLeds[i] = ColorFromPalette( currColor.getPalette(), fixed_map(StepTimer::addOffsetWithWrap(currPhase,i,numLeds-1), 1, numLeds, 0, 16*currColor.getPaletteRange()-1), 255, LINEARBLEND ); break; }
             default: { bufLeds[i] =  ColorFromPalette( currColor.getPalette(), fixed_map(i,  0, numLeds-1, 0, 255), 255, LINEARBLEND ); break; }
           }
         }
@@ -234,7 +251,7 @@ class ChaseFX : public FFXRotate {
     uint16_t shiftDelay = 3;
 
   public:
-    ChaseFX( uint8_t initSize, uint8_t initSpeed ) : FFXRotate( initSize, initSpeed, 25UL, 2000UL ) {
+    ChaseFX( uint8_t initSize, uint8_t initSpeed ) : FFXRotate( initSize, initSpeed, 60UL, 2000UL ) {
       fxid = CHASE_FX_ID;
       fxName = CHASE_FX_NAME;
       currColor.setColorMode( FFXColor::FFXColorMode::palette16 );
@@ -323,31 +340,74 @@ class ChaseFX : public FFXRotate {
 class MotionFX : public FFXBase {
   private:
     CRGBPalette16 pendPal;    
-    uint8_t pRepeat = 1;  
-    uint8_t normRange = 136;
+    uint8_t pRepeat = 2;  
+    uint8_t normRange = 255;
+    StepTimer shiftTimer = StepTimer(2000, false);
+    uint8_t saturationMin = 0;
+    CRGBPalette16 basePalette;
+    uint8_t baseHue;
       
   public:
-    MotionFX( uint16_t initSize, unsigned long initInterval, CRGBPalette16 initPal ) : FFXBase( initSize, initInterval, 1UL, 100UL ) {
+    MotionFX( uint16_t initSize, unsigned long initInterval, CRGBPalette16 initPal, uint8_t initHue ) : FFXBase( initSize, initInterval, 20UL, 100UL ) {
       fxid = MOTION_FX_ID;
       fxName = MOTION_FX_NAME;
       currColor.setColorMode( FFXColor::FFXColorMode::singleCHSV );
-      setVCycleRange(255);
-      pendPal = initPal;
+      setVCycleRange(127);
+      basePalette = initPal;
+      baseHue = initHue;
+      pendPal = basePalette;
+      setHueShift(true);
     }
-    MotionFX( uint16_t initSize ) : MotionFX( initSize, 20, OceanColors_p ) {};
-    MotionFX( uint16_t initSize, CRGBPalette16 initPal ) : MotionFX( initSize, 20, initPal ) { };
+    MotionFX( uint16_t initSize ) : MotionFX( initSize, 20, OceanColors_p, HUE_BLUE ) {};
+    MotionFX( uint16_t initSize, CRGBPalette16 initPal, uint8_t initHue ) : MotionFX( initSize, 20, initPal, initHue ) { };
     
     uint8_t getNormalizationRange() { return normRange; }
     uint8_t setNormalizationRange( uint8_t newRange ) { normRange = newRange; return normRange;}
 
-
-    void updatePaletteHue( CRGBPalette16 &pal, uint8_t newHue, uint8_t newSat, uint8_t newVal ) {
-      CRGBPalette16 refp = OceanColors_p;
-      CHSV ref;
-      for (int i=0; i<16; i++) {
-        ref = rgb2hsv_approximate( refp[i] );
-        pal[i] = CHSV( newHue+fixed_map(ref.h,0,255,0,normRange), ref.s < newSat ? newSat : ref.s, ref.v ); 
+    bool getHueShift() { return(shiftTimer.isStarted()); }
+    bool setHueShift( bool newVal ) {
+      if (getHueShift() != newVal) {
+        if (newVal) {
+          shiftTimer.start();
+        }
+        else {
+          shiftTimer.stop();
+        }
       }
+      return shiftTimer.isStarted();
+    }
+
+    unsigned long getShiftTime() { return shiftTimer.getInterval(); }
+    unsigned long setShiftTime(unsigned long newValue) { shiftTimer.setInterval(newValue); return( shiftTimer.getInterval()); }
+    
+    uint8_t getSaturationMin() { return saturationMin; }
+    uint8_t setSaturationMin( uint8_t newValue ) {
+      return saturationMin = (saturationMin != newValue ? newValue : saturationMin);
+    }
+
+    void updatePaletteHue( CRGBPalette16 &pal, uint8_t newHue, uint8_t newSat, uint8_t newVal ) {      
+      CHSV ref;
+      uint8_t useHue = 0;
+      for (int i=0; i<16; i++) {
+        ref = rgb2hsv_approximate( basePalette[i] );
+        if (ref.h > baseHue) {
+          useHue = newHue + minimum(sub8(ref.h,baseHue), normRange);
+          // pal[i] = CHSV( newHue + minimum(sub8(ref.h,baseHue), normRange), maximum(saturationMin, ref.s), ref.v );
+        }
+        else {
+          useHue = newHue - minimum(sub8(baseHue,ref.h), normRange);
+          // pal[i] = CHSV( newHue - minimum(sub8(baseHue,ref.h), normRange), maximum(saturationMin, ref.s), ref.v );
+        }
+        // pal[i] = CHSV( newHue+fixed_map(ref.h,0,255,0,normRange), maximum(saturationMin, ref.s), ref.v );
+        pal[i] = CHSV( useHue, maximum(saturationMin, ref.s), ref.v );
+      }      
+      // this->notify( "Motion", "LOG", "Hue updated: " + String(newHue) );
+      //  pal[i] = CHSV( ref.h - diff, maximum(saturationMin, ref.s), ref.v ); 
+       // }
+       // else {
+       //   pal[i] = CHSV( ref.h + diff, maximum(saturationMin, ref.s), ref.v );
+       // }
+       //pal[i] = CHSV( newHue+fixed_map(ref.h,0,255,0,normRange), maximum(saturationMin, ref.s), ref.v ); 
     }
     
     virtual void initLeds(CRGB *bufLeds) override {
@@ -364,9 +424,11 @@ class MotionFX : public FFXBase {
           if (temp.v > 0) { updatePaletteHue( pendPal, temp.h, temp.s, temp.v ); }
         }
         for (uint16_t i=0; i < numLeds; i++) {          
-          uint8_t cindex = fixed_map( StepTimer::addOffsetWithWrap(numLeds-phase, i, numLeds/pRepeat), 0, numLeds/pRepeat, 0, 255 );
-          uint8_t rindex = StepTimer::addOffsetWithWrap(getCurrVPhase(),i,getVCycleRange()-1);
-          bufLeds[i] = blend(ColorFromPalette( currColor.getPalette(), cindex ), ColorFromPalette( currColor.getPalette(), rindex ),200);
+          //uint8_t cindex = fixed_map( StepTimer::addOffsetWithWrap(numLeds-phase, i, (numLeds-1)/pRepeat), 0, (numLeds-1)/pRepeat, 0, 255 );          
+          //uint8_t rindex = StepTimer::addOffsetWithWrap(getCurrVPhase(),i,getVCycleRange()-1);
+          uint8_t cindex = fixed_map(StepTimer::subtractOffsetWithWrap(currPhase,i,numLeds-1), 1, numLeds, 0, 255);
+          uint8_t rindex = fixed_map(StepTimer::addOffsetWithWrap(currPhase,StepTimer::addOffsetWithWrap(0,i,numLeds/pRepeat),numLeds-1), 1, numLeds/pRepeat, 0, 16*currColor.getPaletteRange()-1);
+          bufLeds[i] = blend(ColorFromPalette( currColor.getPalette(), cindex ), ColorFromPalette( currColor.getPalette(), rindex ),75); 
         }
         blur1d( bufLeds, numLeds, 10 ); 
         setUpdated(true);
@@ -374,7 +436,12 @@ class MotionFX : public FFXBase {
   
   virtual void writeNextFrame(CRGB *bufLeds) override {
     if ((pendPal != currColor.getPalette())) { nblendPaletteTowardPalette( currColor.getPalette(), pendPal, 100); }
-       fillLeds(bufLeds, getCurrPhase());
+    fillLeds(bufLeds, getCurrPhase());
+    if (shiftTimer.isStarted() && shiftTimer.isUp()) {
+      uint8_t newrHue = baseHue + 16*(random8(16)-1);
+      currColor.setCHSV( CHSV(newrHue, 255, 255));
+      shiftTimer.step();
+    }
   }
 };
 
@@ -415,7 +482,7 @@ class JuggleFX : public FFXBase {
     std::vector<FFXTrigMotion *> motion = std::vector<FFXTrigMotion *>();
 
   public:
-    JuggleFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 1UL, 1000UL ) {
+    JuggleFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 1UL, 80UL ) {
          fxid = JUGGLE_FX_ID;  
          fxName = JUGGLE_FX_NAME;   
          currColor.setColorMode( FFXColor::FFXColorMode::palette16 );
@@ -475,7 +542,7 @@ class CylonFX : public FFXBase {
     bool twin = false;
 
   public:
-    CylonFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 1UL, 150UL ) {
+    CylonFX( uint16_t initSize, unsigned long initTimer ) : FFXBase( initSize, initTimer, 10UL, 330UL ) {
       fxid = CYLON_FX_ID;
       fxName = CYLON_FX_NAME;
       mt.setLimit( initSize-1 );
@@ -582,7 +649,7 @@ public:
   uint8_t chanceOfTwinkle = 2;
   enum { SteadyDim, GettingBrighter, GettingDimmerAgain };
   
-  TwinkleFX( uint16_t initSize, unsigned long initTimer ) :FFXBase( initSize, initTimer, 10UL, 1000UL )  { 
+  TwinkleFX( uint16_t initSize, unsigned long initTimer ) :FFXBase( initSize, initTimer, 1UL, 225UL )  { 
       fxid = TWINKLE_FX_ID;       
       fxName = TWINKLE_FX_NAME;      
       currColor.setColorMode( FFXColor::singleCRGB );
@@ -712,7 +779,7 @@ class PacificaFX : public FFXBase {
 //  Modified from original FastLED native sketch foound here:  https://gist.github.com/kriegsman/36a1e277f5b4084258d9af1eae29bac4
 //
 public:
-    PacificaFX( uint16_t initSize ) : FFXBase( initSize, (uint8_t)255, 10, 20 ) { 
+    PacificaFX( uint16_t initSize ) : FFXBase( initSize, (uint8_t)255, 1UL, 20UL ) { 
         fxid = PACIFICA_FX_ID;
         fxName = PACIFICA_FX_NAME;
       }
@@ -800,8 +867,124 @@ private:
 
   private:
     uint16_t sCIStart1, sCIStart2, sCIStart3, sCIStart4;
-    uint32_t sLastms = 0;
-    
+    uint32_t sLastms = 0;    
+};
+
+class FireFX : public FFXBase {
+
+ protected:
+    int     Cooling;
+    int     Sparks;
+    int     SparkHeight;
+    int     Sparking;
+    bool    bReversed;
+    bool    bMirrored;
+
+    byte * heat;
+
+    // When diffusing the fire upwards, these control how much to blend in from the cells below (ie: downward neighbors)
+    // You can tune these coefficients to control how quickly and smoothly the fire spreads.  
+    static const byte BlendSelf = 2;
+    static const byte BlendNeighbor1 = 3;
+    static const byte BlendNeighbor2 = 2;
+    static const byte BlendNeighbor3 = 1;
+    static const byte BlendTotal = (BlendSelf + BlendNeighbor1 + BlendNeighbor2 + BlendNeighbor3);
+
+public:
+   FireFX(uint16_t initSize, unsigned long initTimer,  int cooling = 20, int sparking = 50, int sparks = 3, int sparkHeight = 8, bool breversed = true, bool bmirrored = true) 
+        :  FFXBase( initSize, initTimer, 1UL, 225UL),
+          Cooling(cooling),
+          Sparks(sparks),
+          SparkHeight(sparkHeight),
+          Sparking(sparking),
+          bReversed(breversed),
+          bMirrored(bmirrored)
+    {
+      fxid = FIRE_FX_ID;       
+      fxName = FIRE_FX_NAME;      
+      currColor.setColorMode( FFXColor::singleCRGB );
+      currColor.setCRGB( CRGB::Black );        
+      heat = new byte[getNumLeds()] { 0 };
+   }  
+  
+  FireFX( uint16_t initSize ) : FireFX( initSize, 30 ) {}; 
+  virtual ~FireFX() { delete [] heat; }
+  
+  virtual void initLeds( CRGB *bufLeds ) override {
+      fill_solid( bufLeds, numLeds, currColor.getCRGB() );
+    }
+
+  uint16_t getIndex( uint16_t index, bool mirrored )
+  {
+    return (mirrored ? mirror(index) : index);
+  }
+  
+  void drawFire( uint16_t size, bool mirrored, CRGB *bufLeds ) {
+        uint8_t cooldown;
+        // First cool each cell by a little bit
+        for (int i = 0; i < size; i++) {
+            uint16_t idx = getIndex(i, mirrored);
+            if (i > 20) 
+              cooldown = random( 0, fixed_map( heat[idx], 255, 0, 0, 7));
+            else {
+              if (getCurrCycle() % 40 == 0) cooldown = random8(1);
+              else cooldown = 0;  
+            }
+            heat[idx] = max(0, heat[idx] - cooldown); 
+            // max(0L, heat[i] - random(0, ((Cooling * 10) / Size)+2));
+            //if (i > SparkHeight*5) {
+            //  heat[i] -= fixed_map(i,SparkHeight*5,Size,0,heat[i]/4);
+            //}
+        }
+
+        // Next drift heat up and diffuse it a little but
+        for (int i = 0; i < size; i++) {           
+            heat[getIndex(i, mirrored)] = (heat[getIndex(i, mirrored)] * BlendSelf + 
+                       heat[(getIndex(i + 1  % size, mirrored))] * BlendNeighbor1 + 
+                       heat[(getIndex(i + 2 % size, mirrored))] * BlendNeighbor2 + 
+                       heat[(getIndex(i + 3 % size, mirrored))] * BlendNeighbor3) 
+                      / BlendTotal;
+        }
+        // Randomly ignite new sparks down in the flame kernel
+        for (int i = 0; i < Sparks; i++)
+        {
+            if (random(255) < Sparking)
+            {
+                int y = size - 1 - random(SparkHeight);
+                heat[getIndex(y, mirrored)] = heat[getIndex(y, mirrored)] + random(160, 255); // This randomly rolls over sometimes of course, and that's essential to the effect
+            }
+        }
+
+        // Finally convert heat to a color
+        for (int i = 0; i < size; i++)
+        {
+            CRGB color = HeatColor(heat[getIndex(i, mirrored)]);
+            uint16_t j = getIndex(bReversed ? (size - 1 - i) : i, mirrored);
+            bufLeds[j] = color;
+            //DrawPixels(j, 1, color);
+            //if (bMirrored)
+            //{
+            //    int j2 = !bReversed ? (2 * Size - 1 - i) : Size + i;
+            //    bufLeds[j2] = color;
+            //    //DrawPixels(j2, 1, color);
+           // }
+        }
+  }
+
+  virtual void writeNextFrame( CRGB *bufLeds ) override {
+        uint16_t Size = bMirrored ? getNumLeds() / 2 : getNumLeds();         
+        if (bMirrored) {
+          drawFire( Size, false, bufLeds );
+          drawFire( Size, true, bufLeds ); 
+        }
+        else {
+          drawFire( Size, false, bufLeds );
+        }
+        blur1d(bufLeds, getNumLeds(), 124);
+        blur1d(bufLeds, getNumLeds(), 124);
+        setUpdated(true);
+  }
+
 };
 
 /* **********************************************************************************************************************************
