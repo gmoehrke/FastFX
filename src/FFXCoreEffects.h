@@ -904,7 +904,7 @@ public:
       fxName = FIRE_FX_NAME;      
       currColor.setColorMode( FFXColor::singleCRGB );
       currColor.setCRGB( CRGB::Black );        
-      heat = new byte[getNumLeds()] { 0 };
+      heat = new byte[initSize] { 0 };
    }  
   
   FireFX( uint16_t initSize ) : FireFX( initSize, 30 ) {}; 

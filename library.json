@@ -16,10 +16,14 @@
     "license": "MIT",
     "homepage": "https://gmoehrke.github.io/FastFX",
     "dependencies":
-    {
+    [{
         "name": "FastLED",
         "version": ">=3.0.0"
     },
+    {
+        "name": "GPTimer",
+        "version": ">=1.0.0"
+    }],
     "frameworks": "arduino",
     "platforms": "esperessif8266"
 }
