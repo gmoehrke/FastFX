@@ -36,27 +36,30 @@ FFXSegment::FFXSegment( String initTag, uint16_t initStartIdx, uint16_t initEndI
   }
 
  void FFXSegment::onNotify(String source, String attribute, String value ) {
-     if (attribute=="LOG") { 
-       controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOG, value ); 
+     if (attribute.equals("LOG")) { 
+       controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOG, "\""+attribute+"\":\""+value+"\"" ); 
      }
-     else if (attribute=="Interval") {
+     else if (attribute.equals("Param")) {
+      controller->onFXEvent( getTag(), FFXController::FXEventType::FX_PARAM_CHANGE, "\""+attribute+"\":\""+value+"\"" ); 
+     }
+     else if (attribute.equals("Interval")) {
         frameView->checkCrossFade(effect);
      }
-     else if (attribute=="Brightness" && source=="Primary") {
+     else if (attribute.equals("Brightness") && source.equals("Primary")) {
         if (localDimmer && offWithPrimary && !isPrimary()) {
-          if (value == "0") {
-            savedBrightness = getBrightness();
-            this->setBrightness(0);
+          if ((value == "0") && !getForcedOff()) {
+            savedBrightness = this->getBrightness();
+            this->setBrightness(0);            
             forcedOff = true;
           }
-          else {            
+          else if (value != "0") {            
             forcedOff = false;
             this->setBrightness(savedBrightness);            
           }
         }
      }
      else {
-       controller->onFXEvent( getTag(), FFXController::FXEventType::FX_PARAM_CHANGE, attribute );
+       controller->onFXEvent( getTag(), FFXController::FXEventType::FX_PARAM_CHANGE, "\""+attribute+"\":\""+value+"\"" );
        frameView->checkCrossFade(effect);
      }
      stateChanged = true;
@@ -140,12 +143,13 @@ void FFXSegment::setFX( FFXBase *newFX ) {
         savedBrightness = newBrightness;
     }        
     else {
+      String segName = String("\"Segment\":") + "\""+ (isPrimary() ? "Primary" : getTag()) + "\"";
       if (!hasDimmer()) {
         localDimmer = new FFXAFDimmer(500, controller->getPrimarySegment()->getBrightness() );
-        controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOCAL_BRIGHTNESS_ENABLED, "Segment:"+ (isPrimary() ? "Primary" : getTag()) );
+        controller->onFXEvent( getTag(), FFXController::FXEventType::FX_LOCAL_BRIGHTNESS_ENABLED, segName );
       }
       localDimmer->setTarget(newBrightness);
-      controller->onFXEvent( getTag(), FFXController::FXEventType::FX_BRIGHTNESS_CHANGED, "Segment:"+ (isPrimary() ? "Primary" : getTag()) );
+      controller->onFXEvent( getTag(), FFXController::FXEventType::FX_BRIGHTNESS_CHANGED, segName );
       if (isPrimary()) { controller->notifySegments( false, "Primary", "Brightness", String(newBrightness)); }
       stateChanged = true;
     }
@@ -181,7 +185,7 @@ void FFXSegment::setFX( FFXBase *newFX ) {
       else {
         result = (effect->isUpdated() || getActiveDimmer()->isUpdated());
       }
-      if (opacity) { result = result || opacity->isUpdated(); }
+      if (opacity) { result = (result || opacity->isUpdated()); }
     }
     return result;
   }
@@ -214,7 +218,7 @@ void FFXSegment::setFX( FFXBase *newFX ) {
       }
       getFrameProvider()->updateFrame( &(frameBuffer[startIdx]), effect );      
       CRGBSet pixels = CRGBSet(frameBuffer, startIdx, endIdx);
-      getActiveDimmer()->update(pixels);
+      getActiveDimmer()->update(pixels); 
       if (opacity) {
           CRGBSet bkdest = CRGBSet(opacity->getBackgroundBuffer(),getLength());
           controller->getPrimarySegment()->getFrameProvider()->getLastFrame(bkdest.leds, startIdx, endIdx );

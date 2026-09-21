@@ -83,18 +83,11 @@ const CRGBPalette16 Irish_p = CRGBPalette16( CRGB::Green,CRGB::Black,CRGB::Black
                                            CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
 const uint8_t irish_size = 5;                
 
-
-const CRGBPalette16 Haloween_p = CRGBPalette16( CRGB(255,0,255),CRGB(255,0,255),CRGB(255,0,255), CRGB(255,0,255), 
-                                           CRGB(255,46,0), CRGB(255,46,0), CRGB(255,46,0), CRGB(255,46,0),
-                                           CRGB(255,0,255), CRGB(255,0,255), CRGB(255,0,255), CRGB(255,0,255),                                            
-                                           CRGB(255,46,0), CRGB(255,46,0), CRGB(255,46,0), CRGB(255,46,0) );
-const uint8_t Haloween_size = 16; 
-/*
-const CRGBPalette16 Haloween_p = CRGBPalette16( CRGB(255,0,255),CRGB(255,0,255),CRGB(0,255,86), CRGB(255,150,0), 
-                                           CRGB(255,0,255),CRGB(255,0,255),CRGB(0,255,86), CRGB(255,150,0),
-                                           CRGB(255,0,255),CRGB(255,0,255),CRGB(0,255,86), CRGB(255,150,0),
-                                           CRGB(255,0,255),CRGB(255,0,255),CRGB(0,255,86), CRGB(255,150,0));
-const uint8_t Haloween_size = 4; */
+const CRGBPalette16 Halloween_p = CRGBPalette16( CRGB(255,0,255),CRGB(0,255,86),CRGB(255,46,0), CRGB(255,0,255), 
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black,                                            
+                                           CRGB::Black, CRGB::Black, CRGB::Black, CRGB::Black );
+const uint8_t halloween_size = 4; 
 
 const CRGBPalette16 pacifica_palette_1 = 
       { 0x000507, 0x000409, 0x00030B, 0x00030D, 0x000210, 0x000212, 0x000114, 0x000117, 
@@ -155,7 +148,7 @@ class NamedPalettes {
       addNamedPalette( String("lava"), LavaColors_p );
       addNamedPalette( String("heat"), HeatColors_p );   
       addNamedPalette( String("party"), PartyColors_p );
-      addNamedPalette( String("haloween"), Haloween_p );
+      addNamedPalette( String("halloween"), Halloween_p );
     };
     ~NamedPalettes() {    
       plist.clear();
@@ -324,6 +317,7 @@ class ChaseFX : public FFXRotate {
       redrawFull = true;
     }
 
+    boolean getShift() { return hueShift; }
     void setShift( boolean newValue ) {
       if (hueShift != newValue ) {
         hueShift = newValue;
@@ -584,11 +578,30 @@ class CylonFX : public FFXBase {
  * CycleFX - Cycle through color hues with smooth fades between each.
  */
 class CycleFX : public FFXBase {
+  public:  
+    enum TransitionModeType { TM_FADE=1, TM_LINEAR_ASC=2, TM_LINEAR_DESC=3, TM_INSIDE_OUT=4, TM_OUTSIDE_IN=5, TM_RANDOM=6 };
+    static String TransitionModeString( TransitionModeType tm ) {
+      String result;
+      switch(tm) {
+         case TM_LINEAR_ASC    : { result = "TM_LINEAR_ASC"; break; }
+         case TM_LINEAR_DESC  : { result = "TM_LINEAR_DESC"; break; };
+         case TM_FADE         : { result = "TM_FADE"; break; }
+         case TM_INSIDE_OUT   : { result = "TM_INSIDE_OUT"; break; }
+         case TM_OUTSIDE_IN   : { result = "TM_OUTSIDE_IN"; break; }
+         case TM_RANDOM       : { result = "TM_RANDOM"; break; }
+      }
+      return result;
+    }    
+
   private:
     CRGB currRGBColor;
     CRGB nextRGBColor;
-    StepTimer colorTimer = StepTimer( 5000, false );
-    StepTimer transitionTimer = StepTimer( 2000, false );  
+    TransitionModeType transMode = TM_INSIDE_OUT;
+    TransitionModeType pendMode = transMode;
+    TransitionModeType thisTransition  = transMode;
+    StepTimer colorTimer = StepTimer( 6000, false );
+    StepTimer transitionTimer = StepTimer( 1000, false );  
+
   
   public:
     CycleFX( uint16_t initSize, unsigned long initTimer ) :FFXBase( initSize, initTimer, 10UL, 100UL )  { 
@@ -603,6 +616,38 @@ class CycleFX : public FFXBase {
     
     CycleFX( uint16_t initSize) : CycleFX( initSize, 1 ) {};  
 
+    unsigned long getTransitionTime() { return transitionTimer.getInterval(); }
+    unsigned long setTransitionTime( unsigned long newTime ) {
+      if (getTransitionTime() != newTime) {
+        transitionTimer.setIntervalImmediate(newTime);
+        this->notify(this->getFXName(), "transition_time", String(newTime) );
+      }
+      return newTime;
+    }
+
+    unsigned long getStaticTime() { return colorTimer.getInterval(); }
+    unsigned long setStaticTime( unsigned long newTime ) {
+      if (getStaticTime() != newTime) {
+       colorTimer.setIntervalImmediate(newTime);
+       this->notify(this->getFXName(), "static_time", String(newTime) );
+      }
+      return newTime;
+    }
+
+    TransitionModeType getTransitionMode() { 
+      if (transMode==pendMode) { 
+        return transMode; 
+      } else {
+        return pendMode; 
+      }
+    }
+    TransitionModeType setTransitionMode( TransitionModeType newMode ) { 
+      pendMode = newMode; 
+      this->notify(this->getFXName(), "trans_mode", TransitionModeString(newMode) );
+      return pendMode;       
+    }
+
+
     virtual void initLeds( CRGB *bufLeds ) override {
       currRGBColor = currColor.getCRGB();
       fill_solid( bufLeds, numLeds, currRGBColor );
@@ -610,24 +655,72 @@ class CycleFX : public FFXBase {
     }
     
     virtual void writeNextFrame( CRGB *bufLeds ) override {
+        // Only allow transMode to be updated when not in transition
+        if ((colorTimer.isStarted()) && (pendMode != transMode)) {
+          transMode = pendMode;
+        }
         if (colorTimer.isStarted() && colorTimer.isUp()) {
           currColor.step();
           nextRGBColor = currColor.getCRGB();
-          transitionTimer.start();
           colorTimer.stop();
+          transitionTimer.start();
+          if (transMode==TM_RANDOM) {
+            thisTransition = static_cast<TransitionModeType>((std::rand() % 5) + 1);
+          }
+          else {
+            thisTransition = transMode;
+          }
         }
         if (transitionTimer.isStarted()) {
           if (transitionTimer.isUp()) {
             currRGBColor = nextRGBColor; //currColor.getCRGB();
             fill_solid( bufLeds, numLeds, currRGBColor );            
-            transitionTimer.stop();
+            transitionTimer.stop();              
             colorTimer.start();
             setUpdated(true);
           }
-          else {            
+          else if (thisTransition==TM_LINEAR_ASC) {
+            uint16_t border = fixed_map(transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), 0, numLeds-1);
+            fill_solid( bufLeds, border-1, nextRGBColor );
+            bufLeds[border]=CRGB::White;   
+            blur1d(bufLeds, numLeds, 172);
+            setUpdated(true);                     
+          }
+          else if (thisTransition==TM_LINEAR_DESC) {
+            uint16_t border = fixed_map(transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), numLeds-1, 0);
+            if (border < numLeds-1) { 
+              fill_solid( &bufLeds[border+1], numLeds-border, nextRGBColor );
+            }
+            bufLeds[border]=CRGB::White;   
+            blur1d(bufLeds, numLeds, 172);
+            setUpdated(true);                     
+          }
+          else if (thisTransition==TM_INSIDE_OUT) {
+            uint16_t width = fixed_map( transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), 0, numLeds-1);
+            bufLeds[numLeds/2-(width/2)] = CRGB::White;
+            bufLeds[numLeds/2+(width/2)] = CRGB::White;
+            if (width>2) {
+              fill_solid( &bufLeds[numLeds/2-(width/2)+1], width-2, nextRGBColor );
+            } 
+            blur1d(bufLeds, numLeds, 172);
+            setUpdated(true);  
+          }
+          else if (thisTransition==TM_OUTSIDE_IN) {
+            uint16_t width = fixed_map( transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), numLeds-1, 0);
+            bufLeds[numLeds/2-(width/2)] = CRGB::White;
+            bufLeds[numLeds/2+(width/2)-1] = CRGB::White;
+            if (width>2 && width<numLeds-2) {
+              fill_solid( bufLeds, numLeds/2-(width/2)-1, nextRGBColor );
+              fill_solid( &bufLeds[numLeds/2+(width/2)], numLeds-(numLeds/2+(width/2))-1, nextRGBColor );
+            } 
+            blur1d(bufLeds, numLeds, 172);
+            setUpdated(true);  
+          }
+          else { //if (transMode==TM_FADE) {            
             CRGB transRGB = blend( currRGBColor, nextRGBColor, fixed_map( transitionTimer.timeSinceTriggered(), 0, transitionTimer.getInterval(), 0, 255 ));
             if (transRGB != currRGBColor) {              
               fill_solid( bufLeds, numLeds, transRGB );
+              currRGBColor = transRGB;
               setUpdated(true);
               //currRGBColor = transRGB;
             }

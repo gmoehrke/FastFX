@@ -64,6 +64,7 @@ public:
   void updateOverlay( CRGB *frameBuffer );
   inline bool hasDimmer() { return (localDimmer!=nullptr);  }
   void removeDimmer();
+  void addDimmer() { if (!hasDimmer()) { localDimmer = new FFXAFDimmer(500); } }
   void setBrightness( uint8_t newBrightness );
   void setBrightnessInterval( unsigned long newInterval ) { 
     if (!localDimmer) {
@@ -74,6 +75,9 @@ public:
   FFXAFDimmer *getActiveDimmer();
   uint8_t getBrightness();
   uint8_t getCurrentBrightness();
+  bool getForcedOff() { return forcedOff; }
+  uint8_t getSavedBrightness() { return savedBrightness; }
+  bool getOffWithPrimary() { return offWithPrimary; }
   uint8_t getSetBrightness() { return( isPrimary() ? this->getBrightness() : (forcedOff ? savedBrightness : this->getBrightness() ));}
   inline String getTag() { return tag; }
   inline void setTag( String newTag ) { tag = newTag; }

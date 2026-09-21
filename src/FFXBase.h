@@ -239,7 +239,6 @@ public:
    bool isFrozen() { return frozen; }
 
    void update(CRGB *frameBuffer );
-
    boolean isUpdated() { if (currColor.isUpdated()) { changed=true; } return changed;  }
    void setUpdated(boolean newValue) { changed = newValue; }
 
