@@ -55,6 +55,9 @@
 #define FIRE_FX_ID 12
 #define FIRE_FX_NAME "Fire"
 
+#define MULTI_FADE_FX_ID 13
+#define MULTI_FADE_FX_NAME "MultiFade"
+
 #define WAVE_OVLY_FX_NAME "Wave"
 #define PULSE_OVLY_FX_NAME "Pulse"
 #define ZIP_OVLY_FX_NAME "Zip"
@@ -162,6 +165,147 @@ class NamedPalettes {
     }
     NamedPalettes(const NamedPalettes&) {}
     NamedPalettes& operator=(const NamedPalettes&) { return *this; }
+};
+
+/*!
+ * MultiFadeFX - Base effect for displaying and fading between multiple colors.
+ */
+class MultiFadeFX : public FFXBase {
+  private:
+    struct PixelState {
+      uint8_t currentPaletteIndex;
+      uint8_t nextPaletteIndex;
+      StepTimer fadeTimer;
+      StepTimer holdTimer;
+
+      PixelState(uint8_t initCurrentIndex, uint8_t initNextIndex,
+                 unsigned long initFadeDuration, unsigned long initHoldDuration)
+        : currentPaletteIndex(initCurrentIndex),
+          nextPaletteIndex(initNextIndex),
+          fadeTimer(initFadeDuration, false),
+          holdTimer(initHoldDuration, false) {}
+    };
+
+    std::vector<PixelState> pixelStates;
+    unsigned long fadeDuration = 1000;
+    unsigned long minHoldDuration = 1000;
+    unsigned long maxHoldDuration = 5000;
+
+    CRGB paletteColor(uint8_t index) {
+      return ColorFromPalette(currColor.getPalette(), (uint8_t)(index * 16), 255, LINEARBLEND);
+    }
+
+    unsigned long randomHoldDuration() {
+      if (minHoldDuration >= maxHoldDuration) {
+        return minHoldDuration;
+      }
+      return (unsigned long)random((long)minHoldDuration, (long)maxHoldDuration + 1);
+    }
+
+    uint8_t nextPaletteIndex(uint8_t currentIndex) {
+      if (currColor.getPaletteRange() <= 1) {
+        return currentIndex;
+      }
+      uint8_t nextIndex = currentIndex;
+      while (nextIndex == currentIndex) {
+        nextIndex = random8(currColor.getPaletteRange());
+      }
+      return nextIndex;
+    }
+
+    void resetPixelStates() {
+      pixelStates.clear();
+      pixelStates.reserve(numLeds);
+      for (uint16_t i = 0; i < numLeds; ++i) {
+        uint8_t currentIndex = random8(currColor.getPaletteRange());
+        uint8_t nextIndex = nextPaletteIndex(currentIndex);
+        pixelStates.emplace_back(
+          currentIndex,
+          nextIndex,
+          fadeDuration,
+          randomHoldDuration()
+        );
+        pixelStates.back().holdTimer.start();
+      }
+    }
+
+  public:
+    MultiFadeFX( uint16_t initSize ) : FFXBase( initSize, (uint8_t)255, 100, 1000 ) {
+      fxid = MULTI_FADE_FX_ID;
+      fxName = MULTI_FADE_FX_NAME;
+      currColor.setColorMode( FFXColor::FFXColorMode::palette16 );
+      currColor.setPalette( ::Multi_p, 6 );      
+    }
+
+    unsigned long getFadeDuration() { return fadeDuration; }
+    void setFadeDuration(unsigned long newDuration) {
+      fadeDuration = newDuration;
+      for (PixelState &state : pixelStates) {
+        state.fadeTimer.stop();
+        state.fadeTimer.setInterval(fadeDuration);
+      }
+    }
+
+    unsigned long getMinHoldDuration() { return minHoldDuration; }
+    unsigned long getMaxHoldDuration() { return maxHoldDuration; }
+    void setHoldDurationRange(unsigned long newMin, unsigned long newMax) {
+      minHoldDuration = minimum(newMin, newMax);
+      maxHoldDuration = maximum(newMin, newMax);
+    }
+
+    virtual void initLeds( CRGB *bufLeds ) override {
+      resetPixelStates();
+    }
+
+    virtual void writeNextFrame( CRGB *bufLeds ) override {
+      if (currColor.isUpdated()) {
+        resetPixelStates();
+        currColor.setUpdated(false);
+      }
+
+      for (uint16_t i = 0; i < numLeds; ++i) {
+        PixelState &state = pixelStates[i];
+        if (!state.fadeTimer.isStarted() && state.holdTimer.isUp()) {
+          state.holdTimer.stop();
+          state.nextPaletteIndex = nextPaletteIndex(state.currentPaletteIndex);
+          state.fadeTimer.setInterval(fadeDuration);
+          if (fadeDuration > 0) {
+            state.fadeTimer.start();
+          }
+          else {
+            state.currentPaletteIndex = state.nextPaletteIndex;
+            state.holdTimer.setInterval(randomHoldDuration());
+            state.holdTimer.start();
+          }
+        }
+
+        if (state.fadeTimer.isStarted()) {
+          if (state.fadeTimer.timeRemaining() == 0) {
+            state.currentPaletteIndex = state.nextPaletteIndex;
+            state.fadeTimer.stop();
+            state.holdTimer.setInterval(randomHoldDuration());
+            state.holdTimer.start();
+          }
+          else {
+            uint8_t progress = (uint8_t)fixed_map(
+              state.fadeTimer.timeSinceStarted(),
+              0,
+              state.fadeTimer.getInterval(),
+              0,
+              255
+            );
+            bufLeds[i] = blend(
+              paletteColor(state.currentPaletteIndex),
+              paletteColor(state.nextPaletteIndex),
+              progress
+            );
+            continue;
+          }
+        }
+        bufLeds[i] = paletteColor(state.currentPaletteIndex);
+      }
+      setUpdated(true);
+    }
 };
 
 /*!
